@@ -1,0 +1,377 @@
+--- #YAML:1.0
+name: DateTime-Locale
+version: 0.01
+license: perl
+distribution_type: module
+requires:
+  Params::Validate: 0
+recommends: {}
+build_requires: {}
+conflicts: {}
+provides:
+  DateTime::Locale:
+    file: lib/DateTime/Locale.pm
+    version: 0.01
+  DateTime::Locale::Alias::ISO639_2:
+    file: lib/DateTime/Locale/Alias/ISO639_2.pm
+  DateTime::Locale::Base:
+    file: lib/DateTime/Locale/Base.pm
+  DateTime::Locale::af:
+    file: lib/DateTime/Locale/af.pm
+  DateTime::Locale::af_ZA:
+    file: lib/DateTime/Locale/af_ZA.pm
+  DateTime::Locale::am:
+    file: lib/DateTime/Locale/am.pm
+  DateTime::Locale::am_ET:
+    file: lib/DateTime/Locale/am_ET.pm
+  DateTime::Locale::ar:
+    file: lib/DateTime/Locale/ar.pm
+  DateTime::Locale::ar_IN:
+    file: lib/DateTime/Locale/ar_IN.pm
+  DateTime::Locale::ar_JO:
+    file: lib/DateTime/Locale/ar_JO.pm
+  DateTime::Locale::ar_LB:
+    file: lib/DateTime/Locale/ar_LB.pm
+  DateTime::Locale::ar_QA:
+    file: lib/DateTime/Locale/ar_QA.pm
+  DateTime::Locale::ar_SA:
+    file: lib/DateTime/Locale/ar_SA.pm
+  DateTime::Locale::ar_SY:
+    file: lib/DateTime/Locale/ar_SY.pm
+  DateTime::Locale::ar_TN:
+    file: lib/DateTime/Locale/ar_TN.pm
+  DateTime::Locale::ar_YE:
+    file: lib/DateTime/Locale/ar_YE.pm
+  DateTime::Locale::az:
+    file: lib/DateTime/Locale/az.pm
+  DateTime::Locale::az_AZ:
+    file: lib/DateTime/Locale/az_AZ.pm
+  DateTime::Locale::be:
+    file: lib/DateTime/Locale/be.pm
+  DateTime::Locale::bg:
+    file: lib/DateTime/Locale/bg.pm
+  DateTime::Locale::bn:
+    file: lib/DateTime/Locale/bn.pm
+  DateTime::Locale::bn_IN:
+    file: lib/DateTime/Locale/bn_IN.pm
+  DateTime::Locale::ca:
+    file: lib/DateTime/Locale/ca.pm
+  DateTime::Locale::cs:
+    file: lib/DateTime/Locale/cs.pm
+  DateTime::Locale::da:
+    file: lib/DateTime/Locale/da.pm
+  DateTime::Locale::de:
+    file: lib/DateTime/Locale/de.pm
+  DateTime::Locale::de_AT:
+    file: lib/DateTime/Locale/de_AT.pm
+  DateTime::Locale::de_BE:
+    file: lib/DateTime/Locale/de_BE.pm
+  DateTime::Locale::dv:
+    file: lib/DateTime/Locale/dv.pm
+  DateTime::Locale::dv_MV:
+    file: lib/DateTime/Locale/dv_MV.pm
+  DateTime::Locale::el:
+    file: lib/DateTime/Locale/el.pm
+  DateTime::Locale::en_AU:
+    file: lib/DateTime/Locale/en_AU.pm
+  DateTime::Locale::en_BE:
+    file: lib/DateTime/Locale/en_BE.pm
+  DateTime::Locale::en_BW:
+    file: lib/DateTime/Locale/en_BW.pm
+  DateTime::Locale::en_BZ:
+    file: lib/DateTime/Locale/en_BZ.pm
+  DateTime::Locale::en_CA:
+    file: lib/DateTime/Locale/en_CA.pm
+  DateTime::Locale::en_GB:
+    file: lib/DateTime/Locale/en_GB.pm
+  DateTime::Locale::en_HK:
+    file: lib/DateTime/Locale/en_HK.pm
+  DateTime::Locale::en_IE:
+    file: lib/DateTime/Locale/en_IE.pm
+  DateTime::Locale::en_IN:
+    file: lib/DateTime/Locale/en_IN.pm
+  DateTime::Locale::en_MT:
+    file: lib/DateTime/Locale/en_MT.pm
+  DateTime::Locale::en_NZ:
+    file: lib/DateTime/Locale/en_NZ.pm
+  DateTime::Locale::en_PH:
+    file: lib/DateTime/Locale/en_PH.pm
+  DateTime::Locale::en_SG:
+    file: lib/DateTime/Locale/en_SG.pm
+  DateTime::Locale::en_ZA:
+    file: lib/DateTime/Locale/en_ZA.pm
+  DateTime::Locale::en_ZW:
+    file: lib/DateTime/Locale/en_ZW.pm
+  DateTime::Locale::eo:
+    file: lib/DateTime/Locale/eo.pm
+  DateTime::Locale::es:
+    file: lib/DateTime/Locale/es.pm
+  DateTime::Locale::es_AR:
+    file: lib/DateTime/Locale/es_AR.pm
+  DateTime::Locale::es_BO:
+    file: lib/DateTime/Locale/es_BO.pm
+  DateTime::Locale::es_CL:
+    file: lib/DateTime/Locale/es_CL.pm
+  DateTime::Locale::es_CO:
+    file: lib/DateTime/Locale/es_CO.pm
+  DateTime::Locale::es_CR:
+    file: lib/DateTime/Locale/es_CR.pm
+  DateTime::Locale::es_DO:
+    file: lib/DateTime/Locale/es_DO.pm
+  DateTime::Locale::es_EC:
+    file: lib/DateTime/Locale/es_EC.pm
+  DateTime::Locale::es_ES:
+    file: lib/DateTime/Locale/es_ES.pm
+  DateTime::Locale::es_GT:
+    file: lib/DateTime/Locale/es_GT.pm
+  DateTime::Locale::es_HN:
+    file: lib/DateTime/Locale/es_HN.pm
+  DateTime::Locale::es_MX:
+    file: lib/DateTime/Locale/es_MX.pm
+  DateTime::Locale::es_NI:
+    file: lib/DateTime/Locale/es_NI.pm
+  DateTime::Locale::es_PA:
+    file: lib/DateTime/Locale/es_PA.pm
+  DateTime::Locale::es_PE:
+    file: lib/DateTime/Locale/es_PE.pm
+  DateTime::Locale::es_PR:
+    file: lib/DateTime/Locale/es_PR.pm
+  DateTime::Locale::es_PY:
+    file: lib/DateTime/Locale/es_PY.pm
+  DateTime::Locale::es_SV:
+    file: lib/DateTime/Locale/es_SV.pm
+  DateTime::Locale::es_US:
+    file: lib/DateTime/Locale/es_US.pm
+  DateTime::Locale::es_UY:
+    file: lib/DateTime/Locale/es_UY.pm
+  DateTime::Locale::es_VE:
+    file: lib/DateTime/Locale/es_VE.pm
+  DateTime::Locale::et:
+    file: lib/DateTime/Locale/et.pm
+  DateTime::Locale::eu:
+    file: lib/DateTime/Locale/eu.pm
+  DateTime::Locale::eu_ES:
+    file: lib/DateTime/Locale/eu_ES.pm
+  DateTime::Locale::fa:
+    file: lib/DateTime/Locale/fa.pm
+  DateTime::Locale::fi:
+    file: lib/DateTime/Locale/fi.pm
+  DateTime::Locale::fo:
+    file: lib/DateTime/Locale/fo.pm
+  DateTime::Locale::fo_FO:
+    file: lib/DateTime/Locale/fo_FO.pm
+  DateTime::Locale::fr:
+    file: lib/DateTime/Locale/fr.pm
+  DateTime::Locale::fr_BE:
+    file: lib/DateTime/Locale/fr_BE.pm
+  DateTime::Locale::fr_CA:
+    file: lib/DateTime/Locale/fr_CA.pm
+  DateTime::Locale::fr_CH:
+    file: lib/DateTime/Locale/fr_CH.pm
+  DateTime::Locale::ga:
+    file: lib/DateTime/Locale/ga.pm
+  DateTime::Locale::ga_IE:
+    file: lib/DateTime/Locale/ga_IE.pm
+  DateTime::Locale::gl:
+    file: lib/DateTime/Locale/gl.pm
+  DateTime::Locale::gl_ES:
+    file: lib/DateTime/Locale/gl_ES.pm
+  DateTime::Locale::gu:
+    file: lib/DateTime/Locale/gu.pm
+  DateTime::Locale::gu_IN:
+    file: lib/DateTime/Locale/gu_IN.pm
+  DateTime::Locale::gv:
+    file: lib/DateTime/Locale/gv.pm
+  DateTime::Locale::gv_GB:
+    file: lib/DateTime/Locale/gv_GB.pm
+  DateTime::Locale::he:
+    file: lib/DateTime/Locale/he.pm
+  DateTime::Locale::hi:
+    file: lib/DateTime/Locale/hi.pm
+  DateTime::Locale::hi_IN:
+    file: lib/DateTime/Locale/hi_IN.pm
+  DateTime::Locale::hr:
+    file: lib/DateTime/Locale/hr.pm
+  DateTime::Locale::hu:
+    file: lib/DateTime/Locale/hu.pm
+  DateTime::Locale::hy:
+    file: lib/DateTime/Locale/hy.pm
+  DateTime::Locale::hy_AM:
+    file: lib/DateTime/Locale/hy_AM.pm
+  DateTime::Locale::hy_AM_REVISED:
+    file: lib/DateTime/Locale/hy_AM_REVISED.pm
+  DateTime::Locale::id:
+    file: lib/DateTime/Locale/id.pm
+  DateTime::Locale::id_ID:
+    file: lib/DateTime/Locale/id_ID.pm
+  DateTime::Locale::is:
+    file: lib/DateTime/Locale/is.pm
+  DateTime::Locale::it:
+    file: lib/DateTime/Locale/it.pm
+  DateTime::Locale::it_CH:
+    file: lib/DateTime/Locale/it_CH.pm
+  DateTime::Locale::it_IT:
+    file: lib/DateTime/Locale/it_IT.pm
+  DateTime::Locale::ja:
+    file: lib/DateTime/Locale/ja.pm
+  DateTime::Locale::ka:
+    file: lib/DateTime/Locale/ka.pm
+  DateTime::Locale::ka_GE:
+    file: lib/DateTime/Locale/ka_GE.pm
+  DateTime::Locale::kk:
+    file: lib/DateTime/Locale/kk.pm
+  DateTime::Locale::kl:
+    file: lib/DateTime/Locale/kl.pm
+  DateTime::Locale::kl_GL:
+    file: lib/DateTime/Locale/kl_GL.pm
+  DateTime::Locale::kn:
+    file: lib/DateTime/Locale/kn.pm
+  DateTime::Locale::kn_IN:
+    file: lib/DateTime/Locale/kn_IN.pm
+  DateTime::Locale::ko:
+    file: lib/DateTime/Locale/ko.pm
+  DateTime::Locale::ko_KR:
+    file: lib/DateTime/Locale/ko_KR.pm
+  DateTime::Locale::kok:
+    file: lib/DateTime/Locale/kok.pm
+  DateTime::Locale::kok_IN:
+    file: lib/DateTime/Locale/kok_IN.pm
+  DateTime::Locale::kw:
+    file: lib/DateTime/Locale/kw.pm
+  DateTime::Locale::kw_GB:
+    file: lib/DateTime/Locale/kw_GB.pm
+  DateTime::Locale::ky:
+    file: lib/DateTime/Locale/ky.pm
+  DateTime::Locale::ky_KG:
+    file: lib/DateTime/Locale/ky_KG.pm
+  DateTime::Locale::lt:
+    file: lib/DateTime/Locale/lt.pm
+  DateTime::Locale::lv:
+    file: lib/DateTime/Locale/lv.pm
+  DateTime::Locale::mk:
+    file: lib/DateTime/Locale/mk.pm
+  DateTime::Locale::mn:
+    file: lib/DateTime/Locale/mn.pm
+  DateTime::Locale::mn_MN:
+    file: lib/DateTime/Locale/mn_MN.pm
+  DateTime::Locale::mr:
+    file: lib/DateTime/Locale/mr.pm
+  DateTime::Locale::mr_IN:
+    file: lib/DateTime/Locale/mr_IN.pm
+  DateTime::Locale::ms:
+    file: lib/DateTime/Locale/ms.pm
+  DateTime::Locale::ms_BN:
+    file: lib/DateTime/Locale/ms_BN.pm
+  DateTime::Locale::ms_MY:
+    file: lib/DateTime/Locale/ms_MY.pm
+  DateTime::Locale::mt:
+    file: lib/DateTime/Locale/mt.pm
+  DateTime::Locale::nb:
+    file: lib/DateTime/Locale/nb.pm
+  DateTime::Locale::nl:
+    file: lib/DateTime/Locale/nl.pm
+  DateTime::Locale::nl_BE:
+    file: lib/DateTime/Locale/nl_BE.pm
+  DateTime::Locale::nn:
+    file: lib/DateTime/Locale/nn.pm
+  DateTime::Locale::no:
+    file: lib/DateTime/Locale/no.pm
+  DateTime::Locale::om:
+    file: lib/DateTime/Locale/om.pm
+  DateTime::Locale::om_ET:
+    file: lib/DateTime/Locale/om_ET.pm
+  DateTime::Locale::om_KE:
+    file: lib/DateTime/Locale/om_KE.pm
+  DateTime::Locale::pa:
+    file: lib/DateTime/Locale/pa.pm
+  DateTime::Locale::pa_IN:
+    file: lib/DateTime/Locale/pa_IN.pm
+  DateTime::Locale::pl:
+    file: lib/DateTime/Locale/pl.pm
+  DateTime::Locale::pt:
+    file: lib/DateTime/Locale/pt.pm
+  DateTime::Locale::pt_BR:
+    file: lib/DateTime/Locale/pt_BR.pm
+  DateTime::Locale::ro:
+    file: lib/DateTime/Locale/ro.pm
+  DateTime::Locale::root:
+    file: lib/DateTime/Locale/root.pm
+  DateTime::Locale::ru:
+    file: lib/DateTime/Locale/ru.pm
+  DateTime::Locale::ru_UA:
+    file: lib/DateTime/Locale/ru_UA.pm
+  DateTime::Locale::sa:
+    file: lib/DateTime/Locale/sa.pm
+  DateTime::Locale::sa_IN:
+    file: lib/DateTime/Locale/sa_IN.pm
+  DateTime::Locale::sh:
+    file: lib/DateTime/Locale/sh.pm
+  DateTime::Locale::sk:
+    file: lib/DateTime/Locale/sk.pm
+  DateTime::Locale::sl:
+    file: lib/DateTime/Locale/sl.pm
+  DateTime::Locale::so:
+    file: lib/DateTime/Locale/so.pm
+  DateTime::Locale::so_KE:
+    file: lib/DateTime/Locale/so_KE.pm
+  DateTime::Locale::sq:
+    file: lib/DateTime/Locale/sq.pm
+  DateTime::Locale::sr:
+    file: lib/DateTime/Locale/sr.pm
+  DateTime::Locale::sv:
+    file: lib/DateTime/Locale/sv.pm
+  DateTime::Locale::sw:
+    file: lib/DateTime/Locale/sw.pm
+  DateTime::Locale::syr:
+    file: lib/DateTime/Locale/syr.pm
+  DateTime::Locale::syr_SY:
+    file: lib/DateTime/Locale/syr_SY.pm
+  DateTime::Locale::ta:
+    file: lib/DateTime/Locale/ta.pm
+  DateTime::Locale::ta_IN:
+    file: lib/DateTime/Locale/ta_IN.pm
+  DateTime::Locale::te:
+    file: lib/DateTime/Locale/te.pm
+  DateTime::Locale::te_IN:
+    file: lib/DateTime/Locale/te_IN.pm
+  DateTime::Locale::th:
+    file: lib/DateTime/Locale/th.pm
+  DateTime::Locale::ti:
+    file: lib/DateTime/Locale/ti.pm
+  DateTime::Locale::ti_ER:
+    file: lib/DateTime/Locale/ti_ER.pm
+  DateTime::Locale::ti_ET:
+    file: lib/DateTime/Locale/ti_ET.pm
+  DateTime::Locale::tr:
+    file: lib/DateTime/Locale/tr.pm
+  DateTime::Locale::tt:
+    file: lib/DateTime/Locale/tt.pm
+  DateTime::Locale::tt_RU:
+    file: lib/DateTime/Locale/tt_RU.pm
+  DateTime::Locale::uk:
+    file: lib/DateTime/Locale/uk.pm
+  DateTime::Locale::ur:
+    file: lib/DateTime/Locale/ur.pm
+  DateTime::Locale::ur_PK:
+    file: lib/DateTime/Locale/ur_PK.pm
+  DateTime::Locale::uz:
+    file: lib/DateTime/Locale/uz.pm
+  DateTime::Locale::uz_UZ:
+    file: lib/DateTime/Locale/uz_UZ.pm
+  DateTime::Locale::vi:
+    file: lib/DateTime/Locale/vi.pm
+  DateTime::Locale::zh:
+    file: lib/DateTime/Locale/zh.pm
+  DateTime::Locale::zh_CN:
+    file: lib/DateTime/Locale/zh_CN.pm
+  DateTime::Locale::zh_HK:
+    file: lib/DateTime/Locale/zh_HK.pm
+  DateTime::Locale::zh_MO:
+    file: lib/DateTime/Locale/zh_MO.pm
+  DateTime::Locale::zh_SG:
+    file: lib/DateTime/Locale/zh_SG.pm
+  DateTime::Locale::zh_TW:
+    file: lib/DateTime/Locale/zh_TW.pm
+  DateTime::LocaleCatalog:
+    file: lib/DateTime/LocaleCatalog.pm
+generated_by: Module::Build version 0.19_02
