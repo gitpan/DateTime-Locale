@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: DateTime-Locale
-version: 0.01
+version: 0.02
 license: perl
 distribution_type: module
 requires:
@@ -11,7 +11,7 @@ conflicts: {}
 provides:
   DateTime::Locale:
     file: lib/DateTime/Locale.pm
-    version: 0.01
+    version: 0.02
   DateTime::Locale::Alias::ISO639_2:
     file: lib/DateTime/Locale/Alias/ISO639_2.pm
   DateTime::Locale::Base:
@@ -374,4 +374,4 @@ provides:
     file: lib/DateTime/Locale/zh_TW.pm
   DateTime::LocaleCatalog:
     file: lib/DateTime/LocaleCatalog.pm
-generated_by: Module::Build version 0.19_02
+generated_by: Module::Build version 0.19_03
