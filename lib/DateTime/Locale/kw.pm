@@ -40,7 +40,6 @@ my @day_names = (
 "De\ Gwener",
 "De\ Sadorn",
 "De\ Sul",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Gwe",
 "Sad",
 "Sul",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Mys\ Hedra",
 "Mys\ Du",
 "Mys\ Kevardhu",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "Hed",
 "Du",
 "Kev",
-
 );
 
 

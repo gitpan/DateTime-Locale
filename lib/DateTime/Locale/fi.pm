@@ -40,7 +40,6 @@ my @day_names = (
 "perjantai",
 "lauantai",
 "sunnuntai",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "pe",
 "la",
 "su",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "lokakuu",
 "marraskuu",
 "joulukuu",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "loka",
 "marras",
 "joulu",
-
 );
 
 my %date_formats = (
@@ -91,7 +87,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\.\%\{month\}\.\%\{ce_year\}",
 "long" => "\%\{day\}\.\ \%Bta\ \%\{ce_year\}",
 "full" => "\%\{day\}\.\ \%Bta\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -99,7 +94,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

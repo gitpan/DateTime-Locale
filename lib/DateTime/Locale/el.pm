@@ -40,7 +40,6 @@ my @day_names = (
 "Παρασκευή",
 "Σάββατο",
 "Κυριακή",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Παρ",
 "Σαβ",
 "Κυρ",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Οκτώβριος",
 "Νοέμβριος",
 "Δεκέμβριος",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "Οκτ",
 "Νοε",
 "Δεκ",
-
 );
 
 my @am_pms = (
 "πμ",
 "μμ",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\ \%b\ \%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}",
 "full" => "\%A\,\ \%\{day\}\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

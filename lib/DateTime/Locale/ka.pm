@@ -40,7 +40,6 @@ my @day_names = (
 "პარასკევი",
 "შაბათი",
 "კვირა",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "პარასკევი",
 "შაბათი",
 "კვირა",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ოქტომბერი",
 "ნოემბერი",
 "დეკემბერი",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "ოქტ",
 "ნოემ",
 "დეკ",
-
 );
 
 

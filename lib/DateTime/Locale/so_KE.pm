@@ -35,7 +35,6 @@ use DateTime::Locale::so;
 my @am_pms = (
 "sn",
 "gn",
-
 );
 
 

@@ -40,7 +40,6 @@ my @day_names = (
 "星期五",
 "星期六",
 "星期日",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "星期五",
 "星期六",
 "星期日",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "十月",
 "十一月",
 "十二月",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "十月",
 "十一月",
 "十二月",
-
 );
 
 my @am_pms = (
 "上午",
 "下午",
-
 );
 
 my @eras = (
 "公元前",
 "公元",
-
 );
 
 

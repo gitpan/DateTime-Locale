@@ -40,7 +40,6 @@ my @day_names = (
 "fríggjadagur",
 "leygardagur",
 "sunnudagur",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "frí",
 "ley",
 "sun",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "oktober",
 "november",
 "desember",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "okt",
 "nov",
 "des",
-
 );
 
 

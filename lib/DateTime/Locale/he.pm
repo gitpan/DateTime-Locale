@@ -40,7 +40,6 @@ my @day_names = (
 "יום\ שישי",
 "שבת",
 "יום\ ראשון",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ו",
 "ש",
 "א",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "אוקטובר",
 "נובמבר",
 "דצמבר",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "אוק",
 "נוב",
 "דצמ",
-
 );
 
 my @eras = (
 "לסה\"נ",
 "לפסה\"נ",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%d\/\%m\/\%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}",
 "full" => "\%A\ \%\{day\}\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $default_date_format_length = "medium";

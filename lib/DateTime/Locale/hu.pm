@@ -40,7 +40,6 @@ my @day_names = (
 "péntek",
 "szombat",
 "vasárnap",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "P",
 "Szo",
 "V",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "október",
 "november",
 "december",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "okt\.",
 "nov\.",
 "dec\.",
-
 );
 
 my @am_pms = (
 "DE",
 "DU",
-
 );
 
 my @eras = (
 "i\.e\.",
 "i\.u\.",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\.\%m\.\%d\.",
 "long" => "\%\{ce_year\}\.\ \%B\ \%\{day\}\.",
 "full" => "\%\{ce_year\}\.\ \%B\ \%\{day\}\.",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%\{hour\}\:\%M\:\%S",
 "long" => "\%\{hour\}\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour\}\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

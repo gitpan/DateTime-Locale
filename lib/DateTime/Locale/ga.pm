@@ -40,7 +40,6 @@ my @day_names = (
 "Dé\ hAoine",
 "Dé\ Sathairn",
 "Dé\ Domhnaigh",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Aoine",
 "Sath",
 "Domh",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Deireadh\ Fómhair",
 "Samhain",
 "Nollaig",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "DFómh",
 "Samh",
 "Noll",
-
 );
 
 

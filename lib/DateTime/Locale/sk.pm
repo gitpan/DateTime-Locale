@@ -40,7 +40,6 @@ my @day_names = (
 "Piatok",
 "Sobota",
 "Nedeľe",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Pa",
 "So",
 "Ne",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "október",
 "november",
 "december",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "okt",
 "nov",
 "dec",
-
 );
 
 my @eras = (
 "pred\ n\.l\.",
 "n\.l\.",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\.\%\{month\}\.\%\{ce_year\}",
 "long" => "\%\{day\}\.\ \%B\ \%\{ce_year\}",
 "full" => "\%A\,\ \%\{day\}\.\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%\{hour\}\:\%M\:\%S",
 "long" => "\%\{hour\}\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour\}\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

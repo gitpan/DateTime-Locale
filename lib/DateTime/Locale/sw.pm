@@ -40,7 +40,6 @@ my @day_names = (
 "Ijumaa",
 "Jumamosi",
 "Jumapili",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Iju",
 "Jmo",
 "Jpi",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Oktoba",
 "Novemba",
 "Desemba",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "Okt",
 "Nov",
 "Des",
-
 );
 
 my @eras = (
 "KK",
 "BK",
-
 );
 
 

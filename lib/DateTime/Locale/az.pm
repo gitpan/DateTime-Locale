@@ -40,7 +40,6 @@ my @day_names = (
 "Ҹүмә",
 "Шәнбә",
 "Базар",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Ҹ",
 "Ш",
 "Б",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Октјабр",
 "Нојабр",
 "Декабр",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "Окт",
 "Ноя",
 "Дек",
-
 );
 
 

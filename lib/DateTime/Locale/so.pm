@@ -40,7 +40,6 @@ my @day_names = (
 "Jimco",
 "Sabti",
 "Axad",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Jim",
 "Sab",
 "Axa",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Bisha\ Tobnaad",
 "Bisha\ Kow\ iyo\ Tobnaad",
 "Bisha\ Laba\ iyo\ Tobnaad",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "Tob",
 "KIT",
 "LIT",
-
 );
 
 my @am_pms = (
 "sn",
 "gn",
-
 );
 
 my @eras = (
 "Ciise\ ka\ hor",
 "Ciise\ ka\ dib",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%d\-\%b\-\%y",
 "long" => "\%d\ \%B\ \%\{ce_year\}",
 "full" => "\%A\,\ \%B\ \%d\,\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
-
 );
 
 my $date_before_time = "1";

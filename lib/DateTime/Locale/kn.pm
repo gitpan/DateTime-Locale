@@ -40,7 +40,6 @@ my @day_names = (
 "ಶುಕ್ರವಾರ",
 "ಶನಿವಾರ",
 "ರವಿವಾರ",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ಶು\.",
 "ಶನಿ\.",
 "ರ\.",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ಅಕ್ಟೋಬರ್",
 "ನವೆಂಬರ್",
 "ಡಿಸೆಂಬರ್",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "ಅಕ್ಟೋಬರ್",
 "ನವೆಂಬರ್",
 "ಡಿಸೆಂಬರ್",
-
 );
 
 my @am_pms = (
 "ಪೂರ್ವಾಹ್ನ",
 "ಅಪರಾಹ್ನ",
-
 );
 
 

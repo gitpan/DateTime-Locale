@@ -40,7 +40,6 @@ my @day_names = (
 "جمعه",
 "هفته",
 "اتوار",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "جمعه",
 "هفته",
 "اتوار",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "اکتوبر",
 "نومبر",
 "دسمبر",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "اکتوبر",
 "نومبر",
 "دسمبر",
-
 );
 
 

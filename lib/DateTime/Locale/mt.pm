@@ -40,7 +40,6 @@ my @day_names = (
 "Il\-Ġimgħa",
 "Is\-Sibt",
 "Il\-Ħadd",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Ġim",
 "Sib",
 "Ħad",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Ottubru",
 "Novembru",
 "Diċembru",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "Ott",
 "Nov",
 "Diċ",
-
 );
 
 my @eras = (
 "QK",
 "WK",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%d\-\%b\-\%\{ce_year\}",
 "long" => "\%\{day\}\ ta\'\ \%B\ \%\{ce_year\}",
 "full" => "\%A\,\ \%\{day\}\ ta\'\ \%B\,\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

@@ -40,7 +40,6 @@ my @day_names = (
 "Thứ\ bảy",
 "Chủ\ nhật",
 "Thứ\ hai",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Th\ 7",
 "CN",
 "Th\ 2",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Tháng\ mười",
 "Tháng\ mười\ một",
 "Tháng\ mười\ hai",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "Thg\ 10",
 "Thg\ 11",
 "Thg\ 12",
-
 );
 
 my %date_formats = (
@@ -91,7 +87,6 @@ my %date_formats = (
 "medium" => "\%d\ \%b\ \%\{ce_year\}",
 "long" => "\%a\ \%d\ \%b\ \%\{ce_year\}",
 "full" => "\%A\ \%d\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -99,7 +94,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $default_date_format_length = "medium";

@@ -37,7 +37,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\.\ \%m\.\ \%d",
 "long" => "\%\{ce_year\}년\ \%\{month\}월\ \%\{day\}일",
 "full" => "\%\{ce_year\}년\ \%\{month\}월\ \%\{day\}일\ \%A",
-
 );
 
 my %time_formats = (
@@ -45,7 +44,6 @@ my %time_formats = (
 "medium" => "\%p\ \%\{hour_12\}\:\%M\:\%S",
 "long" => "\%p\ \%l시\ \%M분\ \%S초",
 "full" => "\%p\ \%l시\ \%M분\ \%S초\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

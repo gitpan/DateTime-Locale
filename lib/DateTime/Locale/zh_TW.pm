@@ -35,7 +35,6 @@ use DateTime::Locale::zh;
 my @eras = (
 "民國前",
 "民國",
-
 );
 
 my %date_formats = (
@@ -43,7 +42,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\/\%\{month\}\/\%\{day\}",
 "long" => "\%\{ce_year\}年\%\{month\}月\%\{day\}日",
 "full" => "\%\{ce_year\}年\%\{month\}月\%\{day\}日",
-
 );
 
 my %time_formats = (
@@ -51,7 +49,6 @@ my %time_formats = (
 "medium" => "\%p\ \%\{hour_12\}\:\%M\:\%S",
 "long" => "\%p\%l時\%M分\%S秒",
 "full" => "\%p\%l時\%M分\%S秒\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

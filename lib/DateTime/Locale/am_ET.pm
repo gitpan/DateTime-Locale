@@ -35,7 +35,6 @@ use DateTime::Locale::am;
 my @am_pms = (
 "ጡዋት",
 "ከሳዓት",
-
 );
 
 my %date_formats = (
@@ -43,7 +42,6 @@ my %date_formats = (
 "medium" => "\%d\-\%b\-\%y",
 "long" => "\%d\ \%B\ \%\{ce_year\}",
 "full" => "\%A፣\ \%d\ \%B\ ቀን\ \%\{ce_year\}\ \%\{era\}",
-
 );
 
 my %time_formats = (
@@ -51,7 +49,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%l\:\%M\:\%S\ \%p",
 "full" => "\%l\:\%M\:\%S\ \%p",
-
 );
 
 my $date_before_time = "1";

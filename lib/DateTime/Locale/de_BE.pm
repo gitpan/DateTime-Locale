@@ -40,7 +40,6 @@ my @day_abbreviations = (
 "Fre",
 "Sam",
 "Son",
-
 );
 
 my @month_abbreviations = (
@@ -56,7 +55,6 @@ my @month_abbreviations = (
 "Okt",
 "Nov",
 "Dez",
-
 );
 
 my %date_formats = (
@@ -64,7 +62,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\-\%b\-\%y",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}",
 "full" => "\%A\ \%\{day\}\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -72,7 +69,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\ h\ \%M\ min\ \%S\ s\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

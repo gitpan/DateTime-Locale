@@ -40,7 +40,6 @@ my @day_names = (
 "жұма",
 "сенбі",
 "жексені",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "жм\.",
 "сһ\.",
 "жс\.",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "қазан",
 "қараша",
 "желтоқсан",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "қаз\.",
 "қар\.",
 "желт\.",
-
 );
 
 my %date_formats = (
@@ -91,7 +87,6 @@ my %date_formats = (
 "medium" => "\%d\.\%m\.\%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}\ ж\.",
 "full" => "\%A\,\ \%\{day\}\ \%B\ \%\{ce_year\}\ ж\.",
-
 );
 
 my %time_formats = (
@@ -99,7 +94,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

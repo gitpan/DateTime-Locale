@@ -35,7 +35,6 @@ use DateTime::Locale::te;
 my @am_pms = (
 "పూర్వాహ్న",
 "అపరాహ్న",
-
 );
 
 my %date_formats = (
@@ -43,7 +42,6 @@ my %date_formats = (
 "medium" => "\%d\-\%m\-\%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}",
 "full" => "\%A\ \%\{day\}\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -51,7 +49,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

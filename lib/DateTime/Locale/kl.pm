@@ -40,7 +40,6 @@ my @day_names = (
 "tallimanngorneq",
 "arfininngorneq",
 "sabaat",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "tal",
 "arf",
 "sab",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "oktoberi",
 "novemberi",
 "decemberi",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "okt",
 "nov",
 "dec",
-
 );
 
 

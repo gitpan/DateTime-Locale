@@ -40,7 +40,6 @@ my @day_names = (
 "Jimaata",
 "Sanbata",
 "Dilbata",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Jim",
 "San",
 "Dil",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Onkololeessa",
 "Sadaasa",
 "Muddee",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "Onk",
 "Sad",
 "Mud",
-
 );
 
 my @eras = (
 "KD",
 "KB",
-
 );
 
 

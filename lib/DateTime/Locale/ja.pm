@@ -40,7 +40,6 @@ my @day_names = (
 "金曜日",
 "土曜日",
 "日曜日",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "金",
 "土",
 "日",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "10月",
 "11月",
 "12月",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "10",
 "11",
 "12",
-
 );
 
 my @am_pms = (
 "午前",
 "午後",
-
 );
 
 my @eras = (
 "紀元前",
 "西暦",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\/\%m\/\%d",
 "long" => "\%\{ce_year\}年\%\{month\}月\%\{day\}日",
 "full" => "\%\{ce_year\}年\%\{month\}月\%\{day\}日",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%\{hour\}\:\%M\:\%S",
 "long" => "\%\{hour\}\:\%M\:\%S\:\%\{time_zone_long_name\}",
 "full" => "\%\{hour\}時\%M分\%S秒\%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

@@ -35,7 +35,6 @@ use DateTime::Locale::om;
 my @am_pms = (
 "WD",
 "WB",
-
 );
 
 my %date_formats = (
@@ -43,7 +42,6 @@ my %date_formats = (
 "medium" => "\%d\-\%b\-\%y",
 "long" => "\%d\ \%B\ \%\{ce_year\}",
 "full" => "\%A\,\ \%B\ \%\{day\}\,\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -51,7 +49,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
-
 );
 
 my $date_before_time = "1";

@@ -40,7 +40,6 @@ my @day_names = (
 "วันศุกร์",
 "วันเสาร์",
 "วันอาทิตย์",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ศ\.",
 "ส\.",
 "อา\.",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ตุลาคม",
 "พฤศจิกายน",
 "ธันวาคม",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "ต\.ค\.",
 "พ\.ย\.",
 "ธ\.ค\.",
-
 );
 
 my @am_pms = (
 "ก่อนเที่ยง",
 "หลังเที่ยง",
-
 );
 
 my @eras = (
 "ปีก่อนคริสต์กาลที่",
 "ค\.ศ\.",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\ \%b\ \%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\ \%\{ce_year\}",
 "full" => "\%Aที่\ \%\{day\}\ \%B\ \%\{era\}\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%\{hour\}\:\%M\:\%S",
 "long" => "\%\{hour\}\ นาฬิกา\ \%\{minute\}\ นาที",
 "full" => "\%\{hour\}\ นาฬิกา\ \%\{minute\}\ นาที\ \%S\ วินาที",
-
 );
 
 my $default_date_format_length = "medium";

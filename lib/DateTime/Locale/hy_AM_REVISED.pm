@@ -45,7 +45,6 @@ my @month_names = (
 "Հոկտեմբեր",
 "Նոյեմբեր",
 "Դեկտեմբեր",
-
 );
 
 my @month_abbreviations = (
@@ -61,19 +60,16 @@ my @month_abbreviations = (
 "Հոկ",
 "Նոյ",
 "Դեկ",
-
 );
 
 my @am_pms = (
 "Առ․",
 "Կե․",
-
 );
 
 my @eras = (
 "Մ․Թ․Ա․",
 "Մ․Թ․",
-
 );
 
 

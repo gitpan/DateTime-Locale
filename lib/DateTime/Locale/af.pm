@@ -40,7 +40,6 @@ my @day_names = (
 "Vrydag",
 "Saterdag",
 "Sondag",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Vr",
 "Sa",
 "So",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Oktober",
 "November",
 "Desember",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "Okt",
 "Nov",
 "Des",
-
 );
 
 my @am_pms = (
 "VM",
 "NM",
-
 );
 
 

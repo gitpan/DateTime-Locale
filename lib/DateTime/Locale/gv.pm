@@ -40,7 +40,6 @@ my @day_names = (
 "Jeheiney",
 "Jesarn",
 "Jedoonee",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Jeh",
 "Jes",
 "Jed",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Jerrey\-fouyir",
 "Mee\ Houney",
 "Mee\ ny\ Nollick",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "J\-fouyir",
 "M\.Houney",
 "M\.Nollick",
-
 );
 
 

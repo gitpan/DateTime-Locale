@@ -40,7 +40,6 @@ my @day_names = (
 "الجمعة",
 "السبت",
 "الأحد",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "الجمعة",
 "السبت",
 "الأحد",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "أكتوبر",
 "نوفمبر",
 "ديسمبر",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "أكتوبر",
 "نوفمبر",
 "ديسمبر",
-
 );
 
 my @am_pms = (
 "ص",
 "م",
-
 );
 
 my @eras = (
 "ق\.م",
 "م",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%d\/\%m\/\%\{ce_year\}",
 "long" => "\%\{day\}\ \%B\,\ \%\{ce_year\}",
 "full" => "\%A\,\ \%\{day\}\ \%B\,\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "full" => "\%\{time_zone_long_name\}\ \%\{hour_12\}\:\%M\:\%S\ \%p",
-
 );
 
 my $date_before_time = "1";

@@ -40,7 +40,6 @@ my @day_names = (
 "ܥܪܘܒܬܐ",
 "ܫܒܬܐ",
 "ܚܕ ܒܫܒܐ",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "܏ܥܪܘܒ",
 "܏ܫܒ",
 "܏ܐ ܏ܒܫ",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ܬܫܪܝ ܩܕܝܡ",
 "ܬܫܪܝ ܐܚܪܝ",
 "ܟܢܘܢ ܩܕܝܡ",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "܏ܬܫ ܏ܐ",
 "܏ܬܫ ܏ܒ",
 "܏ܟܢ ܏ܐ",
-
 );
 
 my @am_pms = (
 "ܩ\.ܛ",
 "ܒ\.ܛ",
-
 );
 
 

@@ -40,7 +40,6 @@ my @day_names = (
 "ዓርቢ",
 "ቀዳም",
 "ሰንበት",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ዓርቢ",
 "ቀዳም",
 "ሰንበ",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ጥቅምቲ",
 "ሕዳር",
 "ታሕሳስ",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "ጥቅም",
 "ሕዳር",
 "ታሕሳ",
-
 );
 
 my %date_formats = (
@@ -91,7 +87,6 @@ my %date_formats = (
 "medium" => "\%d\-\%b\-\%y",
 "long" => "\%d\ \%B\ \%\{ce_year\}",
 "full" => "\%A፡\ \%d\ \%B\ መዓልቲ\ \%\{ce_year\}\ \%\{era\}",
-
 );
 
 my %time_formats = (
@@ -99,7 +94,6 @@ my %time_formats = (
 "medium" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "long" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
 "full" => "\%\{hour_12\}\:\%M\:\%S\ \%p",
-
 );
 
 my $date_before_time = "1";

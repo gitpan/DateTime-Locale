@@ -40,7 +40,6 @@ my @day_names = (
 "Sexta\-feira",
 "Sábado",
 "Domingo",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Sex",
 "Sáb",
 "Dom",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Outubro",
 "Novembro",
 "Dezembro",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "Out",
 "Nov",
 "Dez",
-
 );
 
 my %date_formats = (
@@ -91,7 +87,6 @@ my %date_formats = (
 "medium" => "\%\{day\}\/\%b\/\%\{ce_year\}",
 "long" => "\%\{day\}\ de\ \%B\ de\ \%\{ce_year\}",
 "full" => "\%A\,\ \%\{day\}\ de\ \%B\ de\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -99,7 +94,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%HH\%Mm\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

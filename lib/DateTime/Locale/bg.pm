@@ -40,7 +40,6 @@ my @day_names = (
 "петък",
 "събота",
 "неделя",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "пет\.",
 "съб\.",
 "нед\.",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "октомври",
 "ноември",
 "декември",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "окт\.",
 "ноем\.",
 "дек\.",
-
 );
 
 my @eras = (
 "пр\.н\.е\.",
 "н\.е\.",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%d\.\%m\.\%y",
 "long" => "\%d\ \%B\ \%\{ce_year\}",
 "full" => "\%d\ \%B\ \%\{ce_year\}\,\ \%A",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

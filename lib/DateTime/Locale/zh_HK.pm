@@ -40,7 +40,6 @@ my @day_abbreviations = (
 "五",
 "六",
 "日",
-
 );
 
 my @month_abbreviations = (
@@ -56,7 +55,6 @@ my @month_abbreviations = (
 "10月",
 "11月",
 "12月",
-
 );
 
 my %date_formats = (
@@ -64,7 +62,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}年\%\{month\}月\%\{day\}日",
 "long" => "\%\{ce_year\}年\%m月\%d日\ \%A",
 "full" => "\%\{ce_year\}年\%m月\%d日\ \%A",
-
 );
 
 my %time_formats = (
@@ -72,7 +69,6 @@ my %time_formats = (
 "medium" => "\%p\%l\:\%M\:\%S",
 "long" => "\%p\%l時\%M分\%S秒",
 "full" => "\%p\%l時\%M分\%S秒\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

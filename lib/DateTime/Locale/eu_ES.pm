@@ -37,7 +37,6 @@ my %date_formats = (
 "medium" => "\%y\-\%b\-\%d",
 "long" => "\%a\,\ \%\{ce_year\}eko\ \%bren\ \%da",
 "full" => "\%A\,\ \%\{ce_year\}eko\ \%Bren\ \%da",
-
 );
 
 my %time_formats = (
@@ -45,7 +44,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

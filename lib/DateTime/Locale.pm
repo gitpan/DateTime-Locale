@@ -8,7 +8,7 @@ use Params::Validate qw( validate validate_pos SCALAR );
 
 use vars qw($VERSION);
 
-$VERSION = 0.06;
+$VERSION = 0.07;
 
 BEGIN
 {
@@ -217,7 +217,7 @@ sub load
 
     if ( my $id = $class->_guess_id($name) )
     {
-        return $LoadCache{$key} = $class->_load_from_id($id);
+        return $LoadCache{$key} = $class->_load_class_from_id($id);
     }
 
     die "Invalid locale name or id: $name\n";
@@ -233,10 +233,22 @@ sub _guess_id
 
     my ( $language, $territory, $variant ) = split /_/, $name;
 
-    foreach my $id ( "\L$language\U$territory\U$variant",
-                     "\L$language\U$territory",
-                     lc $language
-                   )
+    my @guesses;
+    if ( defined $variant )
+    {
+        push @guesses,
+            join '_', lc $language, uc $territory, uc $variant;
+    }
+
+    if ( defined $territory )
+    {
+        push @guesses,
+            join '_', lc $language, uc $territory;
+    }
+
+    push @guesses, lc $language;
+
+    foreach my $id (@guesses)
     {
         return $id
             if exists $DataForID{$id} || exists $AliasToID{$id};
@@ -806,12 +818,12 @@ errors in some locales.
 
 When reporting errors in data, please check the primary data sources
 first, then where necessary report errors directly to the primary
-source:
-
-  Common XML Locale Repository/ICU:  fsg.openi18n.locale.user newsgroup
+source via the ICU project's Jitterbug system at
+http://www.jtcsv.com/cgibin/icu-bugs/
 
 Once these errors have been confirmed, please forward the error
-report, and corrections to DateTime.
+report, and corrections to the DateTime mailing list,
+datetime@perl.org.
 
 Support for this module is provided via the datetime@perl.org email
 list. See http://lists.perl.org/ for more details.

@@ -40,7 +40,6 @@ my @day_names = (
 "ዓርብ",
 "ቅዳሜ",
 "እሑድ",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ዓርብ",
 "ቅዳሜ",
 "እሑድ",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "ኦክተውበር",
 "ኖቬምበር",
 "ዲሴምበር",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "ኦክተ",
 "ኖቬም",
 "ዲሴም",
-
 );
 
 my @eras = (
 "ዓ\/ዓ",
 "ዓ\/ም",
-
 );
 
 

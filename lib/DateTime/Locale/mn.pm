@@ -40,7 +40,6 @@ my @day_names = (
 "Баасан",
 "Бямба",
 "Ням",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Ба",
 "Бя",
 "Ня",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "10 дугаар сар",
 "11 дүгээр сар",
 "12 дугаар сар",
-
 );
 
 my @month_abbreviations = (
@@ -83,7 +80,6 @@ my @month_abbreviations = (
 "X",
 "XI",
 "XII",
-
 );
 
 

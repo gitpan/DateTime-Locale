@@ -40,7 +40,6 @@ my @day_names = (
 "vendredo",
 "sabato",
 "dimanĉo",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "ve",
 "sa",
 "di",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "oktobro",
 "novembro",
 "decembro",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "okt",
 "nov",
 "dec",
-
 );
 
 my @am_pms = (
 "atm",
 "ptm",
-
 );
 
 my @eras = (
 "aK",
 "pK",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\-\%b\-\%d",
 "long" => "\%\{ce_year\}\-\%B\-\%d",
 "full" => "\%A\,\ \%\{day\}\-a\ de\ \%B\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%\{hour\}\-a\ horo\ kaj\ \%\{minute\}\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

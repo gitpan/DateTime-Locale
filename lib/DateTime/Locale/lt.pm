@@ -40,7 +40,6 @@ my @day_names = (
 "penktadienis",
 "šeštadienis",
 "sekmadienis",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "pn",
 "št",
 "sk",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "spalio",
 "lapkričio",
 "gruodžio",
-
 );
 
 my @month_abbreviations = (
@@ -83,13 +80,11 @@ my @month_abbreviations = (
 "spa",
 "lap",
 "grd",
-
 );
 
 my @eras = (
 "pr\.Kr\.",
 "po\.Kr\.",
-
 );
 
 my %date_formats = (
@@ -97,7 +92,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\.\%\{month\}\.\%\{day\}",
 "long" => "\%\{ce_year\}\ m\.\ \%B\ \%\{day\}\ d\.",
 "full" => "\%\{ce_year\}\ m\.\ \%B\ \%\{day\}\ d\.\,\%A",
-
 );
 
 my %time_formats = (
@@ -105,7 +99,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

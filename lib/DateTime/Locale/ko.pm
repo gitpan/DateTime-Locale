@@ -40,7 +40,6 @@ my @day_names = (
 "금요일",
 "토요일",
 "일요일",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "금",
 "토",
 "일",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "10월",
 "11월",
 "12월",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "10월",
 "11월",
 "12월",
-
 );
 
 my @am_pms = (
 "오전",
 "오후",
-
 );
 
 my @eras = (
 "기원전",
 "서기",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%\{ce_year\}\-\%m\-\%d",
 "long" => "\%\{ce_year\}년\ \%\{month\}월\ \%\{day\}일\ \%a",
 "full" => "\%\{ce_year\}년\ \%\{month\}월\ \%\{day\}일\ \%A",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%p\ \%\{hour_12\}\:\%M\:\%S",
 "long" => "\%p\ \%l시\%M분\%S초",
 "full" => "\%p\ \%l시\%M분\%S초\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";

@@ -35,7 +35,6 @@ use DateTime::Locale::hy;
 my @eras = (
 "Ք․Ա․",
 "Ք․Ե․",
-
 );
 
 

@@ -40,7 +40,6 @@ my @day_names = (
 "Ուրբաթ",
 "Շաբաթ",
 "Կիրակի",
-
 );
 
 my @day_abbreviations = (
@@ -51,7 +50,6 @@ my @day_abbreviations = (
 "Ուր",
 "Շաբ",
 "Կիր",
-
 );
 
 my @month_names = (
@@ -67,7 +65,6 @@ my @month_names = (
 "Հոկտեմբեր",
 "Նոյեմբեր",
 "Դեկտեմբեր",
-
 );
 
 my @month_abbreviations = (
@@ -83,19 +80,16 @@ my @month_abbreviations = (
 "Հոկ",
 "Նոյ",
 "Դեկ",
-
 );
 
 my @am_pms = (
 "Առ․",
 "Եր․",
-
 );
 
 my @eras = (
 "Յ․Տ․",
 "Ն․Ք․",
-
 );
 
 my %date_formats = (
@@ -103,7 +97,6 @@ my %date_formats = (
 "medium" => "\%b\ \%\{day\}\,\ \%\{ce_year\}",
 "long" => "\%B\ \%d\,\ \%\{ce_year\}",
 "full" => "\%A\,\%B\ \%\{day\}\,\ \%\{ce_year\}",
-
 );
 
 my %time_formats = (
@@ -111,7 +104,6 @@ my %time_formats = (
 "medium" => "\%H\:\%M\:\%S",
 "long" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
 "full" => "\%H\:\%M\:\%S\ \%\{time_zone_long_name\}",
-
 );
 
 my $date_before_time = "1";
