@@ -197,3 +197,5 @@ lib/DateTime/Locale/zh_HK.pm
 lib/DateTime/Locale/zh_MO.pm
 lib/DateTime/Locale/zh_SG.pm
 lib/DateTime/Locale/zh_TW.pm
+
+SIGNATURE    Added here by Module::Build

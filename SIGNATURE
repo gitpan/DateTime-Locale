@@ -1,0 +1,222 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.38.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It would check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 ee1bed0a19dc6da76ce795d53b216bb7aa34d4b4 Build.PL
+SHA1 5b4e0740af7345738ce5cc5f3e51618dd5a77e85 Changes
+SHA1 f235ba4160673bcb7c9d58c2f09dbc7fc0efadea LICENSE
+SHA1 a603c95943709515565859b2c43fa2877648aa10 LICENSE.icu
+SHA1 02ad41fa65a417216adedce88a785e2fd03ac617 MANIFEST
+SHA1 ed576ee92a84ddc078f65ef9d7c2d9a979efe1b7 MANIFEST.SKIP
+SHA1 f14972eff654e7c9e8fd8c1ba76fdc7c4c896f4a MANIFEST.base
+SHA1 6c740e202796a0d528e3a2e1dc30055688e0bdcc META.yml
+SHA1 7e9e2553e95913392d02f7841987ce8b9fb01d1d Makefile.PL
+SHA1 ffa008bd88b69899e6b1a4cbd71d36cc46e43e8d README
+SHA1 6d3d99a1af99549b21a38a545d29059522f6fcab lib/DateTime/Locale.pm
+SHA1 97ea496ab7464cdc4f7e21a4cca2510b1ac720e7 lib/DateTime/Locale/Alias/ISO639_2.pm
+SHA1 12ff9cdcdab16c5e16ab45009964cf86d74c7324 lib/DateTime/Locale/Base.pm
+SHA1 7da5e237b3259ad7c277253dc15ebc99e792362d lib/DateTime/Locale/af.pm
+SHA1 224df5cedbafe75f5aa8add8a9cb832a2baee8e7 lib/DateTime/Locale/af_ZA.pm
+SHA1 41a2a8ffabd2225072d12af04fcd8091f9c556d7 lib/DateTime/Locale/am.pm
+SHA1 dea6591548cc65a386f7a55faa305a68c973f159 lib/DateTime/Locale/am_ET.pm
+SHA1 25209cb2d4a06e0f1fdce177dd927b083fde954e lib/DateTime/Locale/ar.pm
+SHA1 ced86d618f3106e799a8e016c218267e757390b5 lib/DateTime/Locale/ar_IN.pm
+SHA1 f36aefa55ac7bf786baeb944992b765fad8e18d6 lib/DateTime/Locale/ar_JO.pm
+SHA1 e828b646e80be46d0fac68438d22f8b9be781115 lib/DateTime/Locale/ar_LB.pm
+SHA1 3961ed958c45714e5156e9478e9a3206430dacba lib/DateTime/Locale/ar_QA.pm
+SHA1 a210ee667f900f1a54edad45405e9ecfaeaa1937 lib/DateTime/Locale/ar_SA.pm
+SHA1 21b53e2bfdfa032bde51ef2eb49ca013600e4eac lib/DateTime/Locale/ar_SY.pm
+SHA1 08dc02360a71f36dce355e9a85882b203df230b1 lib/DateTime/Locale/ar_TN.pm
+SHA1 ce3dbea1f856a392e4239197619df90ddd9a118d lib/DateTime/Locale/ar_YE.pm
+SHA1 6c18c4585cf865037569ae00ba9c6b813f4640ef lib/DateTime/Locale/az.pm
+SHA1 f5328cb0372a7350300045636f2434b103b21c96 lib/DateTime/Locale/az_AZ.pm
+SHA1 e584c3ff0d1194b3ddacc885b744c167bcad524f lib/DateTime/Locale/be.pm
+SHA1 7f05e6ac03f35f87341c8e578da0ebfcc8504c95 lib/DateTime/Locale/bg.pm
+SHA1 78444a06236b6cc7bd27fd55195f1d9b0c68b4d6 lib/DateTime/Locale/bn.pm
+SHA1 f74250bd5683a5bc1b8fa9f86fb6a2f46b509250 lib/DateTime/Locale/bn_IN.pm
+SHA1 7401b11079742f522fcc35fef0d404ae4375f3ae lib/DateTime/Locale/ca.pm
+SHA1 2d17a7ba15331f1f8805913ef2bfd7963c1b51a5 lib/DateTime/Locale/cs.pm
+SHA1 123b1ff3d495e2dd418bd9c5d91b26545ccc0014 lib/DateTime/Locale/da.pm
+SHA1 eb2339279d05b9ac7b6db055c3318e3b67fb00a1 lib/DateTime/Locale/de.pm
+SHA1 dc9bbc322a7825baa898af6b194e9bcf1c219461 lib/DateTime/Locale/de_AT.pm
+SHA1 0ed16f8d4c40a07a90fa801a3c46426b0e416a3b lib/DateTime/Locale/de_BE.pm
+SHA1 0f11f909a883cfd8dc06c224fbba0e5c98d0cb79 lib/DateTime/Locale/dv.pm
+SHA1 2a7bc9969a7842e1810ea1f1c089405266fe5f46 lib/DateTime/Locale/dv_MV.pm
+SHA1 b73a61c33544f128cc251fc9f313ae08617c5b06 lib/DateTime/Locale/el.pm
+SHA1 6fc1f399fff9b5c8c1be974640085f529a22aa02 lib/DateTime/Locale/en_AU.pm
+SHA1 c7a28346020119316b4a633b2e81276a4781b225 lib/DateTime/Locale/en_BE.pm
+SHA1 20d5bb786e11671bc4f535364f3fec043b02e94b lib/DateTime/Locale/en_BW.pm
+SHA1 eb1dfcde4f40f7838149544fc44c36993fc31deb lib/DateTime/Locale/en_BZ.pm
+SHA1 4ffc25f10ceed970ec812d3fb7afe46487d03618 lib/DateTime/Locale/en_CA.pm
+SHA1 5c30be05e019f24c87d36fa07d5b6a28739f8b4e lib/DateTime/Locale/en_GB.pm
+SHA1 2c05dc06f5f4ace27c1f54370d7c3865451a5c8c lib/DateTime/Locale/en_HK.pm
+SHA1 595f83eef8a49d83dfc0700fab7f3987cc2e4bc9 lib/DateTime/Locale/en_IE.pm
+SHA1 18923fa014222404a6d568512f8128e545039694 lib/DateTime/Locale/en_IN.pm
+SHA1 6f2d8818a2433fef0db71f116fac8455b9413295 lib/DateTime/Locale/en_MT.pm
+SHA1 773da6e88027e4538ac8b8cd03159ca21a1b206a lib/DateTime/Locale/en_NZ.pm
+SHA1 f1d9b033d642e5e49cfee823a9f87e2b5627a7e7 lib/DateTime/Locale/en_PH.pm
+SHA1 5103749d3fa2dce4f480fab4287fd7c193dd4a46 lib/DateTime/Locale/en_SG.pm
+SHA1 c92cbfc42f4e036bfd9a56c11831d4654b744891 lib/DateTime/Locale/en_ZA.pm
+SHA1 d4b1f47728cc4969b41cda35113abcfaeb9c6e9e lib/DateTime/Locale/en_ZW.pm
+SHA1 06d010fc0984ef5c69c04d8cbd1a2f0b5e5a72d2 lib/DateTime/Locale/eo.pm
+SHA1 fb13779c693586c78b095dbbbd9f1ee34d935bda lib/DateTime/Locale/es.pm
+SHA1 2596af9f47d0d29c3bd4692536c9caf1c1fef45d lib/DateTime/Locale/es_AR.pm
+SHA1 1f2a97b82d4b07de02949ea5dd7ccbe38d92ba22 lib/DateTime/Locale/es_BO.pm
+SHA1 4fe283909b5fb31e0046ba43f2f26d185bb42515 lib/DateTime/Locale/es_CL.pm
+SHA1 b5d5a13b1bf3bb445e5a6f0a808e7f026075d046 lib/DateTime/Locale/es_CO.pm
+SHA1 5f6a9a243c37fba44acf7bb92c551e3ee70cae7f lib/DateTime/Locale/es_CR.pm
+SHA1 6a80e7cb1a7e13a3f1fbba73f44a2a5ccc185aec lib/DateTime/Locale/es_DO.pm
+SHA1 68c1fefbd4c85f7557b93aa19f1850449e959e72 lib/DateTime/Locale/es_EC.pm
+SHA1 f90cff5588aafc0ec7484032182b988eaa8e1287 lib/DateTime/Locale/es_ES.pm
+SHA1 51bbf42d076b179cb2196147daf37d8349f4fc49 lib/DateTime/Locale/es_GT.pm
+SHA1 6707016a4a7b510a3dff98754f3bd3f0b7444dee lib/DateTime/Locale/es_HN.pm
+SHA1 83b4c2e77e6c9265df8341d1273228e88048856c lib/DateTime/Locale/es_MX.pm
+SHA1 7a55f21578bf98447cdf68b9b01ecd48fc486e1c lib/DateTime/Locale/es_NI.pm
+SHA1 3ac381a5492ab42b80611fe85bc33409e1509888 lib/DateTime/Locale/es_PA.pm
+SHA1 9ea43326d196e5e9febbc618f9e6d40aa4b59c9b lib/DateTime/Locale/es_PE.pm
+SHA1 6ae0994d8ff4b4d83235e6fc820c613d802feb47 lib/DateTime/Locale/es_PR.pm
+SHA1 c94cf7ed1b1444d885fc1555164bdf391cc46346 lib/DateTime/Locale/es_PY.pm
+SHA1 996e5e49f79745fddc55c102bd44fefba905fc6f lib/DateTime/Locale/es_SV.pm
+SHA1 4784abb802e08bc12bd487b9b84d3f13c40e6a67 lib/DateTime/Locale/es_US.pm
+SHA1 a86997bd3bbf045643cce2d687b274eeb82db647 lib/DateTime/Locale/es_UY.pm
+SHA1 0042de8134961e696253d4aa2e2aed1c8c529b2f lib/DateTime/Locale/es_VE.pm
+SHA1 6c1a410df9593da4565b5dae850e3c897259a9e5 lib/DateTime/Locale/et.pm
+SHA1 1ae60b5662c1ee864c876c7fe8d09d9f1ef69877 lib/DateTime/Locale/eu.pm
+SHA1 a1a49f3b366672db90be1444e7307599c0fe3840 lib/DateTime/Locale/eu_ES.pm
+SHA1 fa88be1afa41831435123191c69d705c71926d48 lib/DateTime/Locale/fa.pm
+SHA1 ff5d5b3fedda908074a0d68b6fcb4a2f9c487d57 lib/DateTime/Locale/fi.pm
+SHA1 3cc210b6842200e904aeccdb8524c897826c5e9b lib/DateTime/Locale/fo.pm
+SHA1 d05531843458c5f203edffc7f164270ac2ccd301 lib/DateTime/Locale/fo_FO.pm
+SHA1 8bf3c153f275950901870748bdaff03e091d7305 lib/DateTime/Locale/fr.pm
+SHA1 b7b8479dd8d8a2620d305934699aa3ae7b77abf8 lib/DateTime/Locale/fr_BE.pm
+SHA1 4ded2e2f97e9024d8b0199ff8a10dffbb4a83c36 lib/DateTime/Locale/fr_CA.pm
+SHA1 8b99f71a8a1bd286fb70ba05d4ed7b74e01d263e lib/DateTime/Locale/fr_CH.pm
+SHA1 96cc4663e20d89a63ff445b2fcfaa45b55125526 lib/DateTime/Locale/ga.pm
+SHA1 9dcb10362b6e2cf676730b8fc6b76e3899a068e2 lib/DateTime/Locale/ga_IE.pm
+SHA1 e7fdc453c316578c13a7ecc6da19d073562b6505 lib/DateTime/Locale/gl.pm
+SHA1 8cec99ee6679baa9597655e89db2b80d9aa1e78d lib/DateTime/Locale/gl_ES.pm
+SHA1 9728aed2eda6927efe34955109c26cc2a1d780df lib/DateTime/Locale/gu.pm
+SHA1 35a9155be428dd8ab2fd5c7ddff1633c8c93d435 lib/DateTime/Locale/gu_IN.pm
+SHA1 7116ad7392a4a4c06dbc7c38e44554d81dc3afd8 lib/DateTime/Locale/gv.pm
+SHA1 ef198b719290d3dd38a9a1f162c0e739bc5a0e75 lib/DateTime/Locale/gv_GB.pm
+SHA1 8285bd44000f12c48ed0dd4f93038f9a53013365 lib/DateTime/Locale/he.pm
+SHA1 b0b7157b58bd06f9a69024c756711bcbabb98af2 lib/DateTime/Locale/hi.pm
+SHA1 7056f214a692b9dd1c93fcb1cba65f919b8fc03f lib/DateTime/Locale/hi_IN.pm
+SHA1 84fc9916505497fc7f078abfa035ed4168012e9b lib/DateTime/Locale/hr.pm
+SHA1 d91ca581b12d73a908fa323a6a63a1fc0c0c9434 lib/DateTime/Locale/hu.pm
+SHA1 f6c242ba2fb1a8531a154740209357537fd6f4d7 lib/DateTime/Locale/hy.pm
+SHA1 b1da296c1f9b392829a090d6e55bbf0235d57fa6 lib/DateTime/Locale/hy_AM.pm
+SHA1 52ee4d29664c2038fca1580889caa5fadebff984 lib/DateTime/Locale/hy_AM_REVISED.pm
+SHA1 4b6d402171531fa2e3e08fcffc19246950f6a719 lib/DateTime/Locale/id.pm
+SHA1 2de709d471f19f9a18867d5e3ec9b3c679984309 lib/DateTime/Locale/id_ID.pm
+SHA1 f550854e9c396ac6d474f6cdcb42dcfda549d1b4 lib/DateTime/Locale/is.pm
+SHA1 bd03d98f536445a7de504da81fc027b15de66bb2 lib/DateTime/Locale/it.pm
+SHA1 74c669a3c7f1e866ab59419297c88cce9e4ff5ab lib/DateTime/Locale/it_CH.pm
+SHA1 e3c1f671ef59fe54b72528e5e9eec3fb8b04fbd4 lib/DateTime/Locale/it_IT.pm
+SHA1 3e2cf3dc99972af29e4a21d5dd7ee2e544bd7f10 lib/DateTime/Locale/ja.pm
+SHA1 f3af4e6065268af1ce7fb9056a32f03c30d7bc4f lib/DateTime/Locale/ka.pm
+SHA1 76aa6e47672ff015d288400a7373eb0099063065 lib/DateTime/Locale/ka_GE.pm
+SHA1 c66e7679da788cc3bac2fc6d7b97562c0164f3cc lib/DateTime/Locale/kk.pm
+SHA1 c6f68a753a41d04289ff922f6ae7e4aa7b354b80 lib/DateTime/Locale/kl.pm
+SHA1 521b4d76053c954a7438a30d3517c721ec19b985 lib/DateTime/Locale/kl_GL.pm
+SHA1 babc3e06b230fc70cf7d6cfb4120e1401ef46c7f lib/DateTime/Locale/kn.pm
+SHA1 da1137a06a30d899c9a6d6a356d247f6608bc553 lib/DateTime/Locale/kn_IN.pm
+SHA1 14203e620f7d1d1aedcb9c12206b63018bd57c70 lib/DateTime/Locale/ko.pm
+SHA1 b5bc754fafa5d4a9fc854d044aebb435098db42f lib/DateTime/Locale/ko_KR.pm
+SHA1 3051469b7380a4dc2fff711f63f54f4456dfc129 lib/DateTime/Locale/kok.pm
+SHA1 d51f650cba382a9a9139ff47902baf85029a61dd lib/DateTime/Locale/kok_IN.pm
+SHA1 f578e150cdeb3c2e3d37e41de27979f1b278cbcd lib/DateTime/Locale/kw.pm
+SHA1 614b9ddc34da55149ac5040440421480506c4884 lib/DateTime/Locale/kw_GB.pm
+SHA1 ed4bab72201465792ca3d797874bed2cec0af1f0 lib/DateTime/Locale/ky.pm
+SHA1 0a8d763f833a2b3e3c11f2e37669ea19cffc8fa9 lib/DateTime/Locale/ky_KG.pm
+SHA1 7af23a627de32e4117c84dcacdf34af30d0e749f lib/DateTime/Locale/lt.pm
+SHA1 3cbdb17cdf05cd874974f032d222def7a4ad3f51 lib/DateTime/Locale/lv.pm
+SHA1 0a3dfb18a212e6b8a4170d5bd63a9b354f1f769a lib/DateTime/Locale/mk.pm
+SHA1 292d7755206156d0dd282799b7f4a32485d44cb5 lib/DateTime/Locale/mn.pm
+SHA1 7ff45780b831fd644d02a092edd4a8bb7200c7a7 lib/DateTime/Locale/mn_MN.pm
+SHA1 97397518009a8d5984e111591677a396dba0d21e lib/DateTime/Locale/mr.pm
+SHA1 2124a238758abf94b2a951e6fb1fd602640be3bb lib/DateTime/Locale/mr_IN.pm
+SHA1 63e71e2fa6da45769537c07f2ef201081195222d lib/DateTime/Locale/ms.pm
+SHA1 03a2c03e36a8c45f08c1975600f0cdae54b889d6 lib/DateTime/Locale/ms_BN.pm
+SHA1 0e18cafbf0a43e266f62fe3eb07e72c41863d609 lib/DateTime/Locale/ms_MY.pm
+SHA1 3833b80f2cc9595af99d6cbbd4d9d7794f86587b lib/DateTime/Locale/mt.pm
+SHA1 629fa51d1aa28b63720037e874e962bf0a07069a lib/DateTime/Locale/nb.pm
+SHA1 83b4b304808c62a18002377779e9422a563db396 lib/DateTime/Locale/nl.pm
+SHA1 93ed8b15a2d084a8e5dc12550aacbbaf5c03b04d lib/DateTime/Locale/nl_BE.pm
+SHA1 5eab8699cc78032c43fe1a2b22029f6752a2805e lib/DateTime/Locale/nn.pm
+SHA1 d4b420998cd5269337319d22941ba6e6ce8f19e7 lib/DateTime/Locale/no.pm
+SHA1 0371b554b41edeeee5cb347d5911adfaa19b5557 lib/DateTime/Locale/om.pm
+SHA1 f5863568e0c7dea4c1cb43bbc226ef249fcc00b8 lib/DateTime/Locale/om_ET.pm
+SHA1 616b9b2a2cbfbe91a3521562841ac5e8ad9e6270 lib/DateTime/Locale/om_KE.pm
+SHA1 622a7da8fb60130dc6ad50f7dd22e1f8d9e87a42 lib/DateTime/Locale/pa.pm
+SHA1 095d9ad03353a59030bc1705bdd2c610a2ab8346 lib/DateTime/Locale/pa_IN.pm
+SHA1 334c3bab48c28e9128ae0cc0af6eae35d3eb5720 lib/DateTime/Locale/pl.pm
+SHA1 84da940291f0adea4d823b780d718e6a904ea00e lib/DateTime/Locale/pt.pm
+SHA1 cda53591b2c530d6f5765355b5155e4880e26e05 lib/DateTime/Locale/pt_BR.pm
+SHA1 e6b219002eb832e5e5b13a5bc0ed42d696bc7d34 lib/DateTime/Locale/ro.pm
+SHA1 3944e56420718e56c9d961037a8bf72329476490 lib/DateTime/Locale/root.pm
+SHA1 3160d603efefaae6b60b38206946dad429ee5efe lib/DateTime/Locale/ru.pm
+SHA1 8ad65f1585d61956864435a91c88ee7e898b1782 lib/DateTime/Locale/ru_UA.pm
+SHA1 fe301b2e0192bdd4522922ba688189507c6bd19a lib/DateTime/Locale/sa.pm
+SHA1 8d8b34c9c37ee0a7e08ad8564237a174fd5e266f lib/DateTime/Locale/sa_IN.pm
+SHA1 9d6fd4da15851d7c81ad5b937bf24c257980bde6 lib/DateTime/Locale/sh.pm
+SHA1 cbd1d3976469583d8ab52f22e4fd5657b3f72103 lib/DateTime/Locale/sk.pm
+SHA1 8fe38277bf50869364c79f447f09ff95ac4b5be8 lib/DateTime/Locale/sl.pm
+SHA1 f8b93859bb9cab95f5185f6d5b4dec9b810fe45d lib/DateTime/Locale/so.pm
+SHA1 797e7a171ad7b9f9a5c665c62ae3bb143f3eea98 lib/DateTime/Locale/so_KE.pm
+SHA1 52b0cd1bddb31c5920acc788beed2baeedba4a7d lib/DateTime/Locale/sq.pm
+SHA1 b5e57e032ab074d7cd0bd5b5cb456654b64e21cf lib/DateTime/Locale/sr.pm
+SHA1 545548bffd738b0ccfd7193d8660ef5fc0e99909 lib/DateTime/Locale/sv.pm
+SHA1 ef4e48c0aa730f12134e3db86e7970d2798133d7 lib/DateTime/Locale/sw.pm
+SHA1 6372d300ff2dd58ea4f94be7d7891402b83d5aa8 lib/DateTime/Locale/syr.pm
+SHA1 01604a18cb7ed63d1683a2ee0e04869032dcd4ae lib/DateTime/Locale/syr_SY.pm
+SHA1 242c3971969a526e785504a4e76e1035c7219c02 lib/DateTime/Locale/ta.pm
+SHA1 cffd8877c9636a854f2cabc2b0d96a33769249fc lib/DateTime/Locale/ta_IN.pm
+SHA1 033be9945cc80c6148c04b90e8658539a477eabf lib/DateTime/Locale/te.pm
+SHA1 642fc41e95a83fe9009a81c28cd254bd09288eeb lib/DateTime/Locale/te_IN.pm
+SHA1 470b157db5623f6b4d7f802799c9dd08d56eafe1 lib/DateTime/Locale/th.pm
+SHA1 b7a5be7669ea2fc4bfafe7106c423e71726a1174 lib/DateTime/Locale/ti.pm
+SHA1 035baab91fc14e0df5c768201693b9fb24205ac6 lib/DateTime/Locale/ti_ER.pm
+SHA1 46a7d4d74edba02b66d43ac793d6732829e2103d lib/DateTime/Locale/ti_ET.pm
+SHA1 d62335518cdb0716f0b76884824b5e282d0a01e4 lib/DateTime/Locale/tr.pm
+SHA1 76665c4408a1f46f7cf6e6bc0422d302ad94a141 lib/DateTime/Locale/tt.pm
+SHA1 726201ca70518603c98c085eaa4685e1804babe6 lib/DateTime/Locale/tt_RU.pm
+SHA1 3c507deef98149e326cc51dc6adb632c99ed9d3f lib/DateTime/Locale/uk.pm
+SHA1 7c5f941d41f6130f42ef3d268e623c82feeb950c lib/DateTime/Locale/ur.pm
+SHA1 13031bd1b996518fb4836f267ee07d865128de19 lib/DateTime/Locale/ur_PK.pm
+SHA1 8a8c89aabe027aac28f6b8d3feb35e2aafedcaed lib/DateTime/Locale/uz.pm
+SHA1 4a32a735db9d05bcbe21e25dad34157a0993c798 lib/DateTime/Locale/uz_UZ.pm
+SHA1 fcfc033a95b2036aea758ead24e063e01c01ebe9 lib/DateTime/Locale/vi.pm
+SHA1 dbf843348b4e0f8fd4161a521be0405c765f8dac lib/DateTime/Locale/zh.pm
+SHA1 d7f278d9bf6ad20102dcf5524910b779fbc34e8a lib/DateTime/Locale/zh_CN.pm
+SHA1 1abbf4c36f58a54dcffbf66b788385b018b6575e lib/DateTime/Locale/zh_HK.pm
+SHA1 3b2e1964bbd2ec409cfb27c57645b0162f62734c lib/DateTime/Locale/zh_MO.pm
+SHA1 53748cb9e450c6dfab9e052a3f8d806a2a93931b lib/DateTime/Locale/zh_SG.pm
+SHA1 7ee1bafb08512a9d96153f5e806ab0a311280e65 lib/DateTime/Locale/zh_TW.pm
+SHA1 59e57ac5c44077e5960f1987639bfa75c86d6893 lib/DateTime/LocaleCatalog.pm
+SHA1 d49aa8bb8bcfcc8fc24de7a1fc358c3e249391c5 t/01basic.t
+SHA1 51d77a3cb6d471819fc3612978387221dd19a5ce t/02iso639-2.t
+SHA1 ad9ad56ddeb3913a80240fe5703b6e51245d3547 t/03alias.t
+SHA1 eab782694076b609b7b101e8c7d274cdecc50893 t/04format-length.t
+SHA1 1866e227e94dff574927e8753109bf5fb5aa82f7 t/05register.t
+SHA1 77232b92127c5f3069f8b6d349aa5ef49ca1b9d4 t/99-pod.t
+SHA1 559b3d4890bb8191670d07e3c4deaeaffa4722b7 tools/generate_from_icu
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFAK7xJ+4tbS/niBUoRAplmAJ0fIlj41mh31k+MwKGb7ZbhMhzIHgCgxTeL
+CTc+FunK0L5+XbsbGQK64c4=
+=cjfJ
+-----END PGP SIGNATURE-----
