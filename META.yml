@@ -1,6 +1,6 @@
 ---
 name: DateTime-Locale
-version: 0.21
+version: 0.22
 author: ~
 abstract: Localization support for DateTime.pm
 license: perl
@@ -9,7 +9,7 @@ requires:
 provides:
   DateTime::Locale:
     file: lib/DateTime/Locale.pm
-    version: 0.21
+    version: 0.22
   DateTime::Locale::Alias::ISO639_2:
     file: lib/DateTime/Locale/Alias/ISO639_2.pm
   DateTime::Locale::Base:
@@ -614,4 +614,4 @@ provides:
     file: lib/DateTime/Locale/zh_TW.pm
   DateTime::LocaleCatalog:
     file: lib/DateTime/LocaleCatalog.pm
-generated_by: Module::Build version 0.2608
+generated_by: Module::Build version 0.261
