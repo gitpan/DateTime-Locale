@@ -12,28 +12,30 @@ use Test::More;
 
 use DateTime::Locale;
 
-my @locale_ids   = DateTime::Locale->ids;
+my @locale_ids   = sort DateTime::Locale->ids;
 my %locale_names = map { $_ => 1 } DateTime::Locale->names;
 my %locale_ids   = map { $_ => 1 } DateTime::Locale->ids;
 
 eval { require DateTime };
 my $has_dt = $@ ? 0 : 1;
 
-my $dt = DateTime->new( year => 2000, month => 1, day => 1, time_zone => "UTC" )
+my $dt = DateTime->new( year => 2000, month => 1, day => 1, time_zone => 'UTC' )
     if $has_dt;
 
-my $tests_per_locale = $has_dt ? 16 : 12;
+my $tests_per_locale = $has_dt ? 23 : 19;
 
 plan tests =>
-    5    # starting
-    + ( @locale_ids * $tests_per_locale ) # test each local
-    + 55 # check_en_GB
+    7    # starting
+    + 1  # load test for root locale
+    + ( (@locale_ids - 1) * $tests_per_locale ) # test each local
+    + 13 # check_root
+    + 25 # check_en_GB
     + 11 # check_es_ES
     + 5  # check_en_US_POSIX
     + 9  # check_DT_Lang
     ;
 
-ok( @locale_ids >= 240,     "Coverage looks complete" );
+ok( @locale_ids >= 240,     'Coverage looks complete' );
 ok( $locale_names{English}, "Locale name 'English' found" );
 ok( $locale_ids{ar_JO},     "Locale id 'ar_JO' found" );
 
@@ -46,7 +48,15 @@ like( $@, qr/invalid/i, 'invalid locale name/id to load() causes an error' );
     is( $l->id, 'en_US', 'id is en_US' );
 }
 
-for my $locale_id ( @locale_ids )
+{
+    my $file = File::Spec->catfile( 'lib/DateTime/Locale/zu_ZA.pm' );
+    ok( ! -f $file, 'zu_ZA.pm does not exist' );
+
+    my $locale = eval { DateTime::Locale->load('zu_ZA') };
+    isa_ok( $locale, 'DateTime::Locale::Base', 'can load zu_ZA locale anyway' );
+}
+
+for my $locale_id (@locale_ids)
 {
     my $locale;
 
@@ -55,56 +65,104 @@ for my $locale_id ( @locale_ids )
         $locale = DateTime::Locale->load($locale_id);
     };
 
-    isa_ok( $locale, "DateTime::Locale::Base" );
+    if ($@)
+    {
+        diag( "$@\nSkipping tests for failed locale: '$locale_id'" );
+        fail() for 1..$tests_per_locale;
+    }
 
-    $@ and warn("$@\nSkipping tests for failed locale: '$locale_id'"), next;
+    isa_ok( $locale, 'DateTime::Locale::Base' );
 
-    ok( $locale_ids{ $locale->id },  "'$locale_id':  Has a valid locale id" );
+    next if $locale_id eq 'root';
 
-    $locale_id = $locale_id . "(" . $locale->id . ")";
+    ok( $locale_ids{ $locale->id }, "'$locale_id':  Has a valid locale id" );
 
-    ok( length $locale->name,        "'$locale_id':  Has a locale name"        );
-    ok( length $locale->native_name, "'$locale_id':  Has a native locale name" );
+    ok( length $locale->name, "'$locale_id':  Has a locale name" );
+    ok( length $locale->native_name,
+        "'$locale_id':  Has a native locale name" );
 
-    check_array($locale_id, $locale, "month_names",         "month_name",         "month", 12);
-    check_array($locale_id, $locale, "month_abbreviations", "month_abbreviation", "month", 12);
+    # Each iteration runs one test if DateTime.pm is not available or
+    # there is no matching DateTime.pm method, otherwise it runs two.
+    for my $test ( { locale_method    => 'month_names',
+                     datetime_method  => 'month_name',
+                     datetime_set_key => 'month',
+                     count            => 12,
+                   },
+                   { locale_method    => 'month_abbreviations',
+                     datetime_method  => 'month_abbreviation',
+                     datetime_set_key => 'month',
+                     count            => 12,
+                   },
+                   { locale_method    => 'day_names',
+                     datetime_method  => 'day_name',
+                     datetime_set_key => 'day',
+                     count            => 7,
+                   },
+                   { locale_method    => 'day_abbreviations',
+                     datetime_method  => 'day_abbreviation',
+                     datetime_set_key => 'day',
+                     count            => 7,
+                   },
+                   { locale_method    => 'quarter_names',
+                     count            => 4,
+                   },
+                   { locale_method    => 'quarter_abbreviations',
+                     count            => 4,
+                   },
+                   { locale_method    => 'am_pms',
+                     count            => 2,
+                   },
+                   { locale_method    => 'era_names',
+                     count            => 2,
+                   },
+                   { locale_method    => 'era_abbreviations',
+                     count            => 2,
+                   },
+                 )
+    {
+        check_array( locale => $locale, %$test );
+    }
 
-    check_array($locale_id, $locale, "day_names",           "day_name",           "day",   7 );
-    check_array($locale_id, $locale, "day_abbreviations",   "day_abbreviation",   "day",   7 );
+    # We can't actually expect these to be unique.
+    is( scalar @{ $locale->day_narrows() }, 7, 'day_narrows() returns 7 items' );
+    is( scalar @{ $locale->month_narrows() }, 12, 'month_narrows() returns 12 items' );
 
-    check_formats($locale_id, $locale, "date_formats",        "date_format");
-    check_formats($locale_id, $locale, "time_formats",        "time_format");
+    check_formats( $locale_id, $locale, 'date_formats', 'date_format' );
+    check_formats( $locale_id, $locale, 'time_formats', 'time_format' );
 }
 
+check_root();
 check_en_GB();
 check_es_ES();
 check_en_US_POSIX();
 check_DT_Lang();
 
-# does 2 tests
 sub check_array
 {
-    my ($locale_id, $locale, $array_func, $item_func, $dt_component, $count) = @_;
+    my %test = @_;
 
-    my %unique = map { $_ => 1 } @{ $locale->$array_func() };
+    my $locale_method = $test{locale_method};
 
-    is( keys %unique, $count, "'$locale_id': '$array_func' contains $count unique items" );
+    my %unique = map { $_ => 1 } @{ $test{locale}->$locale_method() };
 
-    if ($has_dt)
+    my $locale_id = $test{locale}->id();
+
+    is( keys %unique, $test{count}, "'$locale_id': '$locale_method' contains $test{count} unique items" );
+
+    my $datetime_method = $test{datetime_method};
+    return unless $datetime_method;
+
+    for my $i ( 1..$test{count} )
     {
-        for my $i ( 1..$count )
-        {
-            $dt->set($dt_component => $i);
+        $dt->set( $test{datetime_set_key} => $i );
 
-            delete $unique{ $locale->$item_func($dt) };
-        }
-
-        is( keys %unique, 0,
-            "'$locale_id':  Data returned by '$array_func' and '$item_func match' matches" );
+        delete $unique{ $test{locale}->$datetime_method($dt) };
     }
+
+    is( keys %unique, 0,
+        "'$locale_id':  Data returned by '$locale_method' and '$datetime_method' matches" );
 }
 
-# does 2 tests
 sub check_formats
 {
     my ($locale_id, $locale, $hash_func, $item_func) = @_;
@@ -133,76 +191,133 @@ sub check_formats
         "'$locale_id':  Data returned by '$hash_func' and '$item_func patterns' matches" );
 }
 
-# does 46 tests
+sub check_root
+{
+    my $locale = DateTime::Locale->load('root');
+
+    my %tests =
+        ( day_names =>
+          [ qw( 2 3 4 5 6 7 1 ) ],
+
+          day_abbreviations =>
+          [ qw( 2 3 4 5 6 7 1 ) ],
+
+          day_narrows =>
+          [ qw( 2 3 4 5 6 7 1 ) ],
+
+          month_names =>
+          [ qw( 1 2 3 4 5 6 7 8 9 10 11 12 ) ],
+
+          month_abbreviations =>
+          [ qw( 1 2 3 4 5 6 7 8 9 10 11 12 ) ],
+
+          month_narrows =>
+          [ qw( 1 2 3 4 5 6 7 8 9 10 11 12 ) ],
+
+          quarter_abbreviations =>
+          [ qw( Q1 Q2 Q3 Q4 ) ],
+
+          quarter_names =>
+          [ qw( Q1 Q2 Q3 Q4 ) ],
+
+          era_abbreviations =>
+          [ qw( BCE CE ) ],
+
+          era_names =>
+          [ qw( BCE CE ) ],
+
+          am_pms =>
+          [ qw( AM PM ) ],
+
+          default_datetime_format => '%{ce_year} %b %{day} %H:%M:%S',
+          date_parts_order        => 'ymd',
+        );
+
+    for my $k ( sort keys %tests )
+    {
+        my $desc = "$k for " . $locale->id();
+        if ( ref $tests{$k} )
+        {
+            is_deeply( $locale->$k(), $tests{$k}, $desc );
+        }
+        else
+        {
+            is( $locale->$k(), $tests{$k}, $desc );
+        }
+    }
+}
+
 sub check_en_GB
 {
-    my $locale = DateTime::Locale->load("en_GB");
+    my $locale = DateTime::Locale->load('en_GB');
 
-    is( $locale->day_names->[0], "Monday",    "Check names: Monday" );
-    is( $locale->day_names->[1], "Tuesday",   "Check names: Tuesday" );
-    is( $locale->day_names->[2], "Wednesday", "Check names: Wednesday" );
-    is( $locale->day_names->[3], "Thursday",  "Check names: Thursday" );
-    is( $locale->day_names->[4], "Friday",    "Check names: Friday" );
-    is( $locale->day_names->[5], "Saturday",  "Check names: Saturday" );
-    is( $locale->day_names->[6], "Sunday",    "Check names: Sunday" );
+    my %tests =
+        ( day_names =>
+          [ qw( Monday Tuesday Wednesday Thursday Friday Saturday Sunday ) ],
 
-    is( $locale->day_abbreviations->[0], "Mon", "Check names: Mon" );
-    is( $locale->day_abbreviations->[1], "Tue", "Check names: Tue" );
-    is( $locale->day_abbreviations->[2], "Wed", "Check names: Wed" );
-    is( $locale->day_abbreviations->[3], "Thu", "Check names: Thu" );
-    is( $locale->day_abbreviations->[4], "Fri", "Check names: Fri" );
-    is( $locale->day_abbreviations->[5], "Sat", "Check names: Sat" );
-    is( $locale->day_abbreviations->[6], "Sun", "Check names: Sun" );
+          day_abbreviations =>
+          [ qw( Mon Tue Wed Thu Fri Sat Sun ) ],
 
-    is( $locale->month_names->[0] , "January",   "Check names: January"  );
-    is( $locale->month_names->[1] , "February",  "Check names: February" );
-    is( $locale->month_names->[2] , "March",     "Check names: March"    );
-    is( $locale->month_names->[3] , "April",     "Check names: April"    );
-    is( $locale->month_names->[4] , "May",       "Check names: May"      );
-    is( $locale->month_names->[5] , "June",      "Check names: June"     );
-    is( $locale->month_names->[6] , "July",      "Check names: July"     );
-    is( $locale->month_names->[7] , "August",    "Check names: August"   );
-    is( $locale->month_names->[8] , "September", "Check names: September" );
-    is( $locale->month_names->[9] , "October",   "Check names: October"  );
-    is( $locale->month_names->[10], "November",  "Check names: November" );
-    is( $locale->month_names->[11], "December",  "Check names: December" );
+          day_narrows =>
+          [ qw( M T W T F S S ) ],
 
-    is( $locale->month_abbreviations->[0] , "Jan", "Check names: Jan" );
-    is( $locale->month_abbreviations->[1] , "Feb", "Check names: Feb" );
-    is( $locale->month_abbreviations->[2] , "Mar", "Check names: Mar" );
-    is( $locale->month_abbreviations->[3] , "Apr", "Check names: Apr" );
-    is( $locale->month_abbreviations->[4] , "May", "Check names: May" );
-    is( $locale->month_abbreviations->[5] , "Jun", "Check names: Jun" );
-    is( $locale->month_abbreviations->[6] , "Jul", "Check names: Jul" );
-    is( $locale->month_abbreviations->[7] , "Aug", "Check names: Aug" );
-    is( $locale->month_abbreviations->[8] , "Sep", "Check names: Sep" );
-    is( $locale->month_abbreviations->[9] , "Oct", "Check names: Oct" );
-    is( $locale->month_abbreviations->[10], "Nov", "Check names: Nov" );
-    is( $locale->month_abbreviations->[11], "Dec", "Check names: Dec" );
+          month_names =>
+          [ qw( January February March April May June
+                July August September October November December ) ],
 
-    is( $locale->eras->[0]       , "BC", "Check names: BC" );
-    is( $locale->eras->[1]       , "AD", "Check names: AD" );
+          month_abbreviations =>
+          [ qw( Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec ) ],
 
-    is( $locale->am_pms->[0]     , "AM", "Check names: AM" );
-    is( $locale->am_pms->[1]     , "PM", "Check names: PM" );
+          month_narrows =>
+          [ qw( J F M A M J J A S O N D ) ],
 
-    is( $locale->name, "English United Kingdom", 'name()' );
-    is( $locale->native_name, "English United Kingdom", 'native_name()' );
-    is( $locale->language, "English", 'language()' );
-    is( $locale->native_language, "English", 'native_language()' );
-    is( $locale->territory, "United Kingdom", 'territory()' );
-    is( $locale->native_territory, "United Kingdom", 'native_territory()' );
-    is( $locale->variant, undef, 'variant()' );
-    is( $locale->native_variant, undef, 'native_variant()' );
+          quarter_abbreviations =>
+          [ qw( Q1 Q2 Q3 Q4 ) ],
 
-    is( $locale->language_id, 'en', 'language_id()' );
-    is( $locale->territory_id, 'GB', 'territory_id()' );
-    is( $locale->variant_id, undef, 'variant_id()' );
+          quarter_names =>
+          [ '1st quarter', '2nd quarter', '3rd quarter', '4th quarter' ],
 
-    is( $locale->default_datetime_format, "\%\{day\}\ \%b\ \%\{ce_year\} \%H\:\%M\:\%S",
-        'check default datetime format' );
+          eras =>
+          [ qw( BC AD ) ],
 
-    is( $locale->date_parts_order, 'dmy', 'date_parts_order' );
+          era_abbreviations =>
+          [ qw( BC AD ) ],
+
+          era_names =>
+          [ 'Before Christ', 'Anno Domini' ],
+
+          am_pms =>
+          [ qw( AM PM ) ],
+
+          name             => 'English United Kingdom',
+          native_name      => 'English United Kingdom',
+          language         => 'English',
+          native_language  => 'English',
+          territory        => 'United Kingdom',
+          native_territory => 'United Kingdom',
+          variant          => undef,
+          native_variant   => undef,
+
+          language_id      => 'en',
+          territory_id     => 'GB',
+          variant_id       => undef,
+
+          default_datetime_format => '%{day} %b %{ce_year} %H:%M:%S',
+          date_parts_order        => 'dmy',
+        );
+
+    for my $k ( sort keys %tests )
+    {
+        my $desc = "$k for " . $locale->id();
+        if ( ref $tests{$k} )
+        {
+            is_deeply( $locale->$k(), $tests{$k}, $desc );
+        }
+        else
+        {
+            is( $locale->$k(), $tests{$k}, $desc );
+        }
+    }
 }
 
 sub check_es_ES
@@ -244,12 +359,11 @@ sub check_DT_Lang
         ok( DateTime::Locale->load($old), "backwards compatibility for $old" );
     }
 
-
     foreach my $old ( qw ( Gedeo ) )
     {
       SKIP:
         {
-            skip 'No ICU XML data for some African languages included in DT::Language', 1
+            skip 'No CLDR XML data for some African languages included in DT::Language', 1
                 unless $locale_names{$old};
 
             ok( DateTime::Locale->load($old), "backwards compatibility for $old" );

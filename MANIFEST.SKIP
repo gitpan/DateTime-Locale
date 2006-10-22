@@ -15,9 +15,6 @@ CVS/.*
 \.tar\.gz$
 \.zip$
 _uu$
-\.cvsignore
 _build.*
-icu-xml.*
 ^Build$
-generator.*
-generated.*
+\.svn

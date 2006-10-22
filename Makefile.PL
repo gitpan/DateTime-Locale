@@ -5,9 +5,11 @@ WriteMakefile
           'NAME' => 'DateTime::Locale',
           'VERSION_FROM' => 'lib/DateTime/Locale.pm',
           'PREREQ_PM' => {
+                           'Module::Build' => '0',
                            'Params::Validate' => '0'
                          },
           'INSTALLDIRS' => 'site',
+          'EXE_FILES' => [],
           'PL_FILES' => {}
         )
 ;
