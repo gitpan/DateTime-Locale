@@ -1,3 +1,12 @@
+0.3101 2006-10-23
+
+- Fixed a test failure when DateTime::Locale is installed on a system
+  where DateTime.pm has never been installed.
+
+- Fixed a test failure in bleadperl. RT Ticket #22515. Reported by
+  Steve Peters.
+
+
 0.31   2006-10-22
 
 - Added era_name() and era_abbreviation() methods for the use of
