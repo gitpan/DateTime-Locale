@@ -12,7 +12,7 @@ use Params::Validate qw( validate validate_pos SCALAR );
 
 use vars qw($VERSION);
 
-$VERSION = 0.3101;
+$VERSION = 0.32;
 
 BEGIN
 {
@@ -196,7 +196,7 @@ my %OldAliases =
 sub load
 {
     my $class = shift;
-    my $name = shift;
+    my ($name) = validate_pos( @_, { type => SCALAR } );
 
     # Support RFC 3066 language tags, which use '-' instead of '_'.
     $name =~ tr/-/_/;

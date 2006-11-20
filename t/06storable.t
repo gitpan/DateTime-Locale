@@ -14,7 +14,7 @@ BEGIN
     }
     else
     {
-        plan tests => 2;
+        plan tests => 3;
     }
 }
 
@@ -22,12 +22,16 @@ use DateTime::Locale;
 
 use Storable;
 
-my $tz1 = DateTime::Locale->load( 'en_US' );
-my $frozen = Storable::nfreeze($tz1);
+my $loc1 = DateTime::Locale->load( 'en_US' );
+my $frozen = Storable::nfreeze($loc1);
 
 ok( length $frozen < 2000,
     'the serialized locale object should not be immense' );
 
-my $tz2 = Storable::thaw($frozen);
+my $loc2 = Storable::thaw($frozen);
 
-is( $tz2->id, 'en_US', 'thaw frozen locale object' );
+is( $loc2->id, 'en_US', 'thaw frozen locale object' );
+
+my $loc3 = Storable::dclone($loc1);
+
+is( $loc3->id, 'en_US', 'dclone object' );
