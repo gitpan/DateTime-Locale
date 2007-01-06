@@ -1759,6 +1759,24 @@ BEGIN
       native_territory => "Srbija\ i\ Crna\ Gora",
       real_class => "sr_Cyrl",
     },
+    { id => "sr_Cyrl_ME",
+      en_language => "Serbian",
+      en_script => "Cyrillic",
+      en_territory => "Montenegro",
+      native_language => "Srpski",
+      native_script => "Ćirilica",
+      native_territory => "Montenegro",
+      real_class => "sr_Cyrl",
+    },
+    { id => "sr_Cyrl_RS",
+      en_language => "Serbian",
+      en_script => "Cyrillic",
+      en_territory => "Serbia",
+      native_language => "Srpski",
+      native_script => "Ćirilica",
+      native_territory => "Serbia",
+      real_class => "sr_Cyrl",
+    },
     { id => "sr_Cyrl_YU",
       en_language => "Serbian",
       en_script => "Cyrillic",
@@ -1789,12 +1807,44 @@ BEGIN
       native_territory => "Srbija\ i\ Crna\ Gora",
       real_class => "sr_Latn",
     },
+    { id => "sr_Latn_ME",
+      en_language => "Serbian",
+      en_script => "Latin",
+      en_territory => "Montenegro",
+      native_language => "Srpski",
+      native_script => "Latinica",
+      native_territory => "Montenegro",
+      real_class => "sr_Latn",
+    },
+    { id => "sr_Latn_RS",
+      en_language => "Serbian",
+      en_script => "Latin",
+      en_territory => "Serbia",
+      native_language => "Srpski",
+      native_script => "Latinica",
+      native_territory => "Serbia",
+      real_class => "sr_Latn",
+    },
     { id => "sr_Latn_YU",
       en_language => "Serbian",
       en_script => "Latin",
       native_language => "Srpski",
       native_script => "Latinica",
       real_class => "sr_Latn",
+    },
+    { id => "sr_ME",
+      en_language => "Serbian",
+      en_territory => "Montenegro",
+      native_language => "Srpski",
+      native_territory => "Montenegro",
+      real_class => "sr_Cyrl",
+    },
+    { id => "sr_RS",
+      en_language => "Serbian",
+      en_territory => "Serbia",
+      native_language => "Srpski",
+      native_territory => "Serbia",
+      real_class => "sr_Cyrl",
     },
     { id => "sr_YU",
       en_language => "Serbian",
@@ -2854,11 +2904,17 @@ The available locales are:
  sr_Cyrl             Serbian (Cyrillic)
  sr_Cyrl_BA          Serbian Bosnia and Herzegovina (Cyrillic)
  sr_Cyrl_CS          Serbian Serbia And Montenegro (Cyrillic)
+ sr_Cyrl_ME          Serbian Montenegro (Cyrillic)
+ sr_Cyrl_RS          Serbian Serbia (Cyrillic)
  sr_Cyrl_YU          Serbian (Cyrillic)
  sr_Latn             Serbian (Latin)
  sr_Latn_BA          Serbian Bosnia and Herzegovina (Latin)
  sr_Latn_CS          Serbian Serbia And Montenegro (Latin)
+ sr_Latn_ME          Serbian Montenegro (Latin)
+ sr_Latn_RS          Serbian Serbia (Latin)
  sr_Latn_YU          Serbian (Latin)
+ sr_ME               Serbian Montenegro
+ sr_RS               Serbian Serbia
  sr_YU               Serbian
  ss                  Swati
  ss_ZA               Swati South Africa

@@ -1,6 +1,6 @@
 ---
 name: DateTime-Locale
-version: 0.32
+version: 0.33
 author:
   - 'Dave Rolsky <autarch@urth.org>'
 abstract: Localization support for DateTime.pm
@@ -14,7 +14,7 @@ build_requires:
 provides:
   DateTime::Locale:
     file: lib/DateTime/Locale.pm
-    version: 0.32
+    version: 0.33
   DateTime::Locale::Base:
     file: lib/DateTime/Locale/Base.pm
   DateTime::Locale::aa:
@@ -471,7 +471,7 @@ provides:
     file: lib/DateTime/Locale/zu.pm
   DateTime::LocaleCatalog:
     file: lib/DateTime/LocaleCatalog.pm
-generated_by: Module::Build version 0.2801
+generated_by: Module::Build version 0.2806
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

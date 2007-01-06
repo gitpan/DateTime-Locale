@@ -90,7 +90,7 @@ my @quarter_names = (
 );
 
 my @am_pms = (
-"HASH\(0x92dac6c\)",
+"ਸਵੇਰੇ",
 "ਸ਼ਾਮ",
 );
 
