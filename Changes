@@ -1,3 +1,32 @@
+0.40   2008-05-18
+
+* Dropped support for Perl 5.005.
+
+- Based on CLDR 1.5.1
+
+- Massive reworking of the locale generation code. We now extract much
+  more information from the CLDR files. See the DateTime::Locale and
+  DateTime::Locale::Base documentation for details on what is
+  available.
+
+- Lots of bug fixes in the data. The old generation code was often
+  extracting the draft form of a piece of data as opposed to the
+  current final form. There are also many other data fixes from this
+  new generation code.
+
+- One of the notable additions is the inclusion of
+  $locale->format_for(...) and $locale->available_formats(). This
+  gives you access to formatting for various arbitrary patterns like
+  "year and month" or "month and day". Requested by Brian Hirt.
+
+- Many of the new features in this release will only be available with
+  DateTime.pm 0.43+, since it requires a version of DateTime.pm which
+  can handle the CLDR date pattern language.
+
+- All locale files now include POD with examples of the data they
+  include.
+
+
 0.35   2007-09-09
 
 - Based on CLDR 1.5

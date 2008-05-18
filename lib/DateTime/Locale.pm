@@ -1,26 +1,18 @@
 package DateTime::Locale;
 
 use strict;
+use warnings;
 
-use DateTime::LocaleCatalog;
+use 5.006;
 
 # Loading this here isn't necessary, but it makes it easier to catch
 # syntax errors when testing.
 use DateTime::Locale::Base;
-
+use DateTime::Locale::Catalog;
 use Params::Validate qw( validate validate_pos SCALAR );
 
-use vars qw($VERSION);
+our $VERSION = '0.40';
 
-$VERSION = 0.35;
-
-BEGIN
-{
-    if ( $] >= 5.006 )
-    {
-        require utf8; import utf8;
-    }
-}
 
 my %Class;
 my %DataForID;
@@ -63,11 +55,7 @@ sub _register
                         native_script    => { type => SCALAR, optional => 1 },
                         native_territory => { type => SCALAR, optional => 1 },
                         native_variant   => { type => SCALAR, optional => 1 },
-                        # undocumented hack so we don't have to
-                        # generate .pm files for CLDR XML locales which
-                        # don't differ from their parents in terms of
-                        # datetime data.
-                        real_class       => { type => SCALAR, optional => 1 },
+
                         class            => { type => SCALAR, optional => 1 },
                         replace          => { type => SCALAR, default => 0 },
                       } );
@@ -102,7 +90,7 @@ sub _register
     $Class{$id} = $p{class} if defined exists $p{class};
 }
 
-sub registered_id
+sub _registered_id
 {
     shift;
     my ($id) = validate_pos( @_, { type => SCALAR } );
@@ -124,7 +112,7 @@ sub add_aliases
     while ( my ( $alias, $id ) = each %$aliases )
     {
         die "Unregistered locale '$id' cannot be used as an alias target for $alias"
-            unless __PACKAGE__->registered_id($id);
+            unless __PACKAGE__->_registered_id($id);
 
         die "Can't alias an id to itself"
             if $alias eq $id;
@@ -158,13 +146,13 @@ sub remove_alias
 
 BEGIN
 {
-    __PACKAGE__->register( @DateTime::Locale::Locales );
-    __PACKAGE__->add_aliases( \%DateTime::Locale::Aliases );
+    __PACKAGE__->register( DateTime::Locale::Catalog->Locales() );
+    __PACKAGE__->add_aliases( DateTime::Locale::Catalog->Aliases() );
 }
 
-sub ids              { wantarray ? keys %DataForID       : [ keys %DataForID      ] }
-sub names            { wantarray ? keys %NameToID        : [ keys %NameToID       ] }
-sub native_names     { wantarray ? keys %NativeNameToID  : [ keys %NativeNameToID ] }
+sub ids          { wantarray ? keys %DataForID       : [ keys %DataForID      ] }
+sub names        { wantarray ? keys %NameToID        : [ keys %NameToID       ] }
+sub native_names { wantarray ? keys %NativeNameToID  : [ keys %NativeNameToID ] }
 
 # These are hardcoded for backwards comaptibility with the
 # DateTime::Language code.
@@ -242,7 +230,7 @@ sub _guess_id
     $name =~ s/\..*$//;
 
     my ($language, $script, $territory, $variant ) =
-        parse_id($name);
+        _parse_id($name);
 
     my @guesses;
 
@@ -279,7 +267,7 @@ sub _guess_id
     }
 }
 
-sub parse_id
+sub _parse_id
 {
     $_[0] =~ /([a-z]+)               # id
               (?: _([A-Z][a-z]+) )?  # script - Title Case - optional
@@ -292,8 +280,8 @@ sub parse_id
 
 sub _load_class_from_id
 {
-    my $class = shift;
-    my $id = shift;
+    my $class      = shift;
+    my $id         = shift;
     my $real_class = shift;
 
     # We want the first alias for which there is data, even if it has
@@ -305,10 +293,7 @@ sub _load_class_from_id
         $data_id = $AliasToID{$data_id};
     }
 
-    my $data = $DataForID{$data_id};
-    my $subclass = $data->{real_class} ? $data->{real_class} : $data_id;
-
-    $real_class ||= "DateTime::Locale::$subclass";
+    $real_class ||= "DateTime::Locale::$data_id";
 
     unless ( $real_class->can('new') )
     {
@@ -317,7 +302,7 @@ sub _load_class_from_id
         die $@ if $@;
     }
 
-    return $real_class->new( %$data,
+    return $real_class->new( %{ $DataForID{$data_id} },
                              id => $id,
                            );
 }
@@ -325,6 +310,10 @@ sub _load_class_from_id
 1;
 
 __END__
+
+=pod
+
+=encoding utf8
 
 =head1 NAME
 
@@ -336,19 +325,19 @@ DateTime::Locale - Localization support for DateTime.pm
 
   my $loc = DateTime::Locale->load('en_GB');
 
-  print $loc->native_locale_name,    "\n",
-	$loc->long_datetime_format, "\n";
+  print $loc->native_locale_name(),   "\n",
+	$loc->datetime_format_long(), "\n";
 
   # but mostly just things like ...
 
   my $dt = DateTime->now( locale => 'fr' );
-  print "Aujourd'hui le mois est " . $dt->month_name, "\n":
+  print "Aujourd'hui le mois est " . $dt->month_name(), "\n";
 
 =head1 DESCRIPTION
 
 DateTime::Locale is primarily a factory for the various locale
-subclasses.  It also provides some functions for getting information
-on available locales.
+subclasses. It also provides some functions for getting information on
+all the available locales.
 
 If you want to know what methods are available for locale objects,
 then please read the C<DateTime::Locale::Base> documentation.
@@ -357,14 +346,12 @@ then please read the C<DateTime::Locale::Base> documentation.
 
 This module provides the following class methods:
 
-=over 4
-
-=item * load( $locale_id | $locale_name | $alias )
+=head2 DateTime::Locale->load( $locale_id | $locale_name | $alias )
 
 Returns the locale object for the specified locale id, name, or alias
-- see the C<DateTime::LocaleCatalog> documentation for a list of built
-in names and ids.  The name provided may be either the English or
-native name.
+- see the C<DateTime::Locale::Catalog> documentation for a list of
+built in names and ids. The name provided may be either the English
+or native name.
 
 If the requested locale is not found, a fallback search takes place to
 find a suitable replacement.
@@ -401,34 +388,35 @@ value you gave, even if that value was an alias to some other id.
 This is done for forwards compatibility, in case something that is
 currently an alias becomes a unique locale in the future.
 
-This means that the value of C<id()> and the object's class may not
-match.
+This means that the value of C<< $locale->id() >> and the object's
+class may not match.
 
 The loaded locale is cached, so that B<locale objects may be
-singletons>.  Calling C<register()>, C<add_aliases()>,
-or C<remove_alias()> clears the cache.
+singletons>. Calling C<< DateTime::Locale->register() >>, C<<
+DateTime::Locale->add_aliases() >>, or C<<
+DateTime::Locale->remove_alias() >> clears the cache.
 
-=item * ids
+=head2 DateTime::Locale->ids()
 
-  my @ids = DateTime::Locale->ids;
-  my $ids = DateTime::Locale->ids;
+  my @ids = DateTime::Locale->ids();
+  my $ids = DateTime::Locale->ids();
 
 Returns an unsorted list of the available locale ids, or an array
-reference if called in a scalar context.  This list does not include
+reference if called in a scalar context. This list does not include
 aliases.
 
-=item * names
+=head2 DateTime::Locale->names()
 
-  my @names = DateTime::Locale->names;
-  my $names = DateTime::Locale->names;
+  my @names = DateTime::Locale->names();
+  my $names = DateTime::Locale->names();
 
 Returns an unsorted list of the available locale names in English, or
 an array reference if called in a scalar context.
 
-=item * native_names
+=head2 DateTime::Locale->native_names()
 
-  my @names = DateTime::Locale->native_names;
-  my $names = DateTime::Locale->native_names;
+  my @names = DateTime::Locale->native_names();
+  my $names = DateTime::Locale->native_names();
 
 Returns an unsorted list of the available locale names in their native
 language, or an array reference if called in a scalar context. All
@@ -437,14 +425,14 @@ native names are utf8 encoded.
 B<NB>: Many locales are only partially translated, so some native
 locale names may still contain some English.
 
-=item * add_aliases ( $alias1 => $id1, $alias2 => $id2, ... )
+=head2 DateTime::Locale->add_aliases ( $alias1 => $id1, $alias2 => $id2, ... )
 
 Adds an alias to an existing locale id. This allows a locale to be
-C<load()>ed by its alias rather than id or name. Multiple aliases are
+loaded by its alias rather than id or name. Multiple aliases are
 allowed.
 
 If the passed locale id is neither registered nor listed in
-L</AVAILABLE LOCALES>, an exception is thrown.
+L<DateTime::Local::Catalog>'s list of ids, an exception is thrown.
 
  DateTime::Locale->add_aliases( LastResort => 'es_ES' );
 
@@ -457,7 +445,7 @@ You can also pass a hash reference to this method.
                                   Alternative => 'en_US',
                                   LastResort  => 'es_ES' } );
 
-=item * remove_alias( $alias )
+=head2 DateTime::Locale->remove_alias( $alias )
 
 Removes a locale id alias, and returns true if the specified alias
 actually existed.
@@ -472,9 +460,9 @@ actually existed.
  # Throws an exception, 'LastResort' no longer exists
  DateTime::Locale->load('LastResort');
 
-=item * register( { ... }, { ... } )
+=head2 DateTime::Locale->register( { ... }, { ... } )
 
-This method allows you to register custom locales with the module.  A
+This method allows you to register custom locales with the module. A
 single locale is specified as a hash, and you may register multiple
 locales at once by passing an array of hash references.
 
@@ -482,10 +470,10 @@ Until registered, custom locales cannot be instantiated via C<load()>
 and will not be returned by querying methods such as C<ids()> or
 C<names()>.
 
- register( id               => $locale_id,
-           en_language      => ..., # something like 'English' or 'Afar',
+ register( id           => $locale_id,
+           en_language  => ..., # something like 'English' or 'Afar',
 
-           # All other keys are optional.  These are:
+           # All other keys are optional. These are:
            en_script    => ...,
            en_territory => ...,
            en_variant   => ...,
@@ -496,9 +484,9 @@ C<names()>.
            native_variant   => ...,
 
            # Optional - defaults to DateTime::Locale::$locale_id
-           class                => $class_name,
+           class   => $class_name,
 
-           replace          => $boolean
+           replace => $boolean
          )
 
 The locale id and English name are required, and the following formats
@@ -519,11 +507,10 @@ should used wherever possible:
              component that uniquely identifies a custom locale.
 
 You cannot not use '@' or '=' in locale ids - these are reserved for
-future use.  The underscore (_) is the component separator, and should
+future use. The underscore (_) is the component separator, and should
 not be used for any other purpose.
 
-If the "native_*" components are supplied, they must be utf8 encoded
-and follow:
+If the "native_*" components are supplied, they must be utf8 encoded.
 
 If omitted, the native name is assumed to be identical to the English
 name.
@@ -535,7 +522,7 @@ DateTime::Locale subclass.
 Examples:
 
  DateTime::Locale->register
-     ( id => 'en_GB_RIDAS',
+     ( id           => 'en_GB_RIDAS',
        en_language  => 'English',
        en_territory => 'United Kingdom',
        en_variant   => 'Ridas Custom Locale',
@@ -545,9 +532,9 @@ Examples:
  my $l = DateTime::Locale->load('en_GB_RIDAS');
 
  DateTime::Locale->register
-     ( id => 'hu_HU',
-       en_language  => 'Hungarian',
-       en_territory => Hungary',
+     ( id               => 'hu_HU',
+       en_language      => 'Hungarian',
+       en_territory     => Hungary',
        native_language  => 'Magyar',
        native_territory => 'Magyarország',
      );
@@ -565,8 +552,8 @@ Examples:
  # NOT Ridas::Locales::Custom::en_GB_RIDAS !
  my $l = DateTime::Locale->load('en_GB_RIDAS');
 
-If you register a locale for an id that already exists, the "replace"
-parameter must be true or an exception will be thrown.
+If you register a locale for an id that is already registered, the
+"replace" parameter must be true or an exception will be thrown.
 
 The complete name for a registered locale is generated by joining
 together the language, territory, and variant components with a single
@@ -576,10 +563,8 @@ This means that in the first example, the complete English and native
 names for the locale would be "English United Kingdom Ridas Custom
 Locale", and in the second example the complete English name is
 "Hungarian Hungary", while the complete native name is "Magyar
-Magyarország".  The locale will be loadable by these complete names
+Magyarország". The locale will be loadable by these complete names
 (English and native), via the C<load()> method.
-
-=back
 
 =head1 ADDING CUSTOM LOCALES
 
@@ -599,7 +584,7 @@ Create a completely new locale.
 
 In either case the locale MUST be registered before use.
 
-=head2 Subclass an existing locale.
+=head2 Subclassing an existing locale
 
 The following example sublasses the United Kingdom English locale to
 provide different date/time formats:
@@ -609,7 +594,7 @@ provide different date/time formats:
   use strict;
   use DateTime::Locale::en_GB;
 
-  @Ridas::Locale::en_GB_RIDAS1::ISA = qw ( DateTime::Locale::en_GB );
+  use base 'DateTime::Locale::en_GB';
 
   my $locale_id = 'en_GB_RIDAS1';
 
@@ -629,15 +614,15 @@ provide different date/time formats:
     'short'  => '%{hour12}:%M %p',
   };
 
-  sub short_date_format  { $date_formats{short} }
-  sub medium_date_format { $date_formats{medium} }
-  sub long_date_format   { $date_formats{long} }
-  sub full_date_format   { $date_formats{full} }
+  sub date_format_full   { $date_formats{full} }
+  sub date_format_long   { $date_formats{long} }
+  sub date_format_medium { $date_formats{medium} }
+  sub date_format_short  { $date_formats{short} }
 
-  sub short_time_format  { $time_formats{short} }
-  sub medium_time_format { $time_formats{medium} }
-  sub long_time_format   { $time_formats{long} }
-  sub full_time_format   { $time_formats{full} }
+  sub time_format_full   { $time_formats{full} }
+  sub time_format_long   { $time_formats{long} }
+  sub time_format_medium { $time_formats{medium} }
+  sub time_format_short  { $time_formats{short} }
 
   1;
 
@@ -648,158 +633,204 @@ Now register it:
 
        # name, territory, and variant as described in register() documentation
 
-       class => 'Ridas::Locale::en_GB_RIDAS1' );
+       class => 'Ridas::Locale::en_GB_RIDAS1',
+     );
 
 =head2 Creating a completely new locale
-
-A completely new custom locale must implement the following methods:
-
-  id
-  month_names
-  month_abbreviations
-  day_names
-  day_abbreviations
-  am_pms
-  eras
-
-  short_date_format
-  medium_date_format
-  long_date_format
-  full_date_format
-
-  short_time_format
-  medium_time_format
-  long_time_format
-  full_time_format
-
-  datetime_format_pattern_order
-  date_parts_order
-  _default_date_format_length
-  _default_time_format_length
-
-See C<DateTime::Locale::Base> for a description of each method, and
-take a look at F<DateTime/Locale/root.pm> for an example of a complete
-implementation.
 
 You are, of course, free to subclass C<DateTime::Locale::Base> if you
 want to, though this is not required.
 
-Once created, remember to register it!
+Remember to register your custom locale!
 
 Of course, you can always do the registration in the module itself,
 and simply load it before using it.
 
-=head1 LOCALE OBJECT METHODS
-
-All objects that inherit from C<DateTime::Locale::Base> will offer
-certain methods.  All the included locales are
-C<DateTime::Locale::Base> subclasses.
+A completely new custom locale, one which does not subclass
+L<DateTime::Locale::Base>, must implement a number of methods.
 
 The following methods can be used to get information about the
 locale's id and name.
 
 =over 4
 
-=item * id
+=item * $locale->id()
 
 The complete locale id, something like "en_US".
 
-=item * language_id
+=item * $locale->language_id()
 
 The language portion of the id, like "en".
 
-=item * script_id
+=item * $locale->script_id()
 
 The script portion of the id, like "Hant".
 
-=item * territory_id
+=item * $locale->territory_id()
 
 The territory portion of the id, like "US".
 
-=item * variant_id
+=item * $locale->variant_id()
 
 The variant portion of the id, like "PREEURO".
 
-=item * name
+=item * $locale->name()
 
 The locale's complete name, which always includes at least a language
-component, plus optional territory and variant components.  Something
-like "English United States".  The value returned will always be in
+component, plus optional territory and variant components. Something
+like "English United States". The value returned will always be in
 English.
 
-=item * language
+=item * $locale->language()
 
-=item * script
+=item * $locale->script()
 
-=item * territory
+=item * $locale->territory()
 
-=item * variant
+=item * $locale->variant()
 
 The relevant component from the locale's complete name, like "English"
 or "United States".
 
-=item * native_name
+=item * $locale->native_name()
 
 The locale's complete name in localized form as a UTF-8 string.
 
-=item * native_language
+=item * $locale->native_language()
 
-=item * native_script
+=item * $locale->native_script()
 
-=item * native_territory
+=item * $locale->native_territory()
 
-=item * native_variant
+=item * $locale->native_variant()
 
 The relevant component from the locale's complete native name as a
 UTF-8 string.
 
 =back
 
-The following methods all accept a C<DateTime.pm> object and return
-a localized name.
+The following methods all return an array reference containing the
+specified data.
+
+The format methods return strings that might be used a part of a
+string, like "the month of July", and should always return a set of
+unique values. The stand alone values are for use in things like
+calendars, and the narrow form may not be unique (for example, in day
+column heading for a calendar it's okay to have "T" for both Tuesday
+and Thursday).
 
 =over 4
 
-=item * month_name ($dt)
+=item * $locale->month_format_wide()
 
-=item * month_abbreviation ($dt)
+=item * $locale->month_format_abbreviated($dt)
 
-=item * day_name ($dt)
+=item * $locale->month_format_narrow($dt)
 
-=item * day_abbreviation ($dt)
+=item * $locale->month_stand_alone_wide()
 
-=item * am_pm ($dt)
+=item * $locale->month_stand_alone_abbreviated($dt)
+
+=item * $locale->month_stand_alone_narrow($dt)
+
+=item * $locale->day_format_wide()
+
+=item * $locale->day_format_abbreviated($dt)
+
+=item * $locale->day_format_narrow($dt)
+
+=item * $locale->day_stand_alone_wide()
+
+=item * $locale->day_stand_alone_abbreviated($dt)
+
+=item * $locale->day_stand_alone_narrow($dt)
+
+=item * $locale->quarter_format_wide()
+
+=item * $locale->quarter_format_abbreviated($dt)
+
+=item * $locale->quarter_format_narrow($dt)
+
+=item * $locale->quarter_stand_alone_wide()
+
+=item * $locale->quarter_stand_alone_abbreviated($dt)
+
+=item * $locale->quarter_stand_alone_narrow($dt)
+
+=item * $locale->am_pm_abbreviated()
+
+=item * $locale->era_wide()
+
+=item * $locale->era_abbreviated($dt)
+
+=item * $locale->era_narrow($dt)
 
 =back
 
 The following methods return strings appropriate for the
-C<DateTime.pm> C<strftime()> method:
+C<< DateTime->format_cldr() >> method:
 
 =over 4
 
-=item * full_date_format
+=item * $locale->date_format_full()
 
-=item * long_date_format
+=item * $locale->date_format_long()
 
-=item * medium_date_format
+=item * $locale->date_format_medium()
 
-=item * short_date_format
+=item * $locale->date_format_short()
 
-=item * full_time_format
+=item * $locale->date_format_default()
 
-=item * long_time_format
+=item * $locale->time_format_full()
 
-=item * medium_time_format
+=item * $locale->time_format_long()
 
-=item * short_time_format
+=item * $locale->time_format_medium()
 
-=item * full_datetime_format
+=item * $locale->time_format_short()
 
-=item * long_datetime_format
+=item * $locale->time_format_default()
 
-=item * medium_datetime_format
+=item * $locale->datetime_format_full()
 
-=item * short_datetime_format
+=item * $locale->datetime_format_long()
+
+=item * $locale->datetime_format_medium()
+
+=item * $locale->datetime_format_short()
+
+=item * $locale->datetime_format_default()
+
+=back
+
+A locale may also offer one or more formats for displaying part of a
+datetime, such as the year and month, or hour and minute.
+
+=over 4
+
+=item * $locale->format_for($name)
+
+These are accessed by passing a name to C<< $locale->format_for(...)
+>>, where the name is a Java-style format specifier.
+
+The return value is a string suitable for passing to C<<
+$dt->strftime() >>, so you can do something like this:
+
+  print $dt->strftime( $dt->locale()->format_for('MMMdd')
+
+which for the "en" locale would print out something like "08 Jul".
+
+Note that the localization goes beyond just directly translating the
+Java-style string to a strftime-style string. It may also include
+additional text specific to the locale. For example, the "MMMMd"
+format for the "zh" locale includes the Chinese characters for "day"
+(日) and month (月), so you get something like "8月23日".
+
+=item * $locale->_available_format()
+
+This should return a list of all the format names that could be passed
+to C<< $locale->format_for() >>.
 
 =back
 
@@ -807,9 +838,9 @@ The following methods deal with the default format lengths:
 
 =over 4
 
-=item default_date_format_length
+=item * $locale->default_date_format_length()
 
-=item default_time_format_length
+=item * $locale->default_time_format_length()
 
 These methods return one of "full", "long", "medium", or "short",
 indicating the current default format length.
@@ -817,93 +848,19 @@ indicating the current default format length.
 The default when an object is created is determined by the CLDR locale
 data.
 
-=item set_default_date_format_length ($length)
+=item * $locale->set_default_date_format_length($length)
 
-=item set_default_time_format_length ($length)
+=item * $locale->set_default_time_format_length($length)
 
 These methods accept one of "full", "long", "medium", or "short",
 indicating the new default format length.
 
 =back
 
-The following methods can be used to get the object's raw localization
-data.  If a method returns a reference, altering it will alter the
-object, so make a copy if you need to do so.
-
-=over 4
-
-=item * month_names
-
-Returns an array reference containing the full names of the months,
-with January as the first month.
-
-=item * month_abbreviations
-
-Returns an array reference containing the abbreviated names of the
-months, with January as the first month.
-
-=item * month_narrows
-
-Returns an array reference containing the narrow names of the months,
-with January as the first month.  Narrow names are the shortest
-possible names, and may not be unique.
-
-=item * day_names
-
-Returns an array reference containing the full names of the days,
-with Monday as the first day.
-
-=item * day_abbreviations
-
-Returns an array reference containing the abbreviated names of the
-days, with Monday as the first day.
-
-=item * day_narrows
-
-Returns an array reference containing the narrow names of the days,
-with Monday as the first day.  Narrow names are the shortest possible
-names, and may not be unique.
-
-=item * am_pms
-
-Returns an array reference containing the localized forms of "AM" and
-"PM".
-
-=item * eras
-
-Returns an array reference containing the localized forms of "BCE" and
-"CE".
-
-=item * date_formats
-
-Returns a hash reference containing the date formats used for the
-locale.  The hash contains the keys "long", "full", "medium", and
-"short".
-
-=item * time_formats
-
-Returns a hash reference containing the time formats used for the
-locale.  The hash contains the keys "long", "full", "medium", and
-"short".
-
-=item * date_before_time
-
-This returns a boolean value indicating whether or not the date comes
-before the time when formatting a complete date and time for
-presentation.
-
-=item * date_parts_order
-
-This returns a string indicating the order of the parts of a date that
-is in the form XX/YY/ZZ.  The possible values are "dmy", "mdy", "ydm"
-and "ymd".
-
-=back
-
 =head1 SUPPORT
 
 Please be aware that all locale data has been generated from the CLDR
-(Common Locale Data Repository) project locales data).  The data B<is>
+(Common Locale Data Repository) project locales data). The data B<is>
 currently incomplete, and B<will> contain errors in some locales.
 
 When reporting errors in data, please check the primary data sources
@@ -932,8 +889,9 @@ conversion routines used during locale generation.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2003 Richard Evans. Copyright (c) 2004-2006 David
-Rolsky. All rights reserved.
+Copyright (c) 2003 Richard Evans. Copyright (c) 2004-2008 David
+Rolsky. All rights reserved. This program is free software; you can
+redistribute it and/or modify it under the same terms as Perl itself.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

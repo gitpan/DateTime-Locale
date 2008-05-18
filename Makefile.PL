@@ -5,6 +5,8 @@ WriteMakefile
           'NAME' => 'DateTime::Locale',
           'VERSION_FROM' => 'lib/DateTime/Locale.pm',
           'PREREQ_PM' => {
+                           'Class::ISA' => '0',
+                           'List::MoreUtils' => '0',
                            'Module::Build' => '0',
                            'Params::Validate' => '0'
                          },
