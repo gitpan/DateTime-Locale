@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::es';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $date_format_full = "EEEE\ dd\ \'de\'\ MMMM\ \'de\'\ yyyy";

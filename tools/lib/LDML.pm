@@ -9,6 +9,7 @@ use Data::Dumper;
 use Lingua::EN::Inflect qw( PL_N );
 use List::Util qw( first );
 use Path::Class;
+use Storable qw( nstore_fd fd_retrieve );
 use XML::LibXML;
 
 use Moose;
@@ -31,6 +32,7 @@ has 'document' =>
     ( is       => 'ro',
       isa      => 'XML::LibXML::Document',
       required => 1,
+      clearer  => '_clear_document',
     );
 
 class_has 'Aliases' =>
@@ -390,18 +392,19 @@ sub _load_parent
 
         my $doc = $class->_resolve_document_aliases($file);
 
-        return
-            $Cache{$id} = $class->new( id          => $id,
-                                       source_file => $file,
-                                       document    => $doc,
-                                     );
+        return $Cache{$id} =
+            $class->new( id          => $id,
+                         source_file => $file,
+                         document    => $doc,
+                       );
     }
 }
-
 
 {
     my $Parser = XML::LibXML->new();
     $Parser->load_catalog( '/etc/xml/catalog.xml' );
+    $Parser->load_ext_dtd(0);
+
     sub _resolve_document_aliases
     {
         my $class = shift;

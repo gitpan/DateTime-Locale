@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::ug_Arab_CN';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $first_day_of_week = 7;

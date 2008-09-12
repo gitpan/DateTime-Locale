@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::hy_AM';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $era_abbreviated = [ "Մ․Թ․Ա․", "Մ․Թ․" ];

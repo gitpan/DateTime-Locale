@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::aa_ER';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $day_format_abbreviated = [ "San", "Sal", "Rab", "Cam", "Jum", "Qun", "Nab" ];

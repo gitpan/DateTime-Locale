@@ -18,7 +18,7 @@ use strict;
 use warnings;
 use utf8;
 
-sub CLDRVersion { return "1\.6" }
+sub CLDRVersion { return "1\.6\.1" }
 
 my @Locales;
 sub Locales { return @Locales }
@@ -2862,8 +2862,18 @@ sub Aliases { return %Aliases }
 );
 
 %Aliases = (
+    C => "en_US_POSIX",
+    POSIX => "en_US_POSIX",
+    aar => "aa",
+    aar_DJ => "aa_DJ",
+    aar_ER => "aa_ER",
+    aar_ER_SAAHO => "aa_ER_SAAHO",
+    aar_ET => "aa_ET",
     afr => "af",
+    afr_NA => "af_NA",
     afr_ZA => "af_ZA",
+    aka => "ak",
+    aka_GH => "ak_GH",
     alb => "sq",
     alb_AL => "sq_AL",
     amh => "am",
@@ -2889,78 +2899,84 @@ sub Aliases { return %Aliases }
     arm => "hy",
     arm_AM => "hy_AM",
     arm_AM_REVISED => "hy_AM_REVISED",
+    asm => "as",
+    asm_IN => "as_IN",
     aze => "az",
     aze_AZ => "az_AZ",
+    aze_AZ_Cyrl => "az_Cyrl_AZ",
+    aze_AZ_Latn => "az_Latn_AZ",
+    aze_Cyrl => "az_Cyrl",
+    aze_Latn => "az_Latn",
     baq => "eu",
     baq_ES => "eu_ES",
-    baq_ES_PREEURO => "eu_ES",
     bel => "be",
     bel_BY => "be_BY",
     ben => "bn",
+    ben_BD => "bn_BD",
     ben_IN => "bn_IN",
+    bos => "bs",
+    bos_BA => "bs_BA",
     bul => "bg",
     bul_BG => "bg_BG",
+    bur => "my",
+    bur_MM => "my_MM",
     cat => "ca",
     cat_ES => "ca_ES",
-    cat_ES_PREEURO => "ca_ES",
-    ces => "cs",
-    ces_CZ => "cs_CZ",
     chi => "zh",
     chi_CN => "zh_CN",
+    chi_CN_Hans => "zh_Hans_CN",
     chi_HK => "zh_HK",
+    chi_HK_Hans => "zh_Hans_HK",
+    chi_HK_Hant => "zh_Hant_HK",
+    chi_Hans => "zh_Hans",
+    chi_Hant => "zh_Hant",
     chi_MO => "zh_MO",
+    chi_MO_Hans => "zh_Hans_MO",
+    chi_MO_Hant => "zh_Hant_MO",
     chi_SG => "zh_SG",
+    chi_SG_Hans => "zh_Hans_SG",
     chi_TW => "zh_TW",
-    chi_TW_STROKE => "zh_TW",
+    chi_TW_Hant => "zh_Hant_TW",
     cor => "kw",
     cor_GB => "kw_GB",
     cze => "cs",
     cze_CZ => "cs_CZ",
     dan => "da",
     dan_DK => "da_DK",
-    deu => "de",
-    deu_AT => "de_AT",
-    deu_AT_PREEURO => "de_AT",
-    deu_BE => "de_BE",
-    deu_CH => "de_CH",
-    deu_DE => "de_DE",
-    deu_DE_PREEURO => "de_DE",
-    deu_LI => "de_LI",
-    deu_LU => "de_LU",
-    deu_LU_PREEURO => "de_LU",
+    div => "dv",
+    div_MV => "dv_MV",
     dut => "nl",
     dut_BE => "nl_BE",
-    dut_BE_PREEURO => "nl_BE",
     dut_NL => "nl_NL",
-    dut_NL_PREEURO => "nl_NL",
-    ell => "el",
-    ell_GR => "el_GR",
-    ell_GR_PREEURO => "el_GR",
+    dzo => "dz",
+    dzo_BT => "dz_BT",
     eng => "en",
     eng_AS => "en_AS",
     eng_AU => "en_AU",
     eng_BE => "en_BE",
-    eng_BE_PREEURO => "en_BE",
     eng_BW => "en_BW",
     eng_BZ => "en_BZ",
     eng_CA => "en_CA",
+    eng_Dsrt => "en_Dsrt",
     eng_GB => "en_GB",
-    eng_GB_EURO => "en_GB",
     eng_GU => "en_GU",
     eng_HK => "en_HK",
     eng_IE => "en_IE",
-    eng_IE_PREEURO => "en_IE",
     eng_IN => "en_IN",
     eng_JM => "en_JM",
     eng_MH => "en_MH",
     eng_MP => "en_MP",
     eng_MT => "en_MT",
+    eng_NA => "en_NA",
     eng_NZ => "en_NZ",
     eng_PH => "en_PH",
+    eng_PK => "en_PK",
     eng_SG => "en_SG",
+    eng_Shaw => "en_Shaw",
     eng_TT => "en_TT",
     eng_UM => "en_UM",
     eng_US => "en_US",
+    eng_US_Dsrt => "en_Dsrt_US",
     eng_US_POSIX => "en_US_POSIX",
     eng_VI => "en_VI",
     eng_ZA => "en_ZA",
@@ -2968,61 +2984,54 @@ sub Aliases { return %Aliases }
     epo => "eo",
     est => "et",
     est_EE => "et_EE",
-    eus => "eu",
-    eus_ES => "eu_ES",
-    eus_ES_PREEURO => "eu_ES",
+    ewe => "ee",
+    ewe_GH => "ee_GH",
+    ewe_TG => "ee_TG",
     fao => "fo",
     fao_FO => "fo_FO",
-    fas => "fa",
-    fas_IR => "fa_IR",
     fin => "fi",
     fin_FI => "fi_FI",
-    fin_FI_PREEURO => "fi_FI",
-    fra => "fr",
-    fra_BE => "fr_BE",
-    fra_BE_PREEURO => "fr_BE",
-    fra_CA => "fr_CA",
-    fra_CH => "fr_CH",
-    fra_FR => "fr_FR",
-    fra_FR_PREEURO => "fr_FR",
-    fra_LU => "fr_LU",
-    fra_LU_PREEURO => "fr_LU",
-    fra_MC => "fr_MC",
     fre => "fr",
     fre_BE => "fr_BE",
-    fre_BE_PREEURO => "fr_BE",
     fre_CA => "fr_CA",
     fre_CH => "fr_CH",
     fre_FR => "fr_FR",
-    fre_FR_PREEURO => "fr_FR",
     fre_LU => "fr_LU",
-    fre_LU_PREEURO => "fr_LU",
     fre_MC => "fr_MC",
+    fre_SN => "fr_SN",
     geo => "ka",
     geo_GE => "ka_GE",
     ger => "de",
     ger_AT => "de_AT",
-    ger_AT_PREEURO => "de_AT",
     ger_BE => "de_BE",
     ger_CH => "de_CH",
     ger_DE => "de_DE",
-    ger_DE_PREEURO => "de_DE",
     ger_LI => "de_LI",
     ger_LU => "de_LU",
-    ger_LU_PREEURO => "de_LU",
     gle => "ga",
     gle_IE => "ga_IE",
-    gle_IE_PREEURO => "ga_IE",
     glg => "gl",
     glg_ES => "gl_ES",
-    glg_ES_PREEURO => "gl_ES",
     glv => "gv",
     glv_GB => "gv_GB",
     gre => "el",
+    gre_CY => "el_CY",
     gre_GR => "el_GR",
-    gre_GR_PREEURO => "el_GR",
+    gre_POLYTON => "el_POLYTON",
     guj => "gu",
     guj_IN => "gu_IN",
+    hau => "ha",
+    hau_Arab => "ha_Arab",
+    hau_GH => "ha_GH",
+    hau_GH_Latn => "ha_Latn_GH",
+    hau_Latn => "ha_Latn",
+    hau_NE => "ha_NE",
+    hau_NE_Latn => "ha_Latn_NE",
+    hau_NG => "ha_NG",
+    hau_NG_Arab => "ha_Arab_NG",
+    hau_NG_Latn => "ha_Latn_NG",
+    hau_SD => "ha_SD",
+    hau_SD_Arab => "ha_Arab_SD",
     heb => "he",
     heb_IL => "he_IL",
     hin => "hi",
@@ -3031,100 +3040,134 @@ sub Aliases { return %Aliases }
     hrv_HR => "hr_HR",
     hun => "hu",
     hun_HU => "hu_HU",
-    hye => "hy",
-    hye_AM => "hy_AM",
-    hye_AM_REVISED => "hy_AM_REVISED",
+    ibo => "ig",
+    ibo_NG => "ig_NG",
     ice => "is",
     ice_IS => "is_IS",
+    iii => "ii",
+    iii_CN => "ii_CN",
+    iku => "iu",
+    ina => "ia",
     ind => "id",
     ind_ID => "id_ID",
-    isl => "is",
-    isl_IS => "is_IS",
     ita => "it",
     ita_CH => "it_CH",
     ita_IT => "it_IT",
-    ita_IT_PREEURO => "it_IT",
+    iw => "he",
+    iw_IL => "he_IL",
     jpn => "ja",
     jpn_JP => "ja_JP",
     kal => "kl",
     kal_GL => "kl_GL",
     kan => "kn",
     kan_IN => "kn_IN",
-    kat => "ka",
-    kat_GE => "ka_GE",
     kaz => "kk",
+    kaz_Cyrl => "kk_Cyrl",
     kaz_KZ => "kk_KZ",
+    kaz_KZ_Cyrl => "kk_Cyrl_KZ",
+    khm => "km",
+    khm_KH => "km_KH",
+    kin => "rw",
+    kin_RW => "rw_RW",
     kir => "ky",
     kir_KG => "ky_KG",
     kor => "ko",
     kor_KR => "ko_KR",
+    kur => "ku",
+    kur_Arab => "ku_Arab",
+    kur_Latn => "ku_Latn",
+    kur_TR => "ku_TR",
+    kur_TR_Latn => "ku_Latn_TR",
+    lao => "lo",
+    lao_LA => "lo_LA",
     lav => "lv",
     lav_LV => "lv_LV",
+    lin => "ln",
+    lin_CD => "ln_CD",
+    lin_CG => "ln_CG",
     lit => "lt",
     lit_LT => "lt_LT",
     mac => "mk",
     mac_MK => "mk_MK",
+    mal => "ml",
+    mal_IN => "ml_IN",
     mar => "mr",
     mar_IN => "mr_IN",
     may => "ms",
     may_BN => "ms_BN",
     may_MY => "ms_MY",
-    mkd => "mk",
-    mkd_MK => "mk_MK",
     mlt => "mt",
     mlt_MT => "mt_MT",
+    mol => "mo",
     mon => "mn",
+    mon_CN => "mn_CN",
+    mon_CN_Mong => "mn_Mong_CN",
+    mon_Cyrl => "mn_Cyrl",
     mon_MN => "mn_MN",
-    msa => "ms",
-    msa_BN => "ms_BN",
-    msa_MY => "ms_MY",
-    nld => "nl",
-    nld_BE => "nl_BE",
-    nld_BE_PREEURO => "nl_BE",
-    nld_NL => "nl_NL",
-    nld_NL_PREEURO => "nl_NL",
+    mon_MN_Cyrl => "mn_Cyrl_MN",
+    mon_Mong => "mn_Mong",
+    nbl => "nr",
+    nbl_ZA => "nr_ZA",
+    nep => "ne",
+    nep_IN => "ne_IN",
+    nep_NP => "ne_NP",
     nno => "nn",
     nno_NO => "nn_NO",
+    no => "nn",
+    no_NO => "nn_NO",
+    no_NO_NY => "nn_NO",
     nob => "nb",
     nob_NO => "nb_NO",
     nor => "no",
+    nya => "ny",
+    nya_MW => "ny_MW",
+    ori => "or",
+    ori_IN => "or_IN",
     orm => "om",
     orm_ET => "om_ET",
     orm_KE => "om_KE",
     pan => "pa",
+    pan_Arab => "pa_Arab",
+    pan_Guru => "pa_Guru",
     pan_IN => "pa_IN",
+    pan_IN_Guru => "pa_Guru_IN",
+    pan_PK => "pa_PK",
+    pan_PK_Arab => "pa_Arab_PK",
     per => "fa",
+    per_AF => "fa_AF",
     per_IR => "fa_IR",
     pol => "pl",
     pol_PL => "pl_PL",
     por => "pt",
     por_BR => "pt_BR",
     por_PT => "pt_PT",
-    por_PT_PREEURO => "pt_PT",
-    ron => "ro",
-    ron_RO => "ro_RO",
+    pus => "ps",
+    pus_AF => "ps_AF",
     rum => "ro",
+    rum_MD => "ro_MD",
     rum_RO => "ro_RO",
     rus => "ru",
     rus_RU => "ru_RU",
     rus_UA => "ru_UA",
     san => "sa",
     san_IN => "sa_IN",
-    scc => "sr",
-    scc_YU => "sr_YU",
-    scr => "hr",
-    scr_HR => "hr_HR",
-    slk => "sk",
-    slk_SK => "sk_SK",
+    sin => "si",
+    sin_LK => "si_LK",
     slo => "sk",
     slo_SK => "sk_SK",
     slv => "sl",
     slv_SI => "sl_SI",
+    sme => "se",
+    sme_FI => "se_FI",
+    sme_NO => "se_NO",
     som => "so",
     som_DJ => "so_DJ",
     som_ET => "so_ET",
     som_KE => "so_KE",
     som_SO => "so_SO",
+    sot => "st",
+    sot_LS => "st_LS",
+    sot_ZA => "st_ZA",
     spa => "es",
     spa_AR => "es_AR",
     spa_BO => "es_BO",
@@ -3134,7 +3177,6 @@ sub Aliases { return %Aliases }
     spa_DO => "es_DO",
     spa_EC => "es_EC",
     spa_ES => "es_ES",
-    spa_ES_PREEURO => "es_ES",
     spa_GT => "es_GT",
     spa_HN => "es_HN",
     spa_MX => "es_MX",
@@ -3147,10 +3189,27 @@ sub Aliases { return %Aliases }
     spa_US => "es_US",
     spa_UY => "es_UY",
     spa_VE => "es_VE",
-    sqi => "sq",
-    sqi_AL => "sq_AL",
     srp => "sr",
+    srp_BA => "sr_BA",
+    srp_BA_Cyrl => "sr_Cyrl_BA",
+    srp_BA_Latn => "sr_Latn_BA",
+    srp_CS => "sr_CS",
+    srp_CS_Cyrl => "sr_Cyrl_CS",
+    srp_CS_Latn => "sr_Latn_CS",
+    srp_Cyrl => "sr_Cyrl",
+    srp_Latn => "sr_Latn",
+    srp_ME => "sr_ME",
+    srp_ME_Cyrl => "sr_Cyrl_ME",
+    srp_ME_Latn => "sr_Latn_ME",
+    srp_RS => "sr_RS",
+    srp_RS_Cyrl => "sr_Cyrl_RS",
+    srp_RS_Latn => "sr_Latn_RS",
     srp_YU => "sr_YU",
+    srp_YU_Cyrl => "sr_Cyrl_YU",
+    srp_YU_Latn => "sr_Latn_YU",
+    ssw => "ss",
+    ssw_SZ => "ss_SZ",
+    ssw_ZA => "ss_ZA",
     swa => "sw",
     swa_KE => "sw_KE",
     swa_TZ => "sw_TZ",
@@ -3163,25 +3222,58 @@ sub Aliases { return %Aliases }
     tat_RU => "tt_RU",
     tel => "te",
     tel_IN => "te_IN",
+    tgk => "tg",
+    tgk_Cyrl => "tg_Cyrl",
+    tgk_TJ => "tg_TJ",
+    tgk_TJ_Cyrl => "tg_Cyrl_TJ",
+    tgl => "tl",
     tha => "th",
     tha_TH => "th_TH",
+    tir => "ti",
+    tir_ER => "ti_ER",
+    tir_ET => "ti_ET",
+    ton => "to",
+    ton_TO => "to_TO",
+    tsn => "tn",
+    tsn_ZA => "tn_ZA",
+    tso => "ts",
+    tso_ZA => "ts_ZA",
     tur => "tr",
     tur_TR => "tr_TR",
+    uig => "ug",
+    uig_Arab => "ug_Arab",
+    uig_CN => "ug_CN",
+    uig_CN_Arab => "ug_Arab_CN",
     ukr => "uk",
     ukr_UA => "uk_UA",
     urd => "ur",
+    urd_IN => "ur_IN",
     urd_PK => "ur_PK",
     uzb => "uz",
+    uzb_AF => "uz_AF",
+    uzb_AF_Arab => "uz_Arab_AF",
+    uzb_Arab => "uz_Arab",
+    uzb_Cyrl => "uz_Cyrl",
+    uzb_Latn => "uz_Latn",
     uzb_UZ => "uz_UZ",
+    uzb_UZ_Cyrl => "uz_Cyrl_UZ",
+    uzb_UZ_Latn => "uz_Latn_UZ",
+    ven => "ve",
+    ven_ZA => "ve_ZA",
     vie => "vi",
     vie_VN => "vi_VN",
-    zho => "zh",
-    zho_CN => "zh_CN",
-    zho_HK => "zh_HK",
-    zho_MO => "zh_MO",
-    zho_SG => "zh_SG",
-    zho_TW => "zh_TW",
-    zho_TW_STROKE => "zh_TW",
+    wel => "cy",
+    wel_GB => "cy_GB",
+    wol => "wo",
+    wol_Latn => "wo_Latn",
+    wol_SN => "wo_SN",
+    wol_SN_Latn => "wo_Latn_SN",
+    xho => "xh",
+    xho_ZA => "xh_ZA",
+    yor => "yo",
+    yor_NG => "yo_NG",
+    zul => "zu",
+    zul_ZA => "zu_ZA",
 );
 
 1;
@@ -3203,7 +3295,9 @@ This module contains a list of all known locales.
 =head1 LOCALES
 
 Any method taking locale id or name arguments should use one of the
-values listed below. Ids and names are case sensitive.
+values listed below. Ids and names are case sensitive. The id starts
+with the ISO639-1 language code, and may also include information
+identifying any or all of territory, script, or variant.
 
 Always select the closest matching locale - for example, French
 Canadians would choose fr_CA over fr - and B<always> use locale ids in
@@ -3666,12 +3760,22 @@ The available locales are:
 
 
 There are also many aliases available, mostly for three-letter
-language codes, these are:
+(ISO639-2) language codes, these are:
 
  Locale id           Is an alias for
  ==================================================
+ C                   en_US_POSIX
+ POSIX               en_US_POSIX
+ aar                 aa
+ aar_DJ              aa_DJ
+ aar_ER              aa_ER
+ aar_ER_SAAHO        aa_ER_SAAHO
+ aar_ET              aa_ET
  afr                 af
+ afr_NA              af_NA
  afr_ZA              af_ZA
+ aka                 ak
+ aka_GH              ak_GH
  alb                 sq
  alb_AL              sq_AL
  amh                 am
@@ -3697,78 +3801,84 @@ language codes, these are:
  arm                 hy
  arm_AM              hy_AM
  arm_AM_REVISED      hy_AM_REVISED
+ asm                 as
+ asm_IN              as_IN
  aze                 az
  aze_AZ              az_AZ
+ aze_AZ_Cyrl         az_Cyrl_AZ
+ aze_AZ_Latn         az_Latn_AZ
+ aze_Cyrl            az_Cyrl
+ aze_Latn            az_Latn
  baq                 eu
  baq_ES              eu_ES
- baq_ES_PREEURO      eu_ES
  bel                 be
  bel_BY              be_BY
  ben                 bn
+ ben_BD              bn_BD
  ben_IN              bn_IN
+ bos                 bs
+ bos_BA              bs_BA
  bul                 bg
  bul_BG              bg_BG
+ bur                 my
+ bur_MM              my_MM
  cat                 ca
  cat_ES              ca_ES
- cat_ES_PREEURO      ca_ES
- ces                 cs
- ces_CZ              cs_CZ
  chi                 zh
  chi_CN              zh_CN
+ chi_CN_Hans         zh_Hans_CN
  chi_HK              zh_HK
+ chi_HK_Hans         zh_Hans_HK
+ chi_HK_Hant         zh_Hant_HK
+ chi_Hans            zh_Hans
+ chi_Hant            zh_Hant
  chi_MO              zh_MO
+ chi_MO_Hans         zh_Hans_MO
+ chi_MO_Hant         zh_Hant_MO
  chi_SG              zh_SG
+ chi_SG_Hans         zh_Hans_SG
  chi_TW              zh_TW
- chi_TW_STROKE       zh_TW
+ chi_TW_Hant         zh_Hant_TW
  cor                 kw
  cor_GB              kw_GB
  cze                 cs
  cze_CZ              cs_CZ
  dan                 da
  dan_DK              da_DK
- deu                 de
- deu_AT              de_AT
- deu_AT_PREEURO      de_AT
- deu_BE              de_BE
- deu_CH              de_CH
- deu_DE              de_DE
- deu_DE_PREEURO      de_DE
- deu_LI              de_LI
- deu_LU              de_LU
- deu_LU_PREEURO      de_LU
+ div                 dv
+ div_MV              dv_MV
  dut                 nl
  dut_BE              nl_BE
- dut_BE_PREEURO      nl_BE
  dut_NL              nl_NL
- dut_NL_PREEURO      nl_NL
- ell                 el
- ell_GR              el_GR
- ell_GR_PREEURO      el_GR
+ dzo                 dz
+ dzo_BT              dz_BT
  eng                 en
  eng_AS              en_AS
  eng_AU              en_AU
  eng_BE              en_BE
- eng_BE_PREEURO      en_BE
  eng_BW              en_BW
  eng_BZ              en_BZ
  eng_CA              en_CA
+ eng_Dsrt            en_Dsrt
  eng_GB              en_GB
- eng_GB_EURO         en_GB
  eng_GU              en_GU
  eng_HK              en_HK
  eng_IE              en_IE
- eng_IE_PREEURO      en_IE
  eng_IN              en_IN
  eng_JM              en_JM
  eng_MH              en_MH
  eng_MP              en_MP
  eng_MT              en_MT
+ eng_NA              en_NA
  eng_NZ              en_NZ
  eng_PH              en_PH
+ eng_PK              en_PK
  eng_SG              en_SG
+ eng_Shaw            en_Shaw
  eng_TT              en_TT
  eng_UM              en_UM
  eng_US              en_US
+ eng_US_Dsrt         en_Dsrt_US
  eng_US_POSIX        en_US_POSIX
  eng_VI              en_VI
  eng_ZA              en_ZA
@@ -3776,61 +3886,54 @@ language codes, these are:
  epo                 eo
  est                 et
  est_EE              et_EE
- eus                 eu
- eus_ES              eu_ES
- eus_ES_PREEURO      eu_ES
+ ewe                 ee
+ ewe_GH              ee_GH
+ ewe_TG              ee_TG
  fao                 fo
  fao_FO              fo_FO
- fas                 fa
- fas_IR              fa_IR
  fin                 fi
  fin_FI              fi_FI
- fin_FI_PREEURO      fi_FI
- fra                 fr
- fra_BE              fr_BE
- fra_BE_PREEURO      fr_BE
- fra_CA              fr_CA
- fra_CH              fr_CH
- fra_FR              fr_FR
- fra_FR_PREEURO      fr_FR
- fra_LU              fr_LU
- fra_LU_PREEURO      fr_LU
- fra_MC              fr_MC
  fre                 fr
  fre_BE              fr_BE
- fre_BE_PREEURO      fr_BE
  fre_CA              fr_CA
  fre_CH              fr_CH
  fre_FR              fr_FR
- fre_FR_PREEURO      fr_FR
  fre_LU              fr_LU
- fre_LU_PREEURO      fr_LU
  fre_MC              fr_MC
+ fre_SN              fr_SN
  geo                 ka
  geo_GE              ka_GE
  ger                 de
  ger_AT              de_AT
- ger_AT_PREEURO      de_AT
  ger_BE              de_BE
  ger_CH              de_CH
  ger_DE              de_DE
- ger_DE_PREEURO      de_DE
  ger_LI              de_LI
  ger_LU              de_LU
- ger_LU_PREEURO      de_LU
  gle                 ga
  gle_IE              ga_IE
- gle_IE_PREEURO      ga_IE
  glg                 gl
  glg_ES              gl_ES
- glg_ES_PREEURO      gl_ES
  glv                 gv
  glv_GB              gv_GB
  gre                 el
+ gre_CY              el_CY
  gre_GR              el_GR
- gre_GR_PREEURO      el_GR
+ gre_POLYTON         el_POLYTON
  guj                 gu
  guj_IN              gu_IN
+ hau                 ha
+ hau_Arab            ha_Arab
+ hau_GH              ha_GH
+ hau_GH_Latn         ha_Latn_GH
+ hau_Latn            ha_Latn
+ hau_NE              ha_NE
+ hau_NE_Latn         ha_Latn_NE
+ hau_NG              ha_NG
+ hau_NG_Arab         ha_Arab_NG
+ hau_NG_Latn         ha_Latn_NG
+ hau_SD              ha_SD
+ hau_SD_Arab         ha_Arab_SD
  heb                 he
  heb_IL              he_IL
  hin                 hi
@@ -3839,100 +3942,134 @@ language codes, these are:
  hrv_HR              hr_HR
  hun                 hu
  hun_HU              hu_HU
- hye                 hy
- hye_AM              hy_AM
- hye_AM_REVISED      hy_AM_REVISED
+ ibo                 ig
+ ibo_NG              ig_NG
  ice                 is
  ice_IS              is_IS
+ iii                 ii
+ iii_CN              ii_CN
+ iku                 iu
+ ina                 ia
  ind                 id
  ind_ID              id_ID
- isl                 is
- isl_IS              is_IS
  ita                 it
  ita_CH              it_CH
  ita_IT              it_IT
- ita_IT_PREEURO      it_IT
+ iw                  he
+ iw_IL               he_IL
  jpn                 ja
  jpn_JP              ja_JP
  kal                 kl
  kal_GL              kl_GL
  kan                 kn
  kan_IN              kn_IN
- kat                 ka
- kat_GE              ka_GE
  kaz                 kk
+ kaz_Cyrl            kk_Cyrl
  kaz_KZ              kk_KZ
+ kaz_KZ_Cyrl         kk_Cyrl_KZ
+ khm                 km
+ khm_KH              km_KH
+ kin                 rw
+ kin_RW              rw_RW
  kir                 ky
  kir_KG              ky_KG
  kor                 ko
  kor_KR              ko_KR
+ kur                 ku
+ kur_Arab            ku_Arab
+ kur_Latn            ku_Latn
+ kur_TR              ku_TR
+ kur_TR_Latn         ku_Latn_TR
+ lao                 lo
+ lao_LA              lo_LA
  lav                 lv
  lav_LV              lv_LV
+ lin                 ln
+ lin_CD              ln_CD
+ lin_CG              ln_CG
  lit                 lt
  lit_LT              lt_LT
  mac                 mk
  mac_MK              mk_MK
+ mal                 ml
+ mal_IN              ml_IN
  mar                 mr
  mar_IN              mr_IN
  may                 ms
  may_BN              ms_BN
  may_MY              ms_MY
- mkd                 mk
- mkd_MK              mk_MK
  mlt                 mt
  mlt_MT              mt_MT
+ mol                 mo
  mon                 mn
+ mon_CN              mn_CN
+ mon_CN_Mong         mn_Mong_CN
+ mon_Cyrl            mn_Cyrl
  mon_MN              mn_MN
- msa                 ms
- msa_BN              ms_BN
- msa_MY              ms_MY
- nld                 nl
- nld_BE              nl_BE
- nld_BE_PREEURO      nl_BE
- nld_NL              nl_NL
- nld_NL_PREEURO      nl_NL
+ mon_MN_Cyrl         mn_Cyrl_MN
+ mon_Mong            mn_Mong
+ nbl                 nr
+ nbl_ZA              nr_ZA
+ nep                 ne
+ nep_IN              ne_IN
+ nep_NP              ne_NP
  nno                 nn
  nno_NO              nn_NO
+ no                  nn
+ no_NO               nn_NO
+ no_NO_NY            nn_NO
  nob                 nb
  nob_NO              nb_NO
  nor                 no
+ nya                 ny
+ nya_MW              ny_MW
+ ori                 or
+ ori_IN              or_IN
  orm                 om
  orm_ET              om_ET
  orm_KE              om_KE
  pan                 pa
+ pan_Arab            pa_Arab
+ pan_Guru            pa_Guru
  pan_IN              pa_IN
+ pan_IN_Guru         pa_Guru_IN
+ pan_PK              pa_PK
+ pan_PK_Arab         pa_Arab_PK
  per                 fa
+ per_AF              fa_AF
  per_IR              fa_IR
  pol                 pl
  pol_PL              pl_PL
  por                 pt
  por_BR              pt_BR
  por_PT              pt_PT
- por_PT_PREEURO      pt_PT
- ron                 ro
- ron_RO              ro_RO
+ pus                 ps
+ pus_AF              ps_AF
  rum                 ro
+ rum_MD              ro_MD
  rum_RO              ro_RO
  rus                 ru
  rus_RU              ru_RU
  rus_UA              ru_UA
  san                 sa
  san_IN              sa_IN
- scc                 sr
- scc_YU              sr_YU
- scr                 hr
- scr_HR              hr_HR
- slk                 sk
- slk_SK              sk_SK
+ sin                 si
+ sin_LK              si_LK
  slo                 sk
  slo_SK              sk_SK
  slv                 sl
  slv_SI              sl_SI
+ sme                 se
+ sme_FI              se_FI
+ sme_NO              se_NO
  som                 so
  som_DJ              so_DJ
  som_ET              so_ET
  som_KE              so_KE
  som_SO              so_SO
+ sot                 st
+ sot_LS              st_LS
+ sot_ZA              st_ZA
  spa                 es
  spa_AR              es_AR
  spa_BO              es_BO
@@ -3942,7 +4079,6 @@ language codes, these are:
  spa_DO              es_DO
  spa_EC              es_EC
  spa_ES              es_ES
- spa_ES_PREEURO      es_ES
  spa_GT              es_GT
  spa_HN              es_HN
  spa_MX              es_MX
@@ -3955,10 +4091,27 @@ language codes, these are:
  spa_US              es_US
  spa_UY              es_UY
  spa_VE              es_VE
- sqi                 sq
- sqi_AL              sq_AL
  srp                 sr
+ srp_BA              sr_BA
+ srp_BA_Cyrl         sr_Cyrl_BA
+ srp_BA_Latn         sr_Latn_BA
+ srp_CS              sr_CS
+ srp_CS_Cyrl         sr_Cyrl_CS
+ srp_CS_Latn         sr_Latn_CS
+ srp_Cyrl            sr_Cyrl
+ srp_Latn            sr_Latn
+ srp_ME              sr_ME
+ srp_ME_Cyrl         sr_Cyrl_ME
+ srp_ME_Latn         sr_Latn_ME
+ srp_RS              sr_RS
+ srp_RS_Cyrl         sr_Cyrl_RS
+ srp_RS_Latn         sr_Latn_RS
  srp_YU              sr_YU
+ srp_YU_Cyrl         sr_Cyrl_YU
+ srp_YU_Latn         sr_Latn_YU
+ ssw                 ss
+ ssw_SZ              ss_SZ
+ ssw_ZA              ss_ZA
  swa                 sw
  swa_KE              sw_KE
  swa_TZ              sw_TZ
@@ -3971,25 +4124,58 @@ language codes, these are:
  tat_RU              tt_RU
  tel                 te
  tel_IN              te_IN
+ tgk                 tg
+ tgk_Cyrl            tg_Cyrl
+ tgk_TJ              tg_TJ
+ tgk_TJ_Cyrl         tg_Cyrl_TJ
+ tgl                 tl
  tha                 th
  tha_TH              th_TH
+ tir                 ti
+ tir_ER              ti_ER
+ tir_ET              ti_ET
+ ton                 to
+ ton_TO              to_TO
+ tsn                 tn
+ tsn_ZA              tn_ZA
+ tso                 ts
+ tso_ZA              ts_ZA
  tur                 tr
  tur_TR              tr_TR
+ uig                 ug
+ uig_Arab            ug_Arab
+ uig_CN              ug_CN
+ uig_CN_Arab         ug_Arab_CN
  ukr                 uk
  ukr_UA              uk_UA
  urd                 ur
+ urd_IN              ur_IN
  urd_PK              ur_PK
  uzb                 uz
+ uzb_AF              uz_AF
+ uzb_AF_Arab         uz_Arab_AF
+ uzb_Arab            uz_Arab
+ uzb_Cyrl            uz_Cyrl
+ uzb_Latn            uz_Latn
  uzb_UZ              uz_UZ
+ uzb_UZ_Cyrl         uz_Cyrl_UZ
+ uzb_UZ_Latn         uz_Latn_UZ
+ ven                 ve
+ ven_ZA              ve_ZA
  vie                 vi
  vie_VN              vi_VN
- zho                 zh
- zho_CN              zh_CN
- zho_HK              zh_HK
- zho_MO              zh_MO
- zho_SG              zh_SG
- zho_TW              zh_TW
- zho_TW_STROKE       zh_TW
+ wel                 cy
+ wel_GB              cy_GB
+ wol                 wo
+ wol_Latn            wo_Latn
+ wol_SN              wo_SN
+ wol_SN_Latn         wo_Latn_SN
+ xho                 xh
+ xho_ZA              xh_ZA
+ yor                 yo
+ yor_NG              yo_NG
+ zul                 zu
+ zul_ZA              zu_ZA
 
 
 =head1 SUPPORT

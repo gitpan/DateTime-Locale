@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::root';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $am_pm_abbreviated = [ "पूर्व\ मध्यान्ह", "उत्तर\ मध्यान्ह" ];

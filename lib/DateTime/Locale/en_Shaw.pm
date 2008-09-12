@@ -24,7 +24,7 @@ use utf8;
 
 use base 'DateTime::Locale::en';
 
-sub cldr_version { return "1\.6" }
+sub cldr_version { return "1\.6\.1" }
 
 {
     my $am_pm_abbreviated = [ "𐑨𐑥", "𐑐𐑥" ];
