@@ -1,6 +1,6 @@
 ---
 name: DateTime-Locale
-version: 0.42
+version: 0.43
 author:
   - 'Dave Rolsky <autarch@urth.org>'
 abstract: Localization support for DateTime.pm
@@ -17,7 +17,7 @@ build_requires:
 provides:
   DateTime::Locale:
     file: lib/DateTime/Locale.pm
-    version: 0.42
+    version: 0.43
   DateTime::Locale::Base:
     file: lib/DateTime/Locale/Base.pm
   DateTime::Locale::Catalog:
@@ -112,6 +112,12 @@ provides:
     file: lib/DateTime/Locale/bn_BD.pm
   DateTime::Locale::bn_IN:
     file: lib/DateTime/Locale/bn_IN.pm
+  DateTime::Locale::bo:
+    file: lib/DateTime/Locale/bo.pm
+  DateTime::Locale::bo_CN:
+    file: lib/DateTime/Locale/bo_CN.pm
+  DateTime::Locale::bo_IN:
+    file: lib/DateTime/Locale/bo_IN.pm
   DateTime::Locale::bs:
     file: lib/DateTime/Locale/bs.pm
   DateTime::Locale::bs_BA:
@@ -348,6 +354,10 @@ provides:
     file: lib/DateTime/Locale/gl.pm
   DateTime::Locale::gl_ES:
     file: lib/DateTime/Locale/gl_ES.pm
+  DateTime::Locale::gsw:
+    file: lib/DateTime/Locale/gsw.pm
+  DateTime::Locale::gsw_CH:
+    file: lib/DateTime/Locale/gsw_CH.pm
   DateTime::Locale::gu:
     file: lib/DateTime/Locale/gu.pm
   DateTime::Locale::gu_IN:
@@ -494,10 +504,22 @@ provides:
     file: lib/DateTime/Locale/ku.pm
   DateTime::Locale::ku_Arab:
     file: lib/DateTime/Locale/ku_Arab.pm
+  DateTime::Locale::ku_Arab_IQ:
+    file: lib/DateTime/Locale/ku_Arab_IQ.pm
+  DateTime::Locale::ku_Arab_IR:
+    file: lib/DateTime/Locale/ku_Arab_IR.pm
+  DateTime::Locale::ku_Arab_SY:
+    file: lib/DateTime/Locale/ku_Arab_SY.pm
+  DateTime::Locale::ku_IQ:
+    file: lib/DateTime/Locale/ku_IQ.pm
+  DateTime::Locale::ku_IR:
+    file: lib/DateTime/Locale/ku_IR.pm
   DateTime::Locale::ku_Latn:
     file: lib/DateTime/Locale/ku_Latn.pm
   DateTime::Locale::ku_Latn_TR:
     file: lib/DateTime/Locale/ku_Latn_TR.pm
+  DateTime::Locale::ku_SY:
+    file: lib/DateTime/Locale/ku_SY.pm
   DateTime::Locale::ku_TR:
     file: lib/DateTime/Locale/ku_TR.pm
   DateTime::Locale::kw:
@@ -572,6 +594,10 @@ provides:
     file: lib/DateTime/Locale/nb.pm
   DateTime::Locale::nb_NO:
     file: lib/DateTime/Locale/nb_NO.pm
+  DateTime::Locale::nds:
+    file: lib/DateTime/Locale/nds.pm
+  DateTime::Locale::nds_DE:
+    file: lib/DateTime/Locale/nds_DE.pm
   DateTime::Locale::ne:
     file: lib/DateTime/Locale/ne.pm
   DateTime::Locale::ne_IN:
@@ -602,6 +628,10 @@ provides:
     file: lib/DateTime/Locale/ny.pm
   DateTime::Locale::ny_MW:
     file: lib/DateTime/Locale/ny_MW.pm
+  DateTime::Locale::oc:
+    file: lib/DateTime/Locale/oc.pm
+  DateTime::Locale::oc_FR:
+    file: lib/DateTime/Locale/oc_FR.pm
   DateTime::Locale::om:
     file: lib/DateTime/Locale/om.pm
   DateTime::Locale::om_ET:
@@ -814,6 +844,10 @@ provides:
     file: lib/DateTime/Locale/tr.pm
   DateTime::Locale::tr_TR:
     file: lib/DateTime/Locale/tr_TR.pm
+  DateTime::Locale::trv:
+    file: lib/DateTime/Locale/trv.pm
+  DateTime::Locale::trv_TW:
+    file: lib/DateTime/Locale/trv_TW.pm
   DateTime::Locale::ts:
     file: lib/DateTime/Locale/ts.pm
   DateTime::Locale::ts_ZA:
@@ -920,7 +954,7 @@ provides:
     file: lib/DateTime/Locale/zu.pm
   DateTime::Locale::zu_ZA:
     file: lib/DateTime/Locale/zu_ZA.pm
-generated_by: Module::Build version 0.2808
+generated_by: Module::Build version 0.32
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2

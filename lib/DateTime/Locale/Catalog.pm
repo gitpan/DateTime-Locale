@@ -18,7 +18,7 @@ use strict;
 use warnings;
 use utf8;
 
-sub CLDRVersion { return "1\.6\.1" }
+sub CLDRVersion { return "1\.7\.1" }
 
 my @Locales;
 sub Locales { return @Locales }
@@ -323,6 +323,25 @@ sub Aliases { return %Aliases }
       en_territory     => "India",
       native_language  => "বাংলা",
       native_territory => "ভারত",
+    },
+    {
+      id               => "bo",
+      en_language      => "Tibetan",
+      native_language  => "པོད་སྐད་",
+    },
+    {
+      id               => "bo_CN",
+      en_language      => "Tibetan",
+      en_territory     => "China",
+      native_language  => "པོད་སྐད་",
+      native_territory => "རྒྱ་ནག",
+    },
+    {
+      id               => "bo_IN",
+      en_language      => "Tibetan",
+      en_territory     => "India",
+      native_language  => "པོད་སྐད་",
+      native_territory => "རྒྱ་གར་",
     },
     {
       id               => "bs",
@@ -696,9 +715,9 @@ sub Aliases { return %Aliases }
     {
       id               => "en_UM",
       en_language      => "English",
-      en_territory     => "United\ States\ Minor\ Outlying\ Islands",
+      en_territory     => "U\.S\.\ Minor\ Outlying\ Islands",
       native_language  => "English",
-      native_territory => "United\ States\ Minor\ Outlying\ Islands",
+      native_territory => "U\.S\.\ Minor\ Outlying\ Islands",
     },
     {
       id               => "en_US",
@@ -1085,6 +1104,18 @@ sub Aliases { return %Aliases }
       native_territory => "España",
     },
     {
+      id               => "gsw",
+      en_language      => "Swiss\ German",
+      native_language  => "Schwiizertüütsch",
+    },
+    {
+      id               => "gsw_CH",
+      en_language      => "Swiss\ German",
+      en_territory     => "Switzerland",
+      native_language  => "Schwiizertüütsch",
+      native_territory => "Schwiiz",
+    },
+    {
       id               => "gu",
       en_language      => "Gujarati",
       native_language  => "ગુજરાતી",
@@ -1139,6 +1170,7 @@ sub Aliases { return %Aliases }
       en_language      => "Hausa",
       en_territory     => "Ghana",
       native_language  => "Haoussa",
+      native_territory => "Gaana",
     },
     {
       id               => "ha_Latn",
@@ -1152,6 +1184,7 @@ sub Aliases { return %Aliases }
       en_script        => "Latin",
       en_territory     => "Ghana",
       native_language  => "Haoussa",
+      native_territory => "Gaana",
     },
     {
       id               => "ha_Latn_NE",
@@ -1159,6 +1192,7 @@ sub Aliases { return %Aliases }
       en_script        => "Latin",
       en_territory     => "Niger",
       native_language  => "Haoussa",
+      native_territory => "Nijer",
     },
     {
       id               => "ha_Latn_NG",
@@ -1173,6 +1207,7 @@ sub Aliases { return %Aliases }
       en_language      => "Hausa",
       en_territory     => "Niger",
       native_language  => "Haoussa",
+      native_territory => "Nijer",
     },
     {
       id               => "ha_NG",
@@ -1399,7 +1434,7 @@ sub Aliases { return %Aliases }
     {
       id               => "kfo_CI",
       en_language      => "Koro",
-      en_territory     => "Ivory\ Coast",
+      en_territory     => "Côte\ d’Ivoire",
     },
     {
       id               => "kk",
@@ -1513,6 +1548,39 @@ sub Aliases { return %Aliases }
       native_language  => "كوردی",
     },
     {
+      id               => "ku_Arab_IQ",
+      en_language      => "Kurdish",
+      en_script        => "Arabic",
+      en_territory     => "Iraq",
+      native_language  => "كوردی",
+    },
+    {
+      id               => "ku_Arab_IR",
+      en_language      => "Kurdish",
+      en_script        => "Arabic",
+      en_territory     => "Iran",
+      native_language  => "كوردی",
+    },
+    {
+      id               => "ku_Arab_SY",
+      en_language      => "Kurdish",
+      en_script        => "Arabic",
+      en_territory     => "Syria",
+      native_language  => "كوردی",
+    },
+    {
+      id               => "ku_IQ",
+      en_language      => "Kurdish",
+      en_territory     => "Iraq",
+      native_language  => "كوردی",
+    },
+    {
+      id               => "ku_IR",
+      en_language      => "Kurdish",
+      en_territory     => "Iran",
+      native_language  => "كوردی",
+    },
+    {
       id               => "ku_Latn",
       en_language      => "Kurdish",
       en_script        => "Latin",
@@ -1525,6 +1593,12 @@ sub Aliases { return %Aliases }
       en_territory     => "Turkey",
       native_language  => "kurdî",
       native_territory => "Tirkiye",
+    },
+    {
+      id               => "ku_SY",
+      en_language      => "Kurdish",
+      en_territory     => "Syria",
+      native_language  => "كوردی",
     },
     {
       id               => "ku_TR",
@@ -1737,7 +1811,7 @@ sub Aliases { return %Aliases }
     {
       id               => "my_MM",
       en_language      => "Burmese",
-      en_territory     => "Myanmar",
+      en_territory     => "Myanmar\ \[Burma\]",
       native_language  => "ဗမာ",
       native_territory => "မြန်မာ",
     },
@@ -1752,6 +1826,18 @@ sub Aliases { return %Aliases }
       en_territory     => "Norway",
       native_language  => "norsk\ bokmål",
       native_territory => "Norge",
+    },
+    {
+      id               => "nds",
+      en_language      => "Low\ German",
+      native_language  => "Plattdüütsch",
+    },
+    {
+      id               => "nds_DE",
+      en_language      => "Low\ German",
+      en_territory     => "Germany",
+      native_language  => "Plattdüütsch",
+      native_territory => "Düütschland",
     },
     {
       id               => "ne",
@@ -1838,6 +1924,18 @@ sub Aliases { return %Aliases }
       id               => "ny_MW",
       en_language      => "Nyanja",
       en_territory     => "Malawi",
+    },
+    {
+      id               => "oc",
+      en_language      => "Occitan",
+      native_language  => "occitan",
+    },
+    {
+      id               => "oc_FR",
+      en_language      => "Occitan",
+      en_territory     => "France",
+      native_language  => "occitan",
+      native_territory => "França",
     },
     {
       id               => "om",
@@ -1974,7 +2072,7 @@ sub Aliases { return %Aliases }
       en_language      => "Romanian",
       en_territory     => "Moldova",
       native_language  => "română",
-      native_territory => "Moldova\,\ Republica",
+      native_territory => "Republica\ Moldova",
     },
     {
       id               => "ro_RO",
@@ -2049,26 +2147,26 @@ sub Aliases { return %Aliases }
     {
       id               => "sh",
       en_language      => "Serbo\-Croatian",
-      native_language  => "Srpsko\-Hrvatski",
+      native_language  => "Srpskohrvatski",
     },
     {
       id               => "sh_BA",
       en_language      => "Serbo\-Croatian",
       en_territory     => "Bosnia\ and\ Herzegovina",
-      native_language  => "Srpsko\-Hrvatski",
+      native_language  => "Srpskohrvatski",
       native_territory => "Bosna\ i\ Hercegovina",
     },
     {
       id               => "sh_CS",
       en_language      => "Serbo\-Croatian",
       en_territory     => "Serbia\ and\ Montenegro",
-      native_language  => "Srpsko\-Hrvatski",
+      native_language  => "Srpskohrvatski",
       native_territory => "Srbija\ i\ Crna\ Gora",
     },
     {
       id               => "sh_YU",
       en_language      => "Serbo\-Croatian",
-      native_language  => "Srpsko\-Hrvatski",
+      native_language  => "Srpskohrvatski",
     },
     {
       id               => "si",
@@ -2097,13 +2195,13 @@ sub Aliases { return %Aliases }
     {
       id               => "sk",
       en_language      => "Slovak",
-      native_language  => "slovenský",
+      native_language  => "slovenčina",
     },
     {
       id               => "sk_SK",
       en_language      => "Slovak",
       en_territory     => "Slovakia",
-      native_language  => "slovenský",
+      native_language  => "slovenčina",
       native_territory => "Slovenská\ republika",
     },
     {
@@ -2286,8 +2384,8 @@ sub Aliases { return %Aliases }
       id               => "sr_ME",
       en_language      => "Serbian",
       en_territory     => "Montenegro",
-      native_language  => "Српски",
-      native_territory => "Црна\ Гора",
+      native_language  => "Srpski",
+      native_territory => "Crna\ Gora",
     },
     {
       id               => "sr_RS",
@@ -2407,7 +2505,7 @@ sub Aliases { return %Aliases }
       en_language      => "Telugu",
       en_territory     => "India",
       native_language  => "తెలుగు",
-      native_territory => "భారత\ దేళం",
+      native_territory => "భారత\ దేశం",
     },
     {
       id               => "tg",
@@ -2511,6 +2609,15 @@ sub Aliases { return %Aliases }
       en_territory     => "Turkey",
       native_language  => "Türkçe",
       native_territory => "Türkiye",
+    },
+    {
+      id               => "trv",
+      en_language      => "Taroko",
+    },
+    {
+      id               => "trv_TW",
+      en_language      => "Taroko",
+      en_territory     => "Taiwan",
     },
     {
       id               => "ts",
@@ -2825,7 +2932,7 @@ sub Aliases { return %Aliases }
       en_territory     => "Taiwan",
       native_language  => "中文",
       native_script    => "繁體中文",
-      native_territory => "臺灣",
+      native_territory => "台灣",
     },
     {
       id               => "zh_MO",
@@ -2846,7 +2953,7 @@ sub Aliases { return %Aliases }
       en_language      => "Chinese",
       en_territory     => "Taiwan",
       native_language  => "中文",
-      native_territory => "臺灣",
+      native_territory => "台灣",
     },
     {
       id               => "zu",
@@ -2858,6 +2965,7 @@ sub Aliases { return %Aliases }
       en_language      => "Zulu",
       en_territory     => "South\ Africa",
       native_language  => "isiZulu",
+      native_territory => "iNingizimu\ Afrika",
     },
 );
 
@@ -3075,7 +3183,13 @@ sub Aliases { return %Aliases }
     kor_KR => "ko_KR",
     kur => "ku",
     kur_Arab => "ku_Arab",
+    kur_IQ => "ku_IQ",
+    kur_IQ_Arab => "ku_Arab_IQ",
+    kur_IR => "ku_IR",
+    kur_IR_Arab => "ku_Arab_IR",
     kur_Latn => "ku_Latn",
+    kur_SY => "ku_SY",
+    kur_SY_Arab => "ku_Arab_SY",
     kur_TR => "ku_TR",
     kur_TR_Latn => "ku_Latn_TR",
     lao => "lo",
@@ -3121,6 +3235,8 @@ sub Aliases { return %Aliases }
     nor => "no",
     nya => "ny",
     nya_MW => "ny_MW",
+    oci => "oc",
+    oci_FR => "oc_FR",
     ori => "or",
     ori_IN => "or_IN",
     orm => "om",
@@ -3229,6 +3345,9 @@ sub Aliases { return %Aliases }
     tgl => "tl",
     tha => "th",
     tha_TH => "th_TH",
+    tib => "bo",
+    tib_CN => "bo_CN",
+    tib_IN => "bo_IN",
     tir => "ti",
     tir_ER => "ti_ER",
     tir_ET => "ti_ET",
@@ -3353,6 +3472,9 @@ The available locales are:
  bn                  Bengali
  bn_BD               Bengali Bangladesh
  bn_IN               Bengali India
+ bo                  Tibetan
+ bo_CN               Tibetan China
+ bo_IN               Tibetan India
  bs                  Bosnian
  bs_BA               Bosnian Bosnia and Herzegovina
  byn                 Blin
@@ -3411,7 +3533,7 @@ The available locales are:
  en_SG               English Singapore
  en_Shaw             English (Shavian)
  en_TT               English Trinidad and Tobago
- en_UM               English United States Minor Outlying Islands
+ en_UM               English U.S. Minor Outlying Islands
  en_US               English United States
  en_US_POSIX         English United States Computer
  en_VI               English U.S. Virgin Islands
@@ -3471,6 +3593,8 @@ The available locales are:
  gez_ET              Geez Ethiopia
  gl                  Galician
  gl_ES               Galician Spain
+ gsw                 Swiss German
+ gsw_CH              Swiss German Switzerland
  gu                  Gujarati
  gu_IN               Gujarati India
  gv                  Manx
@@ -3524,7 +3648,7 @@ The available locales are:
  kcg                 Tyap
  kcg_NG              Tyap Nigeria
  kfo                 Koro
- kfo_CI              Koro Ivory Coast
+ kfo_CI              Koro Côte d’Ivoire
  kk                  Kazakh
  kk_Cyrl             Kazakh (Cyrillic)
  kk_Cyrl_KZ          Kazakh Kazakhstan (Cyrillic)
@@ -3544,8 +3668,14 @@ The available locales are:
  kpe_LR              Kpelle Liberia
  ku                  Kurdish
  ku_Arab             Kurdish (Arabic)
+ ku_Arab_IQ          Kurdish Iraq (Arabic)
+ ku_Arab_IR          Kurdish Iran (Arabic)
+ ku_Arab_SY          Kurdish Syria (Arabic)
+ ku_IQ               Kurdish Iraq
+ ku_IR               Kurdish Iran
  ku_Latn             Kurdish (Latin)
  ku_Latn_TR          Kurdish Turkey (Latin)
+ ku_SY               Kurdish Syria
  ku_TR               Kurdish Turkey
  kw                  Cornish
  kw_GB               Cornish United Kingdom
@@ -3580,9 +3710,11 @@ The available locales are:
  mt                  Maltese
  mt_MT               Maltese Malta
  my                  Burmese
- my_MM               Burmese Myanmar
+ my_MM               Burmese Myanmar [Burma]
  nb                  Norwegian Bokmål
  nb_NO               Norwegian Bokmål Norway
+ nds                 Low German
+ nds_DE              Low German Germany
  ne                  Nepali
  ne_IN               Nepali India
  ne_NP               Nepali Nepal
@@ -3598,6 +3730,8 @@ The available locales are:
  nso_ZA              Northern Sotho South Africa
  ny                  Nyanja
  ny_MW               Nyanja Malawi
+ oc                  Occitan
+ oc_FR               Occitan France
  om                  Oromo
  om_ET               Oromo Ethiopia
  om_KE               Oromo Kenya
@@ -3704,6 +3838,8 @@ The available locales are:
  to_TO               Tonga Tonga
  tr                  Turkish
  tr_TR               Turkish Turkey
+ trv                 Taroko
+ trv_TW              Taroko Taiwan
  ts                  Tsonga
  ts_ZA               Tsonga South Africa
  tt                  Tatar
@@ -3977,7 +4113,13 @@ There are also many aliases available, mostly for three-letter
  kor_KR              ko_KR
  kur                 ku
  kur_Arab            ku_Arab
+ kur_IQ              ku_IQ
+ kur_IQ_Arab         ku_Arab_IQ
+ kur_IR              ku_IR
+ kur_IR_Arab         ku_Arab_IR
  kur_Latn            ku_Latn
+ kur_SY              ku_SY
+ kur_SY_Arab         ku_Arab_SY
  kur_TR              ku_TR
  kur_TR_Latn         ku_Latn_TR
  lao                 lo
@@ -4023,6 +4165,8 @@ There are also many aliases available, mostly for three-letter
  nor                 no
  nya                 ny
  nya_MW              ny_MW
+ oci                 oc
+ oci_FR              oc_FR
  ori                 or
  ori_IN              or_IN
  orm                 om
@@ -4131,6 +4275,9 @@ There are also many aliases available, mostly for three-letter
  tgl                 tl
  tha                 th
  tha_TH              th_TH
+ tib                 bo
+ tib_CN              bo_CN
+ tib_IN              bo_IN
  tir                 ti
  tir_ER              ti_ER
  tir_ET              ti_ET
