@@ -1,23 +1,25 @@
 ---
 name: DateTime-Locale
-version: 0.43
+version: 0.44
 author:
   - 'Dave Rolsky <autarch@urth.org>'
 abstract: Localization support for DateTime.pm
 license: perl
 resources:
   license: http://dev.perl.org/licenses/
+build_requires:
+  Module::Build: 0
 requires:
   Class::ISA: 0
   List::MoreUtils: 0
-  Params::Validate: 0
+  Params::Validate: 0.91
   perl: 5.006
-build_requires:
-  Module::Build: 0
+configure_requires:
+  Module::Build: 0.35
 provides:
   DateTime::Locale:
     file: lib/DateTime/Locale.pm
-    version: 0.43
+    version: 0.44
   DateTime::Locale::Base:
     file: lib/DateTime/Locale/Base.pm
   DateTime::Locale::Catalog:
@@ -954,7 +956,7 @@ provides:
     file: lib/DateTime/Locale/zu.pm
   DateTime::Locale::zu_ZA:
     file: lib/DateTime/Locale/zu_ZA.pm
-generated_by: Module::Build version 0.32
+generated_by: Module::Build version 0.35
 meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
