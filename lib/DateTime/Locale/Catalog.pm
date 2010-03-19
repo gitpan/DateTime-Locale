@@ -3212,7 +3212,6 @@ sub Aliases { return %Aliases }
     may_MY => "ms_MY",
     mlt => "mt",
     mlt_MT => "mt_MT",
-    mol => "mo",
     mon => "mn",
     mon_CN => "mn_CN",
     mon_CN_Mong => "mn_Mong_CN",
@@ -4142,7 +4141,6 @@ There are also many aliases available, mostly for three-letter
  may_MY              ms_MY
  mlt                 mt
  mlt_MT              mt_MT
- mol                 mo
  mon                 mn
  mon_CN              mn_CN
  mon_CN_Mong         mn_Mong_CN

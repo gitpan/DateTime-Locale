@@ -31,6 +31,26 @@ sub cldr_version { return "1\.7\.1" }
     sub first_day_of_week { return $first_day_of_week }
 }
 
+{
+    my $glibc_date_format = "\%d\/\%m\-\%Y";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_date_1_format = "\%a\ \%b\ \%e\ \%H\:\%M\:\%S\ \%Z\ \%Y";
+    sub glibc_date_1_format { return $glibc_date_1_format }
+}
+
+{
+    my $glibc_datetime_format = "\%a\ \%d\ \%b\ \%Y\ \%T\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%T";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
 1;
 
 __END__
@@ -300,7 +320,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05-02-08
    1995-12-22T09:05:02 = 22-12-95
-  -0010-09-15T04:44:23 = 15-09-10
+  -0010-09-15T04:44:23 = 15-09--10
 
 =head3 Default
 
@@ -364,7 +384,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05-02-08 18:30
    1995-12-22T09:05:02 = 22-12-95 09:05
-  -0010-09-15T04:44:23 = 15-09-10 04:44
+  -0010-09-15T04:44:23 = 15-09--10 04:44
 
 =head3 Default
 
@@ -373,6 +393,12 @@ It contains the following data.
   -0010-09-15T04:44:23 = 15-09--010 04:44:23
 
 =head2 Available Formats
+
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
 
 =head3 EEEd (d EEE)
 
@@ -398,11 +424,23 @@ It contains the following data.
    1995-12-22T09:05:02 = 9:05
   -0010-09-15T04:44:23 = 4:44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 PM
+   1995-12-22T09:05:02 = 9:05 AM
+  -0010-09-15T04:44:23 = 4:44 AM
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
+
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 PM
+   1995-12-22T09:05:02 = 9:05:02 AM
+  -0010-09-15T04:44:23 = 4:44:23 AM
 
 =head3 M (L)
 
@@ -410,41 +448,17 @@ It contains the following data.
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
 
+=head3 Md (M-d)
+
+   2008-02-05T18:30:30 = 2-5
+   1995-12-22T09:05:02 = 12-22
+  -0010-09-15T04:44:23 = 9-15
+
 =head3 MEd (E, M-d)
 
    2008-02-05T18:30:30 = týs, 2-5
    1995-12-22T09:05:02 = frí, 12-22
   -0010-09-15T04:44:23 = ley, 9-15
-
-=head3 MMM (LLL)
-
-   2008-02-05T18:30:30 = feb
-   1995-12-22T09:05:02 = des
-  -0010-09-15T04:44:23 = sep
-
-=head3 MMMEd (E MMM d)
-
-   2008-02-05T18:30:30 = týs feb 5
-   1995-12-22T09:05:02 = frí des 22
-  -0010-09-15T04:44:23 = ley sep 15
-
-=head3 MMMMEd (E MMMM d)
-
-   2008-02-05T18:30:30 = týs februar 5
-   1995-12-22T09:05:02 = frí desember 22
-  -0010-09-15T04:44:23 = ley september 15
-
-=head3 MMMMd (MMMM d)
-
-   2008-02-05T18:30:30 = februar 5
-   1995-12-22T09:05:02 = desember 22
-  -0010-09-15T04:44:23 = september 15
-
-=head3 MMMd (d. MMM)
-
-   2008-02-05T18:30:30 = 5. feb
-   1995-12-22T09:05:02 = 22. des
-  -0010-09-15T04:44:23 = 15. sep
 
 =head3 MMdd (dd-MM)
 
@@ -452,29 +466,35 @@ It contains the following data.
    1995-12-22T09:05:02 = 22-12
   -0010-09-15T04:44:23 = 15-09
 
-=head3 Md (M-d)
+=head3 MMM (LLL)
 
-   2008-02-05T18:30:30 = 2-5
-   1995-12-22T09:05:02 = 12-22
-  -0010-09-15T04:44:23 = 9-15
+   2008-02-05T18:30:30 = feb
+   1995-12-22T09:05:02 = des
+  -0010-09-15T04:44:23 = sep
 
-=head3 d (d)
+=head3 MMMd (d. MMM)
 
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
+   2008-02-05T18:30:30 = 5. feb
+   1995-12-22T09:05:02 = 22. des
+  -0010-09-15T04:44:23 = 15. sep
 
-=head3 hm (h:mm a)
+=head3 MMMEd (E MMM d)
 
-   2008-02-05T18:30:30 = 6:30 PM
-   1995-12-22T09:05:02 = 9:05 AM
-  -0010-09-15T04:44:23 = 4:44 AM
+   2008-02-05T18:30:30 = týs feb 5
+   1995-12-22T09:05:02 = frí des 22
+  -0010-09-15T04:44:23 = ley sep 15
 
-=head3 hms (h:mm:ss a)
+=head3 MMMMd (MMMM d)
 
-   2008-02-05T18:30:30 = 6:30:30 PM
-   1995-12-22T09:05:02 = 9:05:02 AM
-  -0010-09-15T04:44:23 = 4:44:23 AM
+   2008-02-05T18:30:30 = februar 5
+   1995-12-22T09:05:02 = desember 22
+  -0010-09-15T04:44:23 = september 15
+
+=head3 MMMMEd (E MMMM d)
+
+   2008-02-05T18:30:30 = týs februar 5
+   1995-12-22T09:05:02 = frí desember 22
+  -0010-09-15T04:44:23 = ley september 15
 
 =head3 ms (mm:ss)
 
@@ -534,7 +554,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 1 08
    1995-12-22T09:05:02 = 4 95
-  -0010-09-15T04:44:23 = 3 10
+  -0010-09-15T04:44:23 = 3 -10
 
 =head3 yyyyMM (MM-yyyy)
 

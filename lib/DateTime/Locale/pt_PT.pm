@@ -92,6 +92,26 @@ sub quarter_stand_alone_wide { $_[0]->quarter_format_wide() }
     sub _available_formats { return $_available_formats }
 }
 
+{
+    my $glibc_date_format = "\%d\-\%m\-\%Y";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_date_1_format = "\%a\ \%b\ \%e\ \%H\:\%M\:\%S\ \%Z\ \%Y";
+    sub glibc_date_1_format { return $glibc_date_1_format }
+}
+
+{
+    my $glibc_datetime_format = "\%a\ \%d\ \%b\ \%Y\ \%T\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%T";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
 1;
 
 __END__
@@ -361,7 +381,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08
    1995-12-22T09:05:02 = 22/12/95
-  -0010-09-15T04:44:23 = 15/09/10
+  -0010-09-15T04:44:23 = 15/09/-10
 
 =head3 Default
 
@@ -425,7 +445,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08 18:30
    1995-12-22T09:05:02 = 22/12/95 09:05
-  -0010-09-15T04:44:23 = 15/09/10 04:44
+  -0010-09-15T04:44:23 = 15/09/-10 04:44
 
 =head3 Default
 
@@ -434,6 +454,12 @@ It contains the following data.
   -0010-09-15T04:44:23 = 15 de Set de -010 04:44:23
 
 =head2 Available Formats
+
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
 
 =head3 EEEd (EEE, d)
 
@@ -459,11 +485,23 @@ It contains the following data.
    1995-12-22T09:05:02 = 9h05
   -0010-09-15T04:44:23 = 4h44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 Depois do meio-dia
+   1995-12-22T09:05:02 = 9:05 Antes do meio-dia
+  -0010-09-15T04:44:23 = 4:44 Antes do meio-dia
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
+
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 Depois do meio-dia
+   1995-12-22T09:05:02 = 9:05:02 Antes do meio-dia
+  -0010-09-15T04:44:23 = 4:44:23 Antes do meio-dia
 
 =head3 M (L)
 
@@ -471,41 +509,17 @@ It contains the following data.
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
 
+=head3 Md (d/M)
+
+   2008-02-05T18:30:30 = 5/2
+   1995-12-22T09:05:02 = 22/12
+  -0010-09-15T04:44:23 = 15/9
+
 =head3 MEd (EEE, dd/MM)
 
    2008-02-05T18:30:30 = ter, 05/02
    1995-12-22T09:05:02 = sex, 22/12
   -0010-09-15T04:44:23 = sáb, 15/09
-
-=head3 MMM (LLL)
-
-   2008-02-05T18:30:30 = Fev
-   1995-12-22T09:05:02 = Dez
-  -0010-09-15T04:44:23 = Set
-
-=head3 MMMEd (EEE, d 'de' MMM)
-
-   2008-02-05T18:30:30 = ter, 5 de Fev
-   1995-12-22T09:05:02 = sex, 22 de Dez
-  -0010-09-15T04:44:23 = sáb, 15 de Set
-
-=head3 MMMMEd (EEE, d 'de' MMMM)
-
-   2008-02-05T18:30:30 = ter, 5 de Fevereiro
-   1995-12-22T09:05:02 = sex, 22 de Dezembro
-  -0010-09-15T04:44:23 = sáb, 15 de Setembro
-
-=head3 MMMMd (d 'de' MMMM)
-
-   2008-02-05T18:30:30 = 5 de Fevereiro
-   1995-12-22T09:05:02 = 22 de Dezembro
-  -0010-09-15T04:44:23 = 15 de Setembro
-
-=head3 MMMd (d 'de' MMM)
-
-   2008-02-05T18:30:30 = 5 de Fev
-   1995-12-22T09:05:02 = 22 de Dez
-  -0010-09-15T04:44:23 = 15 de Set
 
 =head3 MMdd (dd/MM)
 
@@ -513,29 +527,35 @@ It contains the following data.
    1995-12-22T09:05:02 = 22/12
   -0010-09-15T04:44:23 = 15/09
 
-=head3 Md (d/M)
+=head3 MMM (LLL)
 
-   2008-02-05T18:30:30 = 5/2
-   1995-12-22T09:05:02 = 22/12
-  -0010-09-15T04:44:23 = 15/9
+   2008-02-05T18:30:30 = Fev
+   1995-12-22T09:05:02 = Dez
+  -0010-09-15T04:44:23 = Set
 
-=head3 d (d)
+=head3 MMMd (d 'de' MMM)
 
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
+   2008-02-05T18:30:30 = 5 de Fev
+   1995-12-22T09:05:02 = 22 de Dez
+  -0010-09-15T04:44:23 = 15 de Set
 
-=head3 hm (h:mm a)
+=head3 MMMEd (EEE, d 'de' MMM)
 
-   2008-02-05T18:30:30 = 6:30 Depois do meio-dia
-   1995-12-22T09:05:02 = 9:05 Antes do meio-dia
-  -0010-09-15T04:44:23 = 4:44 Antes do meio-dia
+   2008-02-05T18:30:30 = ter, 5 de Fev
+   1995-12-22T09:05:02 = sex, 22 de Dez
+  -0010-09-15T04:44:23 = sáb, 15 de Set
 
-=head3 hms (h:mm:ss a)
+=head3 MMMMd (d 'de' MMMM)
 
-   2008-02-05T18:30:30 = 6:30:30 Depois do meio-dia
-   1995-12-22T09:05:02 = 9:05:02 Antes do meio-dia
-  -0010-09-15T04:44:23 = 4:44:23 Antes do meio-dia
+   2008-02-05T18:30:30 = 5 de Fevereiro
+   1995-12-22T09:05:02 = 22 de Dezembro
+  -0010-09-15T04:44:23 = 15 de Setembro
+
+=head3 MMMMEd (EEE, d 'de' MMMM)
+
+   2008-02-05T18:30:30 = ter, 5 de Fevereiro
+   1995-12-22T09:05:02 = sex, 22 de Dezembro
+  -0010-09-15T04:44:23 = sáb, 15 de Setembro
 
 =head3 mmss (mm'min'ss's')
 
@@ -601,31 +621,31 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 02/08
    1995-12-22T09:05:02 = 12/95
-  -0010-09-15T04:44:23 = 09/10
+  -0010-09-15T04:44:23 = 09/-10
 
 =head3 yyMMM (MMM 'de' yy)
 
    2008-02-05T18:30:30 = Fev de 08
    1995-12-22T09:05:02 = Dez de 95
-  -0010-09-15T04:44:23 = Set de 10
-
-=head3 yyMMMEEEd (EEE, d 'de' MMM 'de' yy)
-
-   2008-02-05T18:30:30 = ter, 5 de Fev de 08
-   1995-12-22T09:05:02 = sex, 22 de Dez de 95
-  -0010-09-15T04:44:23 = sáb, 15 de Set de 10
+  -0010-09-15T04:44:23 = Set de -10
 
 =head3 yyMMMd (d 'de' MMM 'de' yy)
 
    2008-02-05T18:30:30 = 5 de Fev de 08
    1995-12-22T09:05:02 = 22 de Dez de 95
-  -0010-09-15T04:44:23 = 15 de Set de 10
+  -0010-09-15T04:44:23 = 15 de Set de -10
+
+=head3 yyMMMEEEd (EEE, d 'de' MMM 'de' yy)
+
+   2008-02-05T18:30:30 = ter, 5 de Fev de 08
+   1995-12-22T09:05:02 = sex, 22 de Dez de 95
+  -0010-09-15T04:44:23 = sáb, 15 de Set de -10
 
 =head3 yyQ (QQQ 'de' yy)
 
    2008-02-05T18:30:30 = 1.º trimestre de 08
    1995-12-22T09:05:02 = 4.º trimestre de 95
-  -0010-09-15T04:44:23 = 3.º trimestre de 10
+  -0010-09-15T04:44:23 = 3.º trimestre de -10
 
 =head3 yyyyMM (MM/yyyy)
 

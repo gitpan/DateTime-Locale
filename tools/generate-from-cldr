@@ -10,10 +10,13 @@ use lib './lib', 'tools/lib';
 use Data::Dumper;
 use File::Copy qw( copy );
 use File::Find::Rule;
+use File::Slurp qw( read_file );
 use Getopt::Long;
 use LDML;
 use Lingua::EN::Inflect qw( PL_N );
-use Locale::Country qw( country_code2code LOCALE_CODE_ALPHA_2 LOCALE_CODE_ALPHA_3 );
+use List::AllUtils qw( first );
+use Locale::Country
+    qw( country_code2code LOCALE_CODE_ALPHA_2 LOCALE_CODE_ALPHA_3 );
 use Path::Class;
 
 my $VERSION = '0.05';
@@ -26,16 +29,18 @@ my $ScriptName = file($0)->basename();
 }
 
 my %opts;
-sub main
-{
-    GetOptions( 'dir:s'     => \$opts{dir},
-                'file:s'    => \$opts{file},
-                'version:s' => \$opts{version},
-                'clean'     => \$opts{clean},
-                'quiet'     => \$opts{quiet},
-                'verbose'   => \$opts{verbose},
-                'help'      => \$opts{help},
-              );
+my $glibc_dir;
+
+sub main {
+    GetOptions(
+        'dir:s'     => \$opts{dir},
+        'file:s'    => \$opts{file},
+        'version:s' => \$opts{version},
+        'clean'     => \$opts{clean},
+        'quiet'     => \$opts{quiet},
+        'verbose'   => \$opts{verbose},
+        'help'      => \$opts{help},
+    );
 
     $opts{help} = 1
         unless defined $opts{dir} && -d $opts{dir};
@@ -49,11 +54,13 @@ sub main
     binmode STDOUT, ':utf8' if $opts{verbose};
     $| = 1;
 
+    ( $glibc_dir = $opts{dir} ) =~ s{cldr/.+}{};
+    $glibc_dir .= 'glibc';
+
     generate_from_cldr_xml();
 }
 
-sub usage
-{
+sub usage {
     print <<'EOF';
 
 This script parses the CLDR locale files and turns them into a set of
@@ -84,8 +91,7 @@ EOF
     exit;
 }
 
-sub require_version
-{
+sub require_version {
     return if $opts{version};
 
     warn <<'EOF';
@@ -97,21 +103,14 @@ EOF
     exit;
 }
 
-sub clean
-{
-    for my $f ( File::Find::Rule
-                ->file
-                ->name('*.pm')
-                ->grep('This file is auto-generated' )
-                ->in('lib')
-              )
-    {
+sub clean {
+    for my $f ( File::Find::Rule->file->name('*.pm')
+        ->grep('This file is auto-generated')->in('lib') ) {
         unlink $f or die "Cannot unlink $f: $!";
     }
 }
 
-sub generate_from_cldr_xml
-{
+sub generate_from_cldr_xml {
     my @ldml = read_all_files();
     generate_pm_files(@ldml);
     generate_catalog(@ldml);
@@ -120,13 +119,11 @@ sub generate_from_cldr_xml
     print "\nAll done\n" unless $opts{quiet};
 }
 
-sub read_all_files
-{
+sub read_all_files {
     my $dir = dir( $opts{dir} );
 
     my @ldml;
-    while ( my $file = $dir->next() )
-    {
+    while ( my $file = $dir->next() ) {
         next unless -f $file;
         next unless $file->basename() =~ /\.xml$/;
         next if $opts{file} && $opts{file} ne $file->basename();
@@ -145,17 +142,15 @@ sub read_all_files
     return sort { $a->id() cmp $b->id() } @ldml;
 }
 
-sub generate_pm_files
-{
+sub generate_pm_files {
     my @ldml = @_;
 
     print "\nGenerating PM files\n" if $opts{verbose};
 
-    for my $ldml ( sort @ldml )
-    {
-        if ( $opts{verbose} )
-        {
-            print sprintf( <<"EOF", $ldml->id(), $ldml->parent_id(), $ldml->version(), $ldml->generation_date() );
+    for my $ldml ( sort @ldml ) {
+        if ( $opts{verbose} ) {
+            print sprintf(
+                <<"EOF", $ldml->id(), $ldml->parent_id(), $ldml->version(), $ldml->generation_date() );
   %s
     parent_id:       %s
     version:         %s
@@ -168,8 +163,7 @@ EOF
     }
 }
 
-sub generate_pm_file
-{
+sub generate_pm_file {
     my $ldml = shift;
 
     my $pm_file = file( qw( lib DateTime Locale ), $ldml->id() . q{.pm} );
@@ -180,13 +174,13 @@ sub generate_pm_file
 
     write_pm_header( $fh, $ldml );
     write_pm_inheritance( $fh, $ldml );
-    write_pm_cldr_version( $fh );
+    write_pm_cldr_version($fh);
     write_pm_subs( $fh, $ldml );
+    write_pm_glibc_subs( $fh, $ldml );
     write_pm_footer( $fh, $ldml );
 }
 
-sub write_pm_header
-{
+sub write_pm_header {
     my $fh   = shift;
     my $ldml = shift;
 
@@ -223,8 +217,7 @@ use utf8;
 EOF
 }
 
-sub write_pm_inheritance
-{
+sub write_pm_inheritance {
     my $fh   = shift;
     my $ldml = shift;
 
@@ -233,82 +226,128 @@ sub write_pm_inheritance
     print {$fh} "use base 'DateTime::Locale::$parent';\n\n";
 }
 
-sub write_pm_cldr_version
-{
-    my $fh   = shift;
+sub write_pm_cldr_version {
+    my $fh = shift;
 
     my $cldr_version = q{"} . quotemeta( $opts{version} ) . q{"};
 
     print {$fh} "sub cldr_version { return $cldr_version }\n\n";
 }
 
-sub write_pm_subs
-{
+sub write_pm_subs {
     my $fh   = shift;
     my $ldml = shift;
 
     foreach my $attr ( sort { $a->name() cmp $b->name() }
-                       LDML->meta()->get_all_attributes() )
-    {
-        next unless $attr->name() =~
-            /^(?:day_|month_|quarter_|am_pm|era_|date_|time_|datetime_|first_day_)/;
+        LDML->meta()->get_all_attributes() ) {
+        next
+            unless $attr->name()
+                =~ /^(?:day_|month_|quarter_|am_pm|era_|date_|time_|datetime_|first_day_)/;
 
         next if make_alias( $fh, $ldml, $attr->name() );
 
         my $type = $attr->type_constraint();
 
-        if ( $type->is_a_type_of('ArrayRef') )
-        {
+        if ( $type->is_a_type_of('ArrayRef') ) {
             write_arrayref_sub( $fh, $ldml, $attr->name() );
         }
-        elsif ( $type->is_a_type_of('HashRef') )
-        {
+        elsif ( $type->is_a_type_of('HashRef') ) {
             write_hashref_sub( $fh, $ldml, $attr->name() );
         }
-        elsif ( $type->is_a_type_of('Str') )
-        {
+        elsif ( $type->is_a_type_of('Str') ) {
             write_string_sub( $fh, $ldml, $attr->name() );
         }
-        elsif ( $type->is_a_type_of('Int') )
-        {
+        elsif ( $type->is_a_type_of('Int') ) {
             write_int_sub( $fh, $ldml, $attr->name() );
         }
-        else
-        {
+        else {
             die "Cannot handle type: " . $type->name();
         }
     }
 
-    for my $attr ( qw( default_date_format_length default_time_format_length ) )
+    for my $attr (qw( default_date_format_length default_time_format_length ))
     {
         my $def = $ldml->$attr();
         next unless defined $def;
 
-        print {$fh} string_sub( q{_} . $attr, , $def );
+        print {$fh} string_sub( q{_} . $attr,, $def );
     }
 
     write_available_format_subs( $fh, $ldml );
 }
 
-sub make_alias
+sub write_pm_glibc_subs {
+    my $fh   = shift;
+    my $ldml = shift;
+
+    my $file = _glibc_file_for_ldml($ldml);
+    return unless -f $file;
+
+    my %formats = _read_glibc_data($file);
+
+    for my $key ( grep { defined $formats{$_} } sort keys %formats ) {
+        print {$fh} string_sub( 'glibc_' . $key . '_format', $formats{$key} );
+    }
+}
+
+sub _glibc_file_for_ldml
 {
+    my $ldml = shift;
+
+    my $glibc_id = join '_', grep { defined } $ldml->language(), $ldml->territory();
+    if ( my $script = $ldml->en_script() ) {
+        $glibc_id .= '@' . lc $script;
+    }
+
+    # This ensures some sort of sanish fallback
+    $glibc_id = 'POSIX' if $ldml->id() eq 'root';
+
+    return "$glibc_dir/$glibc_id";
+}
+
+sub _read_glibc_data {
+    my $file = shift;
+
+    my $glibc = read_file($file);
+
+    return (
+        datetime => _extract_glibc_value( 'd_t_fmt',    $glibc ),
+        date     => _extract_glibc_value( 'd_fmt',      $glibc ),
+        time     => _extract_glibc_value( 't_fmt',      $glibc ),
+        time_12  => _extract_glibc_value( 't_fmt_ampm', $glibc ),
+        date_1   => _extract_glibc_value( 'date_fmt',   $glibc ),
+    );
+}
+
+sub _extract_glibc_value {
+    my $key = shift;
+    my $data = shift;
+
+    my ($val) = $data =~ /^\Q$key\E\s+"([^"]+?)"/m
+        or return undef;
+
+    $val =~ s/[\\\/]\n//g;
+
+    $val =~ s/\<U([A-F\d]+)\>/chr(hex($1))/eg;
+
+    return $val;
+}
+
+sub make_alias {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
 
-    if ( $name =~ /stand_alone/ )
-    {
+    if ( $name =~ /stand_alone/ ) {
         return make_stand_alone_alias( $fh, $ldml, $name );
     }
-    elsif ( $name =~ /(?:abbreviated|narrow)/ )
-    {
+    elsif ( $name =~ /(?:abbreviated|narrow)/ ) {
         return make_length_alias( $fh, $ldml, $name );
     }
 
 }
 
-sub make_stand_alone_alias
-{
+sub make_stand_alone_alias {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
@@ -318,8 +357,7 @@ sub make_stand_alone_alias
     return maybe_make_alias( $fh, $ldml, $name, $format );
 }
 
-sub make_length_alias
-{
+sub make_length_alias {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
@@ -334,8 +372,7 @@ sub make_length_alias
     # for examples of the expected output. Note that the format narrow
     # days for English are inherited from its stand-alone narrow form,
     # not the root locale.
-    if ( $name =~ /format_narrow/ )
-    {
+    if ( $name =~ /format_narrow/ ) {
         ( my $to_name = $name ) =~ s/format/stand_alone/;
 
         return 1
@@ -347,8 +384,7 @@ sub make_length_alias
     # http://www.unicode.org/cldr/data/charts/by_type/calendar-gregorian.quarter.html
     # for an example. Note that the English format narrow quarter is
     # "1", not "Q1".
-    if ( $name =~ /quarter_(\w+)_narrow/ )
-    {
+    if ( $name =~ /quarter_(\w+)_narrow/ ) {
         return;
     }
 
@@ -359,8 +395,7 @@ sub make_length_alias
     return maybe_make_alias( $fh, $ldml, $name, $to_name );
 }
 
-sub maybe_make_alias
-{
+sub maybe_make_alias {
     my $fh   = shift;
     my $ldml = shift;
     my $from = shift;
@@ -368,21 +403,20 @@ sub maybe_make_alias
 
     my $val = $ldml->$from();
 
-    return if @{ $val };
+    return if @{$val};
 
     return unless $ldml->can($to);
 
     my $to_val = $ldml->$to();
 
-    return unless @{ $to_val };
+    return unless @{$to_val};
 
     write_alias_sub( $fh, $from, $to );
 
     return 1;
 }
 
-sub write_alias_sub
-{
+sub write_alias_sub {
     my $fh   = shift;
     my $from = shift;
     my $to   = shift;
@@ -394,25 +428,23 @@ sub $from { \$_[0]->$to() }
 EOF
 }
 
-sub write_arrayref_sub
-{
+sub write_arrayref_sub {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
 
     my $arr = $ldml->$name();
 
-    return unless @{ $arr };
+    return unless @{$arr};
 
     print {$fh} arrayref_sub( $name, $arr );
 }
 
-sub arrayref_sub
-{
+sub arrayref_sub {
     my $name = shift;
     my $arr  = shift;
 
-    my $val = join ', ', map { q{"} . quotemeta($_) . q{"} } @{ $arr };
+    my $val = join ', ', map { q{"} . quotemeta($_) . q{"} } @{$arr};
 
     return <<"EOF";
 {
@@ -422,28 +454,32 @@ sub arrayref_sub
 EOF
 }
 
-sub write_hashref_sub
-{
+sub write_hashref_sub {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
 
     my $hash = $ldml->$name();
 
-    return unless keys %{ $hash };
+    return unless keys %{$hash};
 
     print {$fh} hashref_sub( $name, $hash );
 }
 
-sub hashref_sub
-{
+sub hashref_sub {
     my $name = shift;
     my $hash = shift;
 
-    my $val = ( join ",\n",
-                map { q{          "} . quotemeta($_) . q{" => "} . quotemeta( $hash->{$_} ). q{"} }
-                sort keys %{ $hash }
-              );
+    my $val = (
+        join ",\n",
+        map {
+            q{          "}
+                . quotemeta($_)
+                . q{" => "}
+                . quotemeta( $hash->{$_} ) . q{"}
+            }
+            sort keys %{$hash}
+    );
 
     return <<"EOF";
 {
@@ -457,8 +493,7 @@ $val
 EOF
 }
 
-sub write_string_sub
-{
+sub write_string_sub {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
@@ -470,8 +505,7 @@ sub write_string_sub
     print {$fh} string_sub( $name, $str );
 }
 
-sub string_sub
-{
+sub string_sub {
     my $name = shift;
     my $str  = shift;
 
@@ -486,8 +520,7 @@ sub string_sub
 EOF
 }
 
-sub write_int_sub
-{
+sub write_int_sub {
     my $fh   = shift;
     my $ldml = shift;
     my $name = shift;
@@ -499,8 +532,7 @@ sub write_int_sub
     print {$fh} int_sub( $name, $int );
 }
 
-sub int_sub
-{
+sub int_sub {
     my $name = shift;
     my $int  = shift;
 
@@ -513,29 +545,27 @@ sub int_sub
 EOF
 }
 
-sub write_available_format_subs
-{
+sub write_available_format_subs {
     my $fh   = shift;
     my $ldml = shift;
 
     my $formats = $ldml->available_formats();
 
-    return unless keys %{ $formats };
+    return unless keys %{$formats};
 
-    for my $format ( sort keys %{ $formats } )
-    {
+    for my $format ( sort keys %{$formats} ) {
         my $sub_name = '_format_for_' . $format;
 
         print {$fh} string_sub( $sub_name, $formats->{$format} );
     }
 
-    my $avail = join ', ', map { q{"} . quotemeta($_) . q{"} } keys %{ $formats };
+    my $avail = join ', ',
+        map { q{"} . quotemeta($_) . q{"} } keys %{$formats};
 
     print {$fh} hashref_sub( '_available_formats', $formats );
 }
 
-sub write_pm_footer
-{
+sub write_pm_footer {
     my $fh   = shift;
     my $ldml = shift;
 
@@ -547,11 +577,10 @@ __END__
 EOF
 }
 
-sub generate_catalog
-{
+sub generate_catalog {
     my @ldml = @_;
 
-    my $file = file( qw( lib DateTime Locale Catalog.pm ) );
+    my $file = file(qw( lib DateTime Locale Catalog.pm ));
 
     open my $fh, '>:utf8', $file
         or die "Cannot write to $file: $!";
@@ -560,8 +589,7 @@ sub generate_catalog
     generate_catalog_pod( $fh, \@ldml );
 }
 
-sub generate_catalog_code
-{
+sub generate_catalog_code {
     my $fh   = shift;
     my $ldml = shift;
 
@@ -600,8 +628,7 @@ EOF
 
     print {$fh} '@Locales = (', "\n";
 
-    for my $l ( @{ $ldml } )
-    {
+    for my $l ( @{$ldml} ) {
         print {$fh} catalog_data_for_locale($l);
     }
 
@@ -619,22 +646,21 @@ __END__
 EOF
 }
 
-sub catalog_data_for_locale
-{
+sub catalog_data_for_locale {
     my $ldml = shift;
 
     my $data = qq[    {\n];
 
-    foreach my $k ( qw( id
-                        en_language en_script en_territory en_variant
-                        native_language native_script native_territory native_variant
-                     )
-                  )
-    {
+    foreach my $k (
+        qw( id
+        en_language en_script en_territory en_variant
+        native_language native_script native_territory native_variant
+        )
+        ) {
         my $val = $ldml->$k();
         next unless defined $val;
 
-        $data .= sprintf ( q{      %-16s => "}, $k );
+        $data .= sprintf( q{      %-16s => "}, $k );
         $data .= quotemeta($val);
         $data .= q{",} . "\n";
     }
@@ -644,16 +670,14 @@ sub catalog_data_for_locale
     return $data;
 }
 
-sub catalog_data_for_aliases
-{
+sub catalog_data_for_aliases {
     my $ldml = shift;
 
     my %aliases = valid_aliases($ldml);
 
     my $code = '%Aliases = (' . "\n";
 
-    for my $id ( sort keys %aliases )
-    {
+    for my $id ( sort keys %aliases ) {
         $code .= qq{    $id => "} . quotemeta( $aliases{$id} ) . qq{",\n};
     }
 
@@ -662,29 +686,28 @@ sub catalog_data_for_aliases
     return $code;
 }
 
-sub generate_catalog_pod
-{
+sub generate_catalog_pod {
     my $fh   = shift;
     my $ldml = shift;
 
     my $locales_in_pod = '';
 
-    for my $ldml ( @{ $ldml } )
-    {
-        my @pieces =
-            join ' ', grep { defined } map { $ldml->$_() } qw( en_language en_territory en_variant );
+    for my $ldml ( @{$ldml} ) {
+        my @pieces = join ' ',
+            grep {defined}
+            map  { $ldml->$_() } qw( en_language en_territory en_variant );
 
         my $script = $ldml->en_script();
         push @pieces, "($script)" if defined $script;
 
-        $locales_in_pod .= sprintf( " %-18s  %s\n", $ldml->id(), join ' ', @pieces );
+        $locales_in_pod
+            .= sprintf( " %-18s  %s\n", $ldml->id(), join ' ', @pieces );
     }
 
     my %aliases = valid_aliases($ldml);
 
     my $aliases_in_pod = '';
-    foreach my $id ( sort keys %aliases )
-    {
+    foreach my $id ( sort keys %aliases ) {
         $aliases_in_pod .= sprintf( " %-18s  %s\n", $id, $aliases{$id} );
     }
 
@@ -751,31 +774,29 @@ EOF
 {
     my %aliases;
 
-    sub valid_aliases
-    {
+    sub valid_aliases {
         return %aliases if keys %aliases;
 
         my $ldml = shift;
 
-        my %ids = map { $_->id() => 1 } @{ $ldml };
+        my %ids = map { $_->id() => 1 } @{$ldml};
 
-        for my $ldml ( @{ $ldml } )
-        {
+        for my $ldml ( @{$ldml} ) {
             my $three = iso639_2_to_3( $ldml->language() );
 
             next unless defined $three;
 
-            my $three_id =
-                ( join '_',
-                  grep { defined }
-                  $three, $ldml->territory(), $ldml->script(), $ldml->variant()
-                );
+            my $three_id = (
+                join '_',
+                grep {defined}
+                    $three, $ldml->territory(), $ldml->script(),
+                $ldml->variant()
+            );
 
             next if $ids{$three_id};
 
             $aliases{$three_id} = $ldml->id();
         }
-
 
         %aliases = ( %aliases, %{ LDML->Aliases() } );
 
@@ -786,8 +807,7 @@ EOF
 {
     my %iso639_map;
 
-    sub iso639_2_to_3
-    {
+    sub iso639_2_to_3 {
         my $two = shift;
 
         _build_iso639_map() unless keys %iso639_map;
@@ -795,10 +815,8 @@ EOF
         return $iso639_map{$two};
     }
 
-    sub _build_iso639_map
-    {
-        while ( defined( my $line = <DATA> ) )
-        {
+    sub _build_iso639_map {
+        while ( defined( my $line = <DATA> ) ) {
             next unless $line =~ /\S/;
             next if $line =~ /^\#/;
 
@@ -811,8 +829,7 @@ EOF
     }
 }
 
-sub generate_pm_file_pod
-{
+sub generate_pm_file_pod {
     my $ldml = shift;
 
     my $pm_file = file( qw( lib DateTime Locale ), $ldml->id() . q{.pm} );
@@ -826,17 +843,16 @@ sub generate_pm_file_pod
 
     write_pm_file_pod_header( $fh, $locale, $ldml );
 
-    print {$fh} pod_for_days( $locale );
-    print {$fh} pod_for_months( $locale );
-    print {$fh} pod_for_quarters( $locale );
-    print {$fh} pod_for_eras( $locale );
-    print {$fh} pod_for_formats( $locale );
-    print {$fh} pod_for_misc( $locale );
-    print {$fh} pod_footer( $locale );
+    print {$fh} pod_for_days($locale);
+    print {$fh} pod_for_months($locale);
+    print {$fh} pod_for_quarters($locale);
+    print {$fh} pod_for_eras($locale);
+    print {$fh} pod_for_formats($locale);
+    print {$fh} pod_for_misc($locale);
+    print {$fh} pod_footer($locale);
 }
 
-sub write_pm_file_pod_header
-{
+sub write_pm_file_pod_header {
     my $fh     = shift;
     my $locale = shift;
     my $ldml   = shift;
@@ -870,75 +886,69 @@ This is the DateTime locale package for $name.
 
 EOF
 
-    if ( $id ne 'root' )
-    {
-        print {$fh}
-            'This locale inherits from the L<DateTime::Locale::' . $ldml->parent_id() . "> locale.\n\n";
+    if ( $id ne 'root' ) {
+        print {$fh} 'This locale inherits from the L<DateTime::Locale::'
+            . $ldml->parent_id()
+            . "> locale.\n\n";
     }
 
     print {$fh} "It contains the following data.\n\n";
 }
 
-sub pod_for_days
-{
+sub pod_for_days {
     my $locale = shift;
 
     return pod_for_variations( $locale, 'day' );
 }
 
-sub pod_for_months
-{
+sub pod_for_months {
     my $locale = shift;
 
     return pod_for_variations( $locale, 'month' );
 }
 
-sub pod_for_quarters
-{
+sub pod_for_quarters {
     my $locale = shift;
 
     return pod_for_variations( $locale, 'quarter' );
 }
 
-sub pod_for_eras
-{
+sub pod_for_eras {
     my $locale = shift;
 
     return pod_for_variations( $locale, 'era' );
 }
 
-sub pod_for_variations
-{
+sub pod_for_variations {
     my $locale = shift;
     my $thing  = shift;
 
     my $pod = '';
 
-    my $pl = PL_N( $thing );
+    my $pl = PL_N($thing);
     $pod .= "=head2 \u$pl\n\n";
 
     my @forms = $thing eq 'era' ? ('') : ( 'format', 'stand_alone' );
 
-    for my $form (@forms)
-    {
-        for my $size ( qw( wide abbreviated narrow ) )
-        {
-            my $meth = $form ? $thing . q{_} . $form . q{_} . $size : $thing . q{_} . $size;
+    for my $form (@forms) {
+        for my $size (qw( wide abbreviated narrow )) {
+            my $meth
+                = $form
+                ? $thing . q{_} . $form . q{_} . $size
+                : $thing . q{_} . $size;
 
             next unless $locale->can($meth);
 
             my $head = ucfirst $size;
 
-            if ($form)
-            {
+            if ($form) {
                 ( my $f = $form ) =~ s/_/-/;
                 $head .= " ($f)";
             }
 
             $pod .= "=head3 $head\n\n";
 
-            for my $val ( @{ $locale->$meth() } )
-            {
+            for my $val ( @{ $locale->$meth() } ) {
                 $pod .= "  $val\n";
             }
 
@@ -949,75 +959,72 @@ sub pod_for_variations
     return $pod;
 }
 
-sub pod_for_formats
-{
+sub pod_for_formats {
     my $locale = shift;
 
-    unless ( DateTime->can('new') )
-    {
+    unless ( DateTime->can('new') ) {
         eval "use DateTime 0.43";
         die $@ if $@;
     }
 
-    my @dts =
-        ( DateTime->new( year      => 2008,
-                         month     => 2,
-                         day       => 5,
-                         hour      => 18,
-                         minute    => 30,
-                         second    => 30,
-                         locale    => $locale,
-                         time_zone => 'UTC',
-                       ),
-          DateTime->new( year       => 1995,
-                         month      => 12,
-                         day        => 22,
-                         hour       => 9,
-                         minute     => 5,
-                         second     => 2,
-                         nanosecond => 505_196,
-                         locale     => $locale,
-                         time_zone  => 'UTC',
-                       ),
-          DateTime->new( year      => -10,
-                         month     => 9,
-                         day       => 15,
-                         hour      => 4,
-                         minute    => 44,
-                         second    => 23,
-                         locale    => $locale,
-                         time_zone => 'UTC',
-                       ),
-        );
+    my @dts = (
+        DateTime->new(
+            year      => 2008,
+            month     => 2,
+            day       => 5,
+            hour      => 18,
+            minute    => 30,
+            second    => 30,
+            locale    => $locale,
+            time_zone => 'UTC',
+        ),
+        DateTime->new(
+            year       => 1995,
+            month      => 12,
+            day        => 22,
+            hour       => 9,
+            minute     => 5,
+            second     => 2,
+            nanosecond => 505_196,
+            locale     => $locale,
+            time_zone  => 'UTC',
+        ),
+        DateTime->new(
+            year      => -10,
+            month     => 9,
+            day       => 15,
+            hour      => 4,
+            minute    => 44,
+            second    => 23,
+            locale    => $locale,
+            time_zone => 'UTC',
+        ),
+    );
 
     return pod_for_standard_formats( $locale, \@dts )
-           . pod_for_available_formats( $locale, \@dts )
+        . pod_for_available_formats( $locale, \@dts );
 }
 
-sub pod_for_standard_formats
-{
+sub pod_for_standard_formats {
     my $locale = shift;
     my $dts    = shift;
 
     my $pod = '';
 
-    for my $type ( qw( date time datetime ) )
-    {
+    for my $type (qw( date time datetime )) {
         $pod .= "=head2 \u$type Formats\n\n";
 
-        for my $length ( qw( full long medium short default ) )
-        {
+        for my $length (qw( full long medium short default )) {
             $pod .= "=head3 \u$length\n\n";
 
             my $meth = $type . q{_} . 'format' . q{_} . $length;
 
-            for my $dt ( @{ $dts } )
-            {
-                $pod .=
-                    sprintf( '  %20s = %s',
-                             $dt->iso8601(),
-                             $dt->format_cldr( $locale->$meth() ),
-                           );
+            for my $dt ( @{$dts} ) {
+                $pod .= sprintf(
+                    '  %20s = %s',
+                    $dt->iso8601(),
+                    $dt->format_cldr( $locale->$meth() ),
+                );
                 $pod .= "\n";
             }
 
@@ -1028,8 +1035,7 @@ sub pod_for_standard_formats
     return $pod;
 }
 
-sub pod_for_available_formats
-{
+sub pod_for_available_formats {
     my $locale = shift;
     my $dts    = shift;
 
@@ -1037,19 +1043,18 @@ sub pod_for_available_formats
 
     $pod .= "=head2 Available Formats\n\n";
 
-    for my $format ( $locale->available_formats() )
-    {
+    for my $format ( sort { lc $a cmp lc $b or $a cmp $b }
+        $locale->available_formats() ) {
         my $cldr = $locale->format_for($format);
 
         $pod .= "=head3 $format ($cldr)\n\n";
 
-        for my $dt ( @{ $dts } )
-        {
-            $pod .=
-                sprintf( '  %20s = %s',
-                         $dt->iso8601(),
-                         $dt->format_cldr($cldr),
-                       );
+        for my $dt ( @{$dts} ) {
+            $pod .= sprintf(
+                '  %20s = %s',
+                $dt->iso8601(),
+                $dt->format_cldr($cldr),
+            );
 
             $pod .= "\n";
         }
@@ -1060,8 +1065,7 @@ sub pod_for_available_formats
     return $pod;
 }
 
-sub pod_for_misc
-{
+sub pod_for_misc {
     my $locale = shift;
 
     my $pod = "=head2 Miscellaneous\n\n";
@@ -1079,8 +1083,7 @@ sub pod_for_misc
     return $pod;
 }
 
-sub pod_footer
-{
+sub pod_footer {
     return <<'EOF';
 
 =head1 SUPPORT
@@ -1105,21 +1108,18 @@ license.
 EOF
 }
 
-sub write_to_manifest
-{
+sub write_to_manifest {
     return if $opts{file};
 
     my $fh = _manifest_handle();
 
-    print {$fh} $_, "\n"
-        for @_;
+    print {$fh} $_, "\n" for @_;
 }
 
 {
     my $fh;
 
-    sub _manifest_handle
-    {
+    sub _manifest_handle {
         return $fh if defined $fh;
 
         copy( 'MANIFEST.base', 'MANIFEST' );
@@ -1140,7 +1140,7 @@ ace|||Achinese|aceh
 ach|||Acoli|acoli
 ada|||Adangme|adangme
 ady|||Adyghe; Adygei|adyghé
-afa|||Afro-Asiatic (Other)|afro-asiatiques, autres langues
+afa|||Afro-Asiatic languages|afro-asiatiques, langues
 afh|||Afrihili|afrihili
 afr||af|Afrikaans|afrikaans
 ain|||Ainu|aïnou
@@ -1153,14 +1153,14 @@ alt|||Southern Altai|altai du Sud
 amh||am|Amharic|amharique
 ang|||English, Old (ca.450-1100)|anglo-saxon (ca.450-1100)
 anp|||Angika|angika
-apa|||Apache languages|apache
+apa|||Apache languages|apaches, langues
 ara||ar|Arabic|arabe
 arc|||Official Aramaic (700-300 BCE); Imperial Aramaic (700-300 BCE)|araméen d'empire (700-300 BCE)
 arg||an|Aragonese|aragonais
 arm|hye|hy|Armenian|arménien
 arn|||Mapudungun; Mapuche|mapudungun; mapuche; mapuce
 arp|||Arapaho|arapaho
-art|||Artificial (Other)|artificielles, autres langues
+art|||Artificial languages|artificielles, langues
 arw|||Arawak|arawak
 asm||as|Assamese|assamais
 ast|||Asturian; Bable; Leonese; Asturleonese|asturien; bable; léonais; asturoléonais
@@ -1172,19 +1172,19 @@ awa|||Awadhi|awadhi
 aym||ay|Aymara|aymara
 aze||az|Azerbaijani|azéri
 bad|||Banda languages|banda, langues
-bai|||Bamileke languages|bamilékés, langues
+bai|||Bamileke languages|bamiléké, langues
 bak||ba|Bashkir|bachkir
 bal|||Baluchi|baloutchi
 bam||bm|Bambara|bambara
 ban|||Balinese|balinais
 baq|eus|eu|Basque|basque
 bas|||Basa|basa
-bat|||Baltic (Other)|baltiques, autres langues
+bat|||Baltic languages|baltes, langues
 bej|||Beja; Bedawiyet|bedja
 bel||be|Belarusian|biélorusse
 bem|||Bemba|bemba
 ben||bn|Bengali|bengali
-ber|||Berber (Other)|berbères, autres langues
+ber|||Berber languages|berbères, langues
 bho|||Bhojpuri|bhojpuri
 bih||bh|Bihari|bihari
 bik|||Bikol|bikol
@@ -1202,12 +1202,12 @@ bul||bg|Bulgarian|bulgare
 bur|mya|my|Burmese|birman
 byn|||Blin; Bilin|blin; bilen
 cad|||Caddo|caddo
-cai|||Central American Indian (Other)|indiennes d'Amérique centrale, autres langues
+cai|||Central American Indian languages|amérindiennes de L'Amérique centrale, langues
 car|||Galibi Carib|karib; galibi; carib
 cat||ca|Catalan; Valencian|catalan; valencien
-cau|||Caucasian (Other)|caucasiennes, autres langues
+cau|||Caucasian languages|caucasiennes, langues
 ceb|||Cebuano|cebuano
-cel|||Celtic (Other)|celtiques, autres langues
+cel|||Celtic languages|celtiques, langues; celtes, langues
 cha||ch|Chamorro|chamorro
 chb|||Chibcha|chibcha
 che||ce|Chechen|tchétchène
@@ -1226,14 +1226,14 @@ cmc|||Chamic languages|chames, langues
 cop|||Coptic|copte
 cor||kw|Cornish|cornique
 cos||co|Corsican|corse
-cpe|||Creoles and pidgins, English based (Other)|créoles et pidgins anglais, autres
-cpf|||Creoles and pidgins, French-based (Other)|créoles et pidgins français, autres
-cpp|||Creoles and pidgins, Portuguese-based (Other)|créoles et pidgins portugais, autres
+cpe|||Creoles and pidgins, English based|créoles et pidgins basés sur l'anglais
+cpf|||Creoles and pidgins, French-based |créoles et pidgins basés sur le français
+cpp|||Creoles and pidgins, Portuguese-based |créoles et pidgins basés sur le portugais
 cre||cr|Cree|cree
 crh|||Crimean Tatar; Crimean Turkish|tatar de Crimé
-crp|||Creoles and pidgins (Other)|créoles et pidgins divers
+crp|||Creoles and pidgins |créoles et pidgins
 csb|||Kashubian|kachoube
-cus|||Cushitic (Other)|couchitiques, autres langues
+cus|||Cushitic languages|couchitiques, langues
 cze|ces|cs|Czech|tchèque
 dak|||Dakota|dakota
 dan||da|Danish|danois
@@ -1245,7 +1245,7 @@ dgr|||Dogrib|dogrib
 din|||Dinka|dinka
 div||dv|Divehi; Dhivehi; Maldivian|maldivien
 doi|||Dogri|dogri
-dra|||Dravidian (Other)|dravidiennes, autres langues
+dra|||Dravidian languages|dravidiennes, langues
 dsb|||Lower Sorbian|bas-sorabe
 dua|||Duala|douala
 dum|||Dutch, Middle (ca.1050-1350)|néerlandais moyen (ca. 1050-1350)
@@ -1268,7 +1268,7 @@ fat|||Fanti|fanti
 fij||fj|Fijian|fidjien
 fil|||Filipino; Pilipino|filipino; pilipino
 fin||fi|Finnish|finnois
-fiu|||Finno-Ugrian (Other)|finno-ougriennes, autres langues
+fiu|||Finno-Ugrian languages|finno-ougriennes, langues
 fon|||Fon|fon
 fre|fra|fr|French|français
 frm|||French, Middle (ca.1400-1600)|français moyen (1400-1600)
@@ -1281,7 +1281,7 @@ fur|||Friulian|frioulan
 gaa|||Ga|ga
 gay|||Gayo|gayo
 gba|||Gbaya|gbaya
-gem|||Germanic (Other)|germaniques, autres langues
+gem|||Germanic languages|germaniques, langues
 geo|kat|ka|Georgian|géorgien
 ger|deu|de|German|allemand
 gez|||Geez|guèze
@@ -1328,13 +1328,13 @@ iku||iu|Inuktitut|inuktitut
 ile||ie|Interlingue; Occidental|interlingue
 ilo|||Iloko|ilocano
 ina||ia|Interlingua (International Auxiliary Language Association)|interlingua (langue auxiliaire internationale)
-inc|||Indic (Other)|indo-aryennes, autres langues
+inc|||Indic languages|indo-aryennes, langues
 ind||id|Indonesian|indonésien
-ine|||Indo-European (Other)|indo-européennes, autres langues
+ine|||Indo-European languages|indo-européennes, langues
 inh|||Ingush|ingouche
 ipk||ik|Inupiaq|inupiaq
-ira|||Iranian (Other)|iraniennes, autres langues
-iro|||Iroquoian languages|iroquoises, langues (famille)
+ira|||Iranian languages|iraniennes, langues
+iro|||Iroquoian languages|iroquoises, langues
 ita||it|Italian|italien
 jav||jv|Javanese|javanais
 jbo|||Lojban|lojban
@@ -1354,9 +1354,9 @@ kaw|||Kawi|kawi
 kaz||kk|Kazakh|kazakh
 kbd|||Kabardian|kabardien
 kha|||Khasi|khasi
-khi|||Khoisan (Other)|khoisan, autres langues
+khi|||Khoisan languages|khoïsan, langues
 khm||km|Central Khmer|khmer central
-kho|||Khotanese|khotanais
+kho|||Khotanese; Sakan|khotanais; sakan
 kik||ki|Kikuyu; Gikuyu|kikuyu
 kin||rw|Kinyarwanda|rwanda
 kir||ky|Kirghiz; Kyrgyz|kirghiz
@@ -1404,7 +1404,7 @@ mak|||Makasar|makassar
 mal||ml|Malayalam|malayalam
 man|||Mandingo|mandingue
 mao|mri|mi|Maori|maori
-map|||Austronesian (Other)|malayo-polynésiennes, autres langues
+map|||Austronesian languages|austronésiennes, langues
 mar||mr|Marathi|marathe
 mas|||Masai|massaï
 may|msa|ms|Malay|malais
@@ -1415,14 +1415,13 @@ mga|||Irish, Middle (900-1200)|irlandais moyen (900-1200)
 mic|||Mi'kmaq; Micmac|mi'kmaq; micmac
 min|||Minangkabau|minangkabau
 mis|||Uncoded languages|langues non codées
-mkh|||Mon-Khmer (Other)|môn-khmer, autres langues
+mkh|||Mon-Khmer languages|môn-khmer, langues
 mlg||mg|Malagasy|malgache
 mlt||mt|Maltese|maltais
 mnc|||Manchu|mandchou
 mni|||Manipuri|manipuri
 mno|||Manobo languages|manobo, langues
 moh|||Mohawk|mohawk
-mol||mo|Moldavian; Moldovan|moldave
 mon||mn|Mongolian|mongol
 mos|||Mossi|moré
 mul|||Multiple languages|multilingue
@@ -1433,7 +1432,7 @@ mwr|||Marwari|marvari
 myn|||Mayan languages|maya, langues
 myv|||Erzya|erza
 nah|||Nahuatl languages|nahuatl, langues
-nai|||North American Indian|indiennes d'Amérique du Nord, autres langues
+nai|||North American Indian languages|nord-amérindiennes, langues
 nap|||Neapolitan|napolitain
 nau||na|Nauru|nauruan
 nav||nv|Navajo; Navaho|navaho
@@ -1444,7 +1443,7 @@ nds|||Low German; Low Saxon; German, Low; Saxon, Low|bas allemand; bas saxon; al
 nep||ne|Nepali|népalais
 new|||Nepal Bhasa; Newari|nepal bhasa; newari
 nia|||Nias|nias
-nic|||Niger-Kordofanian (Other)|nigéro-congolaises, autres langues
+nic|||Niger-Kordofanian languages|nigéro-kordofaniennes, langues
 niu|||Niuean|niué
 nno||nn|Norwegian Nynorsk; Nynorsk, Norwegian|norvégien nynorsk; nynorsk, norvégien
 nob||nb|Bokmål, Norwegian; Norwegian Bokmål|norvégien bokmål
@@ -1467,8 +1466,8 @@ orm||om|Oromo|galla
 osa|||Osage|osage
 oss||os|Ossetian; Ossetic|ossète
 ota|||Turkish, Ottoman (1500-1928)|turc ottoman (1500-1928)
-oto|||Otomian languages|otomangue, langues
-paa|||Papuan (Other)|papoues, autres langues
+oto|||Otomian languages|otomi, langues
+paa|||Papuan languages|papoues, langues
 pag|||Pangasinan|pangasinan
 pal|||Pahlavi|pahlavi
 pam|||Pampanga; Kapampangan|pampangan
@@ -1477,13 +1476,13 @@ pap|||Papiamento|papiamento
 pau|||Palauan|palau
 peo|||Persian, Old (ca.600-400 B.C.)|perse, vieux (ca. 600-400 av. J.-C.)
 per|fas|fa|Persian|persan
-phi|||Philippine (Other)|philippines, autres langues
+phi|||Philippine languages|philippines, langues
 phn|||Phoenician|phénicien
 pli||pi|Pali|pali
 pol||pl|Polish|polonais
 pon|||Pohnpeian|pohnpei
 por||pt|Portuguese|portugais
-pra|||Prakrit languages|prâkrit
+pra|||Prakrit languages|prâkrit, langues
 pro|||Provençal, Old (to 1500)|provençal ancien (jusqu'à 1500)
 pus||ps|Pushto; Pashto|pachto
 qaa-qtz|||Reserved for local use|réservée à l'usage local
@@ -1491,10 +1490,10 @@ que||qu|Quechua|quechua
 raj|||Rajasthani|rajasthani
 rap|||Rapanui|rapanui
 rar|||Rarotongan; Cook Islands Maori|rarotonga; maori des îles Cook
-roa|||Romance (Other)|romanes, autres langues
+roa|||Romance languages|romanes, langues
 roh||rm|Romansh|romanche
 rom|||Romany|tsigane
-rum|ron|ro|Romanian|roumain
+rum|ron|ro|Romanian; Moldavian; Moldovan|roumain; moldave
 run||rn|Rundi|rundi
 rup|||Aromanian; Arumanian; Macedo-Romanian|aroumain; macédo-roumain
 rus||ru|Russian|russe
@@ -1502,7 +1501,7 @@ sad|||Sandawe|sandawe
 sag||sg|Sango|sango
 sah|||Yakut|iakoute
 sai|||South American Indian (Other)|indiennes d'Amérique du Sud, autres langues
-sal|||Salishan languages|salish, langues
+sal|||Salishan languages|salishennes, langues
 sam|||Samaritan Aramaic|samaritain
 san||sa|Sanskrit|sanskrit
 sas|||Sasak|sasak
@@ -1510,20 +1509,20 @@ sat|||Santali|santal
 scn|||Sicilian|sicilien
 sco|||Scots|écossais
 sel|||Selkup|selkoupe
-sem|||Semitic (Other)|sémitiques, autres langues
+sem|||Semitic languages|sémitiques, langues
 sga|||Irish, Old (to 900)|irlandais ancien (jusqu'à 900)
 sgn|||Sign Languages|langues des signes
 shn|||Shan|chan
 sid|||Sidamo|sidamo
 sin||si|Sinhala; Sinhalese|singhalais
 sio|||Siouan languages|sioux, langues
-sit|||Sino-Tibetan (Other)|sino-tibétaines, autres langues
-sla|||Slavic (Other)|slaves, autres langues
+sit|||Sino-Tibetan languages|sino-tibétaines, langues
+sla|||Slavic languages|slaves, langues
 slo|slk|sk|Slovak|slovaque
 slv||sl|Slovenian|slovène
 sma|||Southern Sami|sami du Sud
 sme||se|Northern Sami|sami du Nord
-smi|||Sami languages (Other)|sami, autres langues
+smi|||Sami languages|sames, langues
 smj|||Lule Sami|sami de Lule
 smn|||Inari Sami|sami d'Inari
 smo||sm|Samoan|samoan
@@ -1540,7 +1539,7 @@ srd||sc|Sardinian|sarde
 srn|||Sranan Tongo|sranan tongo
 srp||sr|Serbian|serbe
 srr|||Serer|sérère
-ssa|||Nilo-Saharan (Other)|nilo-sahariennes, autres langues
+ssa|||Nilo-Saharan languages|nilo-sahariennes, langues
 ssw||ss|Swati|swati
 suk|||Sukuma|sukuma
 sun||su|Sundanese|soundanais
@@ -1551,7 +1550,7 @@ swe||sv|Swedish|suédois
 syc|||Classical Syriac|syriaque classique
 syr|||Syriac|syriaque
 tah||ty|Tahitian|tahitien
-tai|||Tai (Other)|thaïes, autres langues
+tai|||Tai languages|tai, langues
 tam||ta|Tamil|tamoul
 tat||tt|Tatar|tatar
 tel||te|Telugu|télougou
@@ -1579,7 +1578,7 @@ tuk||tk|Turkmen|turkmène
 tum|||Tumbuka|tumbuka
 tup|||Tupi languages|tupi, langues
 tur||tr|Turkish|turc
-tut|||Altaic (Other)|altaïques, autres langues
+tut|||Altaic languages|altaïques, langues
 tvl|||Tuvalu|tuvalu
 twi||tw|Twi|twi
 tyv|||Tuvinian|touva
@@ -1596,7 +1595,7 @@ ven||ve|Venda|venda
 vie||vi|Vietnamese|vietnamien
 vol||vo|Volapük|volapük
 vot|||Votic|vote
-wak|||Wakashan languages|wakashennes, langues
+wak|||Wakashan languages|wakashanes, langues
 wal|||Walamo|walamo
 war|||Waray|waray
 was|||Washo|washo

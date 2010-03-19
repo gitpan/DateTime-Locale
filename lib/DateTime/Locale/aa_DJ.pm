@@ -31,6 +31,31 @@ sub cldr_version { return "1\.7\.1" }
     sub first_day_of_week { return $first_day_of_week }
 }
 
+{
+    my $glibc_date_format = "\%d\.\%m\.\%Y";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_date_1_format = "\%a\ \%b\ \%e\ \%r\ \%Z\ \%Y";
+    sub glibc_date_1_format { return $glibc_date_1_format }
+}
+
+{
+    my $glibc_datetime_format = "\%a\ \%d\ \%b\ \%Y\ \%r\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%l\:\%M\:\%S";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
+{
+    my $glibc_time_12_format = "\%X\ \%p";
+    sub glibc_time_12_format { return $glibc_time_12_format }
+}
+
 1;
 
 __END__
@@ -300,7 +325,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08
    1995-12-22T09:05:02 = 22/12/95
-  -0010-09-15T04:44:23 = 15/09/10
+  -0010-09-15T04:44:23 = 15/09/-10
 
 =head3 Default
 
@@ -364,7 +389,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08 6:30 carra
    1995-12-22T09:05:02 = 22/12/95 9:05 saaku
-  -0010-09-15T04:44:23 = 15/09/10 4:44 saaku
+  -0010-09-15T04:44:23 = 15/09/-10 4:44 saaku
 
 =head3 Default
 
@@ -373,6 +398,12 @@ It contains the following data.
   -0010-09-15T04:44:23 = 15-Way--10 4:44:23 saaku
 
 =head2 Available Formats
+
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
 
 =head3 EEEd (d EEE)
 
@@ -386,17 +417,35 @@ It contains the following data.
    1995-12-22T09:05:02 = 9:05
   -0010-09-15T04:44:23 = 4:44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 carra
+   1995-12-22T09:05:02 = 9:05 saaku
+  -0010-09-15T04:44:23 = 4:44 saaku
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
 
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 carra
+   1995-12-22T09:05:02 = 9:05:02 saaku
+  -0010-09-15T04:44:23 = 4:44:23 saaku
+
 =head3 M (L)
 
    2008-02-05T18:30:30 = 2
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
+
+=head3 Md (M-d)
+
+   2008-02-05T18:30:30 = 2-5
+   1995-12-22T09:05:02 = 12-22
+  -0010-09-15T04:44:23 = 9-15
 
 =head3 MEd (E, M-d)
 
@@ -410,17 +459,17 @@ It contains the following data.
    1995-12-22T09:05:02 = Kax
   -0010-09-15T04:44:23 = Way
 
+=head3 MMMd (MMM d)
+
+   2008-02-05T18:30:30 = Nah 5
+   1995-12-22T09:05:02 = Kax 22
+  -0010-09-15T04:44:23 = Way 15
+
 =head3 MMMEd (E MMM d)
 
    2008-02-05T18:30:30 = Tal Nah 5
    1995-12-22T09:05:02 = Gum Kax 22
   -0010-09-15T04:44:23 = Sab Way 15
-
-=head3 MMMMEd (E MMMM d)
-
-   2008-02-05T18:30:30 = Tal Kudo 5
-   1995-12-22T09:05:02 = Gum Kaxxa Garablu 22
-  -0010-09-15T04:44:23 = Sab Waysu 15
 
 =head3 MMMMd (MMMM d)
 
@@ -428,35 +477,11 @@ It contains the following data.
    1995-12-22T09:05:02 = Kaxxa Garablu 22
   -0010-09-15T04:44:23 = Waysu 15
 
-=head3 MMMd (MMM d)
+=head3 MMMMEd (E MMMM d)
 
-   2008-02-05T18:30:30 = Nah 5
-   1995-12-22T09:05:02 = Kax 22
-  -0010-09-15T04:44:23 = Way 15
-
-=head3 Md (M-d)
-
-   2008-02-05T18:30:30 = 2-5
-   1995-12-22T09:05:02 = 12-22
-  -0010-09-15T04:44:23 = 9-15
-
-=head3 d (d)
-
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
-
-=head3 hm (h:mm a)
-
-   2008-02-05T18:30:30 = 6:30 carra
-   1995-12-22T09:05:02 = 9:05 saaku
-  -0010-09-15T04:44:23 = 4:44 saaku
-
-=head3 hms (h:mm:ss a)
-
-   2008-02-05T18:30:30 = 6:30:30 carra
-   1995-12-22T09:05:02 = 9:05:02 saaku
-  -0010-09-15T04:44:23 = 4:44:23 saaku
+   2008-02-05T18:30:30 = Tal Kudo 5
+   1995-12-22T09:05:02 = Gum Kaxxa Garablu 22
+  -0010-09-15T04:44:23 = Sab Waysu 15
 
 =head3 ms (mm:ss)
 
@@ -516,7 +541,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 1 08
    1995-12-22T09:05:02 = 4 95
-  -0010-09-15T04:44:23 = 3 10
+  -0010-09-15T04:44:23 = 3 -10
 
 =head2 Miscellaneous
 

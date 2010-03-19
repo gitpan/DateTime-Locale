@@ -11,8 +11,7 @@ use DateTime::Locale::Base;
 use DateTime::Locale::Catalog;
 use Params::Validate qw( validate validate_pos SCALAR );
 
-our $VERSION = '0.44';
-
+our $VERSION = '0.45';
 
 my %Class;
 my %DataForID;
@@ -23,75 +22,72 @@ my %IDToExtra;
 
 my %LoadCache;
 
-sub register
-{
+sub register {
     my $class = shift;
 
     %LoadCache = ();
 
-    if ( ref $_[0] )
-    {
+    if ( ref $_[0] ) {
         $class->_register(%$_) foreach @_;
     }
-    else
-    {
+    else {
         $class->_register(@_);
     }
 }
 
-sub _register
-{
+sub _register {
     my $class = shift;
 
-    my %p = validate( @_,
-                      { id               => { type => SCALAR },
+    my %p = validate(
+        @_, {
+            id => { type => SCALAR },
 
-                        en_language      => { type => SCALAR },
-                        en_script        => { type => SCALAR, optional => 1 },
-                        en_territory     => { type => SCALAR, optional => 1 },
-                        en_variant       => { type => SCALAR, optional => 1 },
+            en_language  => { type => SCALAR },
+            en_script    => { type => SCALAR, optional => 1 },
+            en_territory => { type => SCALAR, optional => 1 },
+            en_variant   => { type => SCALAR, optional => 1 },
 
-                        native_language  => { type => SCALAR, optional => 1 },
-                        native_script    => { type => SCALAR, optional => 1 },
-                        native_territory => { type => SCALAR, optional => 1 },
-                        native_variant   => { type => SCALAR, optional => 1 },
+            native_language  => { type => SCALAR, optional => 1 },
+            native_script    => { type => SCALAR, optional => 1 },
+            native_territory => { type => SCALAR, optional => 1 },
+            native_variant   => { type => SCALAR, optional => 1 },
 
-                        class            => { type => SCALAR, optional => 1 },
-                        replace          => { type => SCALAR, default => 0 },
-                      } );
+            class   => { type => SCALAR, optional => 1 },
+            replace => { type => SCALAR, default  => 0 },
+        }
+    );
 
     my $id = $p{id};
 
     die "'\@' or '=' are not allowed in locale ids"
         if $id =~ /[\@=]/;
 
-    die "You cannot replace an existing locale ('$id') unless you also specify the 'replace' parameter as true\n"
-        if ! delete $p{replace} && exists $DataForID{$id};
+    die
+        "You cannot replace an existing locale ('$id') unless you also specify the 'replace' parameter as true\n"
+        if !delete $p{replace} && exists $DataForID{$id};
 
     $p{native_language} = $p{en_language}
         unless exists $p{native_language};
 
     my @en_pieces;
     my @native_pieces;
-    foreach my $p ( qw( language script territory variant ) )
-    {
-        push @en_pieces, $p{"en_$p"} if exists $p{"en_$p"};
+    foreach my $p (qw( language script territory variant )) {
+        push @en_pieces,     $p{"en_$p"}     if exists $p{"en_$p"};
         push @native_pieces, $p{"native_$p"} if exists $p{"native_$p"};
     }
 
-    $p{en_complete_name} = join ' ', @en_pieces;
+    $p{en_complete_name}     = join ' ', @en_pieces;
     $p{native_complete_name} = join ' ', @native_pieces;
 
     $DataForID{$id} = \%p;
 
-    $NameToID{ $p{en_complete_name} } = $id;
+    $NameToID{ $p{en_complete_name} }           = $id;
     $NativeNameToID{ $p{native_complete_name} } = $id;
 
     $Class{$id} = $p{class} if defined exists $p{class};
 }
 
-sub _registered_id
-{
+sub _registered_id {
     shift;
     my ($id) = validate_pos( @_, { type => SCALAR } );
 
@@ -101,17 +97,16 @@ sub _registered_id
     return 0;
 }
 
-sub add_aliases
-{
+sub add_aliases {
     shift;
 
     %LoadCache = ();
 
     my $aliases = ref $_[0] ? $_[0] : {@_};
 
-    while ( my ( $alias, $id ) = each %$aliases )
-    {
-        die "Unregistered locale '$id' cannot be used as an alias target for $alias"
+    while ( my ( $alias, $id ) = each %$aliases ) {
+        die
+            "Unregistered locale '$id' cannot be used as an alias target for $alias"
             unless __PACKAGE__->_registered_id($id);
 
         die "Can't alias an id to itself"
@@ -121,8 +116,7 @@ sub add_aliases
 
         my %seen = ( $alias => 1, $id => 1 );
         my $copy = $id;
-        while ( $copy = $AliasToID{$copy} )
-        {
+        while ( $copy = $AliasToID{$copy} ) {
             die "Creating an alias from $alias to $id would create a loop.\n"
                 if $seen{$copy};
 
@@ -133,8 +127,7 @@ sub add_aliases
     }
 }
 
-sub remove_alias
-{
+sub remove_alias {
     shift;
 
     %LoadCache = ();
@@ -144,45 +137,47 @@ sub remove_alias
     return delete $AliasToID{$alias};
 }
 
-BEGIN
-{
+BEGIN {
     __PACKAGE__->register( DateTime::Locale::Catalog->Locales() );
     __PACKAGE__->add_aliases( DateTime::Locale::Catalog->Aliases() );
 }
 
-sub ids          { wantarray ? keys %DataForID       : [ keys %DataForID      ] }
-sub names        { wantarray ? keys %NameToID        : [ keys %NameToID       ] }
-sub native_names { wantarray ? keys %NativeNameToID  : [ keys %NativeNameToID ] }
+sub ids   { wantarray ? keys %DataForID : [ keys %DataForID ] }
+sub names { wantarray ? keys %NameToID  : [ keys %NameToID ] }
+
+sub native_names {
+    wantarray ? keys %NativeNameToID : [ keys %NativeNameToID ];
+}
 
 # These are hardcoded for backwards comaptibility with the
 # DateTime::Language code.
-my %OldAliases =
-    ( 'Afar'             => 'aa',
-      'Amharic'           => 'am_ET',
-      'Austrian'          => 'de_AT',
-      'Brazilian'         => 'pt_BR',
-      'Czech'             => 'cs_CZ',
-      'Danish'            => 'da_DK',
-      'Dutch'             => 'nl_NL',
-      'English'           => 'en_US',
-      'French'            => 'fr_FR',
-      #      'Gedeo'             => undef, # XXX
-      'German'            => 'de_DE',
-      'Italian'           => 'it_IT',
-      'Norwegian'         => 'no_NO',
-      'Oromo'             => 'om_ET', # Maybe om_KE or plain om ?
-      'Portugese'         => 'pt_PT',
-      'Sidama'            => 'sid',
-      'Somali'            => 'so_SO',
-      'Spanish'           => 'es_ES',
-      'Swedish'           => 'sv_SE',
-      'Tigre'             => 'tig',
-      'TigrinyaEthiopian' => 'ti_ET',
-      'TigrinyaEritrean'  => 'ti_ER',
-    );
+my %OldAliases = (
+    'Afar'      => 'aa',
+    'Amharic'   => 'am_ET',
+    'Austrian'  => 'de_AT',
+    'Brazilian' => 'pt_BR',
+    'Czech'     => 'cs_CZ',
+    'Danish'    => 'da_DK',
+    'Dutch'     => 'nl_NL',
+    'English'   => 'en_US',
+    'French'    => 'fr_FR',
 
-sub load
-{
+    #      'Gedeo'             => undef, # XXX
+    'German'            => 'de_DE',
+    'Italian'           => 'it_IT',
+    'Norwegian'         => 'no_NO',
+    'Oromo'             => 'om_ET',    # Maybe om_KE or plain om ?
+    'Portugese'         => 'pt_PT',
+    'Sidama'            => 'sid',
+    'Somali'            => 'so_SO',
+    'Spanish'           => 'es_ES',
+    'Swedish'           => 'sv_SE',
+    'Tigre'             => 'tig',
+    'TigrinyaEthiopian' => 'ti_ET',
+    'TigrinyaEritrean'  => 'ti_ER',
+);
+
+sub load {
     my $class = shift;
     my ($name) = validate_pos( @_, { type => SCALAR } );
 
@@ -194,48 +189,42 @@ sub load
     return $LoadCache{$key} if exists $LoadCache{$key};
 
     # Custom class registered by user
-    if ( $Class{$name} )
-    {
-        return $LoadCache{$key} = $class->_load_class_from_id( $name, $Class{$name} )
+    if ( $Class{$name} ) {
+        return $LoadCache{$key}
+            = $class->_load_class_from_id( $name, $Class{$name} );
     }
 
     # special case for backwards compatibility with DT::Language
     $name = $OldAliases{$name} if exists $OldAliases{$name};
 
-    if ( exists $DataForID{$name} || exists $AliasToID{$name} )
-    {
+    if ( exists $DataForID{$name} || exists $AliasToID{$name} ) {
         return $LoadCache{$key} = $class->_load_class_from_id($name);
     }
 
-    foreach my $h ( \%NameToID, \%NativeNameToID )
-    {
+    foreach my $h ( \%NameToID, \%NativeNameToID ) {
         return $LoadCache{$key} = $class->_load_class_from_id( $h->{$name} )
             if exists $h->{$name};
     }
 
-    if ( my $id = $class->_guess_id($name) )
-    {
+    if ( my $id = $class->_guess_id($name) ) {
         return $LoadCache{$key} = $class->_load_class_from_id($id);
     }
 
     die "Invalid locale name or id: $name\n";
 }
 
-sub _guess_id
-{
+sub _guess_id {
     my $class = shift;
-    my $name = shift;
+    my $name  = shift;
 
     # Strip off charset for LC_* ids : en_GB.UTF-8 etc
     $name =~ s/\..*$//;
 
-    my ($language, $script, $territory, $variant ) =
-        _parse_id($name);
+    my ( $language, $script, $territory, $variant ) = _parse_id($name);
 
     my @guesses;
 
-    if ( defined $script )
-    {
+    if ( defined $script ) {
         my $guess = join '_', lc $language, ucfirst lc $script;
 
         push @guesses, $guess;
@@ -246,29 +235,23 @@ sub _guess_id
         unshift @guesses, $guess;
     }
 
-    if ( defined $variant )
-    {
-        push @guesses,
-            join '_', lc $language, uc $territory, uc $variant;
+    if ( defined $variant ) {
+        push @guesses, join '_', lc $language, uc $territory, uc $variant;
     }
 
-    if ( defined $territory )
-    {
-        push @guesses,
-            join '_', lc $language, uc $territory;
+    if ( defined $territory ) {
+        push @guesses, join '_', lc $language, uc $territory;
     }
 
     push @guesses, lc $language;
 
-    foreach my $id (@guesses)
-    {
+    foreach my $id (@guesses) {
         return $id
             if exists $DataForID{$id} || exists $AliasToID{$id};
     }
 }
 
-sub _parse_id
-{
+sub _parse_id {
     $_[0] =~ /([a-z]+)               # id
               (?: _([A-Z][a-z]+) )?  # script - Title Case - optional
               (?: _([A-Z]+) )?       # territory - ALL CAPS - optional
@@ -278,8 +261,7 @@ sub _parse_id
     return $1, $2, $3, $4;
 }
 
-sub _load_class_from_id
-{
+sub _load_class_from_id {
     my $class      = shift;
     my $id         = shift;
     my $real_class = shift;
@@ -288,36 +270,34 @@ sub _load_class_from_id
     # no corresponding .pm file.  There may be multiple levels of
     # alias to go through.
     my $data_id = $id;
-    while ( exists $AliasToID{$data_id} && ! exists $DataForID{$data_id} )
-    {
+    while ( exists $AliasToID{$data_id} && !exists $DataForID{$data_id} ) {
         $data_id = $AliasToID{$data_id};
     }
 
     $real_class ||= "DateTime::Locale::$data_id";
 
-    unless ( $real_class->can('new') )
-    {
+    unless ( $real_class->can('new') ) {
         eval "require $real_class";
 
         die $@ if $@;
     }
 
-    my $locale = $real_class->new( %{ $DataForID{$data_id} },
-                                   id => $id,
-                                 );
+    my $locale = $real_class->new(
+        %{ $DataForID{$data_id} },
+        id => $id,
+    );
 
     return $locale if $DateTime::Locale::InGenerator;
 
-    if ( $locale->can('cldr_version') )
-    {
-        my $object_version = $locale->cldr_version();
+    if ( $locale->can('cldr_version') ) {
+        my $object_version  = $locale->cldr_version();
         my $catalog_version = DateTime::Locale::Catalog->CLDRVersion();
 
-        if ( $object_version ne $catalog_version )
-        {
-            warn "Loaded $real_class, which is from an older version ($object_version)"
-                 . "of the CLDR database than this installation of"
-                 . "DateTime::Locale ($catalog_version).\n";
+        if ( $object_version ne $catalog_version ) {
+            warn
+                "Loaded $real_class, which is from an older version ($object_version)"
+                . "of the CLDR database than this installation of"
+                . "DateTime::Locale ($catalog_version).\n";
         }
     }
 
@@ -375,11 +355,11 @@ find a suitable replacement.
 
 The fallback search order is:
 
-  language_script_territory
-  language_script
-  language_territory_variant
-  language_territory
-  language
+  {language}_{script}_{territory}
+  {language}_{script}
+  {language}_{territory}_{variant}
+  {language}_{territory}
+  {language}
 
 Eg. For locale C<es_XX_UNKNOWN> the fallback search would be:
 
@@ -439,8 +419,8 @@ Returns an unsorted list of the available locale names in their native
 language, or an array reference if called in a scalar context. All
 native names are utf8 encoded.
 
-B<NB>: Many locales are only partially translated, so some native
-locale names may still contain some English.
+B<NB>: Some locales are only partially translated, so their native locale
+names may still contain some English.
 
 =head2 DateTime::Locale->add_aliases ( $alias1 => $id1, $alias2 => $id2, ... )
 
@@ -566,7 +546,6 @@ Examples:
      );
 
  # Returns instance of class Ridas::Locales::CustomGB
- # NOT Ridas::Locales::Custom::en_GB_RIDAS !
  my $l = DateTime::Locale->load('en_GB_RIDAS');
 
 If you register a locale for an id that is already registered, the
@@ -595,7 +574,7 @@ Subclass an existing locale implementing only the changes you require.
 
 =item 2.
 
-Create a completely new locale.
+Create a completely new locale as a new class.
 
 =back
 
@@ -603,8 +582,8 @@ In either case the locale MUST be registered before use.
 
 =head2 Subclassing an existing locale
 
-The following example sublasses the United Kingdom English locale to
-provide different date/time formats:
+The following example sublasses the United Kingdom English locale to change
+some the full date and time formats.
 
   package Ridas::Locale::en_GB_RIDAS1;
 
@@ -613,40 +592,16 @@ provide different date/time formats:
 
   use base 'DateTime::Locale::en_GB';
 
-  my $locale_id = 'en_GB_RIDAS1';
+  sub date_format_full   { 'EEEE d MMMM y' }
 
-  my $date_formats =
-  {
-    'full'   => '%A %{day} %B %{ce_year}',
-    'long'   => '%{day} %B %{ce_year}',
-    'medium' => '%{day} %b %{ce_year}',
-    'short'  => '%{day}/%m/%y',
-  };
-
-  my $time_formats =
-  {
-    'full'   => '%H h  %{minute} %{time_zone_short_name}',
-    'long'   => '%{hour12}:%M:%S %p',
-    'medium' => '%{hour12}:%M:%S %p',
-    'short'  => '%{hour12}:%M %p',
-  };
-
-  sub date_format_full   { $date_formats{full} }
-  sub date_format_long   { $date_formats{long} }
-  sub date_format_medium { $date_formats{medium} }
-  sub date_format_short  { $date_formats{short} }
-
-  sub time_format_full   { $time_formats{full} }
-  sub time_format_long   { $time_formats{long} }
-  sub time_format_medium { $time_formats{medium} }
-  sub time_format_short  { $time_formats{short} }
+  sub time_format_full   { 'HH mm zzzz' }
 
   1;
 
 Now register it:
 
  DateTime::Locale->register
-     ( id       => 'en_GB_RIDAS1',
+     ( id    => 'en_GB_RIDAS1',
 
        # name, territory, and variant as described in register() documentation
 
@@ -655,7 +610,7 @@ Now register it:
 
 =head2 Creating a completely new locale
 
-You are, of course, free to subclass C<DateTime::Locale::Base> if you
+You are, of course, free to subclass L<DateTime::Locale::Base> if you
 want to, though this is not required.
 
 Remember to register your custom locale!
@@ -729,58 +684,60 @@ UTF-8 string.
 The following methods all return an array reference containing the
 specified data.
 
-The format methods return strings that might be used a part of a
-string, like "the month of July", and should always return a set of
-unique values. The stand alone values are for use in things like
-calendars, and the narrow form may not be unique (for example, in day
-column heading for a calendar it's okay to have "T" for both Tuesday
-and Thursday).
+The methods with "format" in the name should return strings that can be used a
+part of a string, like "the month of July". The stand alone values are for
+use in things like calendars, and the narrow form may not be unique (for
+example, in day column heading for a calendar it's okay to have "T" for both
+Tuesday and Thursday).
+
+The wide name should always be the full name of thing in question. The narrow
+name should be just one or two characters.
 
 =over 4
 
 =item * $locale->month_format_wide()
 
-=item * $locale->month_format_abbreviated($dt)
+=item * $locale->month_format_abbreviated()
 
-=item * $locale->month_format_narrow($dt)
+=item * $locale->month_format_narrow()
 
 =item * $locale->month_stand_alone_wide()
 
-=item * $locale->month_stand_alone_abbreviated($dt)
+=item * $locale->month_stand_alone_abbreviated()
 
-=item * $locale->month_stand_alone_narrow($dt)
+=item * $locale->month_stand_alone_narrow()
 
 =item * $locale->day_format_wide()
 
-=item * $locale->day_format_abbreviated($dt)
+=item * $locale->day_format_abbreviated()
 
-=item * $locale->day_format_narrow($dt)
+=item * $locale->day_format_narrow()
 
 =item * $locale->day_stand_alone_wide()
 
-=item * $locale->day_stand_alone_abbreviated($dt)
+=item * $locale->day_stand_alone_abbreviated()
 
-=item * $locale->day_stand_alone_narrow($dt)
+=item * $locale->day_stand_alone_narrow()
 
 =item * $locale->quarter_format_wide()
 
-=item * $locale->quarter_format_abbreviated($dt)
+=item * $locale->quarter_format_abbreviated()
 
-=item * $locale->quarter_format_narrow($dt)
+=item * $locale->quarter_format_narrow()
 
 =item * $locale->quarter_stand_alone_wide()
 
-=item * $locale->quarter_stand_alone_abbreviated($dt)
+=item * $locale->quarter_stand_alone_abbreviated()
 
-=item * $locale->quarter_stand_alone_narrow($dt)
+=item * $locale->quarter_stand_alone_narrow()
 
 =item * $locale->am_pm_abbreviated()
 
 =item * $locale->era_wide()
 
-=item * $locale->era_abbreviated($dt)
+=item * $locale->era_abbreviated()
 
-=item * $locale->era_narrow($dt)
+=item * $locale->era_narrow()
 
 =back
 
@@ -828,11 +785,11 @@ datetime, such as the year and month, or hour and minute.
 
 =item * $locale->format_for($name)
 
-These are accessed by passing a name to C<< $locale->format_for(...)
->>, where the name is a Java-style format specifier.
+These are accessed by passing a name to C<< $locale->format_for(...)  >>,
+where the name is a CLDR-style format specifier.
 
-The return value is a string suitable for passing to C<<
-$dt->format_cldr() >>, so you can do something like this:
+The return value is a string suitable for passing to C<< $dt->format_cldr()
+>>, so you can do something like this:
 
   print $dt->format_cldr( $dt->locale()->format_for('MMMdd') )
 
@@ -840,10 +797,10 @@ which for the "en" locale would print out something like "08 Jul".
 
 Note that the localization may also include additional text specific to the
 locale. For example, the "MMMMd" format for the "zh" locale includes the
-Chinese characters for "day" (日) and month (月), so you get something like "8
-月23日".
+Chinese characters for "day" (日) and month (月), so you get something like
+"8月23日".
 
-=item * $locale->_available_format()
+=item * $locale->available_formats()
 
 This should return a list of all the format names that could be passed
 to C<< $locale->format_for() >>.
@@ -873,11 +830,26 @@ indicating the new default format length.
 
 =back
 
+There are also some miscellaneous methods locales should support:
+
+=over 4
+
+=item * $locale->prefers_24_hour_time()
+
+Returns a boolean indicating whether or not the locale prefers 24-hour time.
+
+=item * $locale->first_day_of_week()
+
+Returns a number from 1 to 7 indicating the I<local> first day of the
+week, with Monday being 1 and Sunday being 7.
+
+=back
+
 =head1 SUPPORT
 
-Please be aware that all locale data has been generated from the CLDR
-(Common Locale Data Repository) project locales data). The data B<is>
-currently incomplete, and B<will> contain errors in some locales.
+Please be aware that all locale data has been generated from the CLDR (Common
+Locale Data Repository) project locales data). The data is incomplete, and
+will contain errors in some locales.
 
 When reporting errors in data, please check the primary data sources
 first, then where necessary report errors directly to the primary
@@ -923,7 +895,7 @@ Barr's TimeDate distribution.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2003 Richard Evans. Copyright (c) 2004-2008 David
+Copyright (c) 2003 Richard Evans. Copyright (c) 2004-2009 David
 Rolsky. All rights reserved. This program is free software; you can
 redistribute it and/or modify it under the same terms as Perl itself.
 
@@ -933,9 +905,9 @@ it under the same terms as Perl itself.
 The full text of the license can be found in the F<LICENSE> file included
 with this module.
 
-The locale modules in directory C<DateTime/Locale/> have been
+The locale modules in directory F<DateTime/Locale/> have been
 generated from data provided by the CLDR project, see
-C<DateTime/Locale/LICENSE.cldr> for details on the CLDR data's
+F<DateTime/Locale/LICENSE.cldr> for details on the CLDR data's
 license.
 
 =head1 SEE ALSO
@@ -947,4 +919,3 @@ datetime@perl.org mailing list
 http://datetime.perl.org/
 
 =cut
-

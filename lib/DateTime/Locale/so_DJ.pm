@@ -31,6 +31,31 @@ sub cldr_version { return "1\.7\.1" }
     sub first_day_of_week { return $first_day_of_week }
 }
 
+{
+    my $glibc_date_format = "\%d\.\%m\.\%Y";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_date_1_format = "\%a\ \%b\ \%e\ \%r\ \%Z\ \%Y";
+    sub glibc_date_1_format { return $glibc_date_1_format }
+}
+
+{
+    my $glibc_datetime_format = "\%a\ \%d\ \%b\ \%Y\ \%r\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%l\:\%M\:\%S";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
+{
+    my $glibc_time_12_format = "\%X\ \%p";
+    sub glibc_time_12_format { return $glibc_time_12_format }
+}
+
 1;
 
 __END__
@@ -300,7 +325,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08
    1995-12-22T09:05:02 = 22/12/95
-  -0010-09-15T04:44:23 = 15/09/10
+  -0010-09-15T04:44:23 = 15/09/-10
 
 =head3 Default
 
@@ -364,7 +389,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 05/02/08 6:30 gn
    1995-12-22T09:05:02 = 22/12/95 9:05 sn
-  -0010-09-15T04:44:23 = 15/09/10 4:44 sn
+  -0010-09-15T04:44:23 = 15/09/-10 4:44 sn
 
 =head3 Default
 
@@ -373,6 +398,12 @@ It contains the following data.
   -0010-09-15T04:44:23 = 15-Sag--10 4:44:23 sn
 
 =head2 Available Formats
+
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
 
 =head3 EEEd (d EEE)
 
@@ -386,11 +417,23 @@ It contains the following data.
    1995-12-22T09:05:02 = 9:05
   -0010-09-15T04:44:23 = 4:44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 gn
+   1995-12-22T09:05:02 = 9:05 sn
+  -0010-09-15T04:44:23 = 4:44 sn
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
+
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 gn
+   1995-12-22T09:05:02 = 9:05:02 sn
+  -0010-09-15T04:44:23 = 4:44:23 sn
 
 =head3 M (L)
 
@@ -398,11 +441,23 @@ It contains the following data.
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
 
+=head3 Md (M-d)
+
+   2008-02-05T18:30:30 = 2-5
+   1995-12-22T09:05:02 = 12-22
+  -0010-09-15T04:44:23 = 9-15
+
 =head3 MEd (E, M-d)
 
    2008-02-05T18:30:30 = Sal, 2-5
    1995-12-22T09:05:02 = Jim, 12-22
   -0010-09-15T04:44:23 = Sab, 9-15
+
+=head3 MMdd (dd/MM)
+
+   2008-02-05T18:30:30 = 05/02
+   1995-12-22T09:05:02 = 22/12
+  -0010-09-15T04:44:23 = 15/09
 
 =head3 MMM (LLL)
 
@@ -410,17 +465,17 @@ It contains the following data.
    1995-12-22T09:05:02 = LIT
   -0010-09-15T04:44:23 = Sag
 
+=head3 MMMd (MMM d)
+
+   2008-02-05T18:30:30 = Lab 5
+   1995-12-22T09:05:02 = LIT 22
+  -0010-09-15T04:44:23 = Sag 15
+
 =head3 MMMEd (E MMM d)
 
    2008-02-05T18:30:30 = Sal Lab 5
    1995-12-22T09:05:02 = Jim LIT 22
   -0010-09-15T04:44:23 = Sab Sag 15
-
-=head3 MMMMEd (E MMMM d)
-
-   2008-02-05T18:30:30 = Sal Bisha Labaad 5
-   1995-12-22T09:05:02 = Jim Bisha Laba iyo Tobnaad 22
-  -0010-09-15T04:44:23 = Sab Bisha Sagaalaad 15
 
 =head3 MMMMd (MMMM d)
 
@@ -434,41 +489,11 @@ It contains the following data.
    1995-12-22T09:05:02 = 22 Bisha Laba iyo Tobnaad
   -0010-09-15T04:44:23 = 15 Bisha Sagaalaad
 
-=head3 MMMd (MMM d)
+=head3 MMMMEd (E MMMM d)
 
-   2008-02-05T18:30:30 = Lab 5
-   1995-12-22T09:05:02 = LIT 22
-  -0010-09-15T04:44:23 = Sag 15
-
-=head3 MMdd (dd/MM)
-
-   2008-02-05T18:30:30 = 05/02
-   1995-12-22T09:05:02 = 22/12
-  -0010-09-15T04:44:23 = 15/09
-
-=head3 Md (M-d)
-
-   2008-02-05T18:30:30 = 2-5
-   1995-12-22T09:05:02 = 12-22
-  -0010-09-15T04:44:23 = 9-15
-
-=head3 d (d)
-
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
-
-=head3 hm (h:mm a)
-
-   2008-02-05T18:30:30 = 6:30 gn
-   1995-12-22T09:05:02 = 9:05 sn
-  -0010-09-15T04:44:23 = 4:44 sn
-
-=head3 hms (h:mm:ss a)
-
-   2008-02-05T18:30:30 = 6:30:30 gn
-   1995-12-22T09:05:02 = 9:05:02 sn
-  -0010-09-15T04:44:23 = 4:44:23 sn
+   2008-02-05T18:30:30 = Sal Bisha Labaad 5
+   1995-12-22T09:05:02 = Jim Bisha Laba iyo Tobnaad 22
+  -0010-09-15T04:44:23 = Sab Bisha Sagaalaad 15
 
 =head3 ms (mm:ss)
 
@@ -528,13 +553,13 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 02/08
    1995-12-22T09:05:02 = 12/95
-  -0010-09-15T04:44:23 = 09/10
+  -0010-09-15T04:44:23 = 09/-10
 
 =head3 yyQ (Q yy)
 
    2008-02-05T18:30:30 = 1 08
    1995-12-22T09:05:02 = 4 95
-  -0010-09-15T04:44:23 = 3 10
+  -0010-09-15T04:44:23 = 3 -10
 
 =head3 yyyyMMMM (MMMM y)
 

@@ -31,6 +31,26 @@ sub cldr_version { return "1\.7\.1" }
     sub first_day_of_week { return $first_day_of_week }
 }
 
+{
+    my $glibc_date_format = "\%d\/\%m\/\%y";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_datetime_format = "ọjọ́\ \%A\,\ \%d\ oṣù\ \%B\ ọdún\ \%Y\ \%T\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%r";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
+{
+    my $glibc_time_12_format = "\%I\:\%M\:\%S\ \%p";
+    sub glibc_time_12_format { return $glibc_time_12_format }
+}
+
 1;
 
 __END__
@@ -374,6 +394,12 @@ It contains the following data.
 
 =head2 Available Formats
 
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
+
 =head3 EEEd (d EEE)
 
    2008-02-05T18:30:30 = 5 Ìsẹ́gun
@@ -386,17 +412,35 @@ It contains the following data.
    1995-12-22T09:05:02 = 9:05
   -0010-09-15T04:44:23 = 4:44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 ọ̀sán
+   1995-12-22T09:05:02 = 9:05 àárọ̀
+  -0010-09-15T04:44:23 = 4:44 àárọ̀
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
 
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 ọ̀sán
+   1995-12-22T09:05:02 = 9:05:02 àárọ̀
+  -0010-09-15T04:44:23 = 4:44:23 àárọ̀
+
 =head3 M (L)
 
    2008-02-05T18:30:30 = 2
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
+
+=head3 Md (M-d)
+
+   2008-02-05T18:30:30 = 2-5
+   1995-12-22T09:05:02 = 12-22
+  -0010-09-15T04:44:23 = 9-15
 
 =head3 MEd (E, M-d)
 
@@ -410,17 +454,17 @@ It contains the following data.
    1995-12-22T09:05:02 = Ọ̀pẹ̀
   -0010-09-15T04:44:23 = Owewe
 
+=head3 MMMd (MMM d)
+
+   2008-02-05T18:30:30 = Èrèlè 5
+   1995-12-22T09:05:02 = Ọ̀pẹ̀ 22
+  -0010-09-15T04:44:23 = Owewe 15
+
 =head3 MMMEd (E MMM d)
 
    2008-02-05T18:30:30 = Ìsẹ́gun Èrèlè 5
    1995-12-22T09:05:02 = Ẹtì Ọ̀pẹ̀ 22
   -0010-09-15T04:44:23 = Àbámẹ́ta Owewe 15
-
-=head3 MMMMEd (E MMMM d)
-
-   2008-02-05T18:30:30 = Ìsẹ́gun Oṣù Èrèlè 5
-   1995-12-22T09:05:02 = Ẹtì Oṣù Ọ̀pẹ̀ 22
-  -0010-09-15T04:44:23 = Àbámẹ́ta Oṣù Owewe 15
 
 =head3 MMMMd (MMMM d)
 
@@ -428,35 +472,11 @@ It contains the following data.
    1995-12-22T09:05:02 = Oṣù Ọ̀pẹ̀ 22
   -0010-09-15T04:44:23 = Oṣù Owewe 15
 
-=head3 MMMd (MMM d)
+=head3 MMMMEd (E MMMM d)
 
-   2008-02-05T18:30:30 = Èrèlè 5
-   1995-12-22T09:05:02 = Ọ̀pẹ̀ 22
-  -0010-09-15T04:44:23 = Owewe 15
-
-=head3 Md (M-d)
-
-   2008-02-05T18:30:30 = 2-5
-   1995-12-22T09:05:02 = 12-22
-  -0010-09-15T04:44:23 = 9-15
-
-=head3 d (d)
-
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
-
-=head3 hm (h:mm a)
-
-   2008-02-05T18:30:30 = 6:30 ọ̀sán
-   1995-12-22T09:05:02 = 9:05 àárọ̀
-  -0010-09-15T04:44:23 = 4:44 àárọ̀
-
-=head3 hms (h:mm:ss a)
-
-   2008-02-05T18:30:30 = 6:30:30 ọ̀sán
-   1995-12-22T09:05:02 = 9:05:02 àárọ̀
-  -0010-09-15T04:44:23 = 4:44:23 àárọ̀
+   2008-02-05T18:30:30 = Ìsẹ́gun Oṣù Èrèlè 5
+   1995-12-22T09:05:02 = Ẹtì Oṣù Ọ̀pẹ̀ 22
+  -0010-09-15T04:44:23 = Àbámẹ́ta Oṣù Owewe 15
 
 =head3 ms (mm:ss)
 

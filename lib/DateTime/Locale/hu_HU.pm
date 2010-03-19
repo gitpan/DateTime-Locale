@@ -31,6 +31,31 @@ sub cldr_version { return "1\.7\.1" }
     sub first_day_of_week { return $first_day_of_week }
 }
 
+{
+    my $glibc_date_format = "\%Y\-\%m\-\%d";
+    sub glibc_date_format { return $glibc_date_format }
+}
+
+{
+    my $glibc_date_1_format = "\%Y\.\ \%b\.\ \%e\.\,\ \%A\,\ \%H\.\%M\.\%S\ \%Z";
+    sub glibc_date_1_format { return $glibc_date_1_format }
+}
+
+{
+    my $glibc_datetime_format = "\%Y\.\ \%b\.\ \%e\.\,\ \%A\,\ \%H\.\%M\.\%S\ \%Z";
+    sub glibc_datetime_format { return $glibc_datetime_format }
+}
+
+{
+    my $glibc_time_format = "\%H\.\%M\.\%S";
+    sub glibc_time_format { return $glibc_time_format }
+}
+
+{
+    my $glibc_time_12_format = "\%H\.\%M\.\%S";
+    sub glibc_time_12_format { return $glibc_time_12_format }
+}
+
 1;
 
 __END__
@@ -374,6 +399,12 @@ It contains the following data.
 
 =head2 Available Formats
 
+=head3 d (d)
+
+   2008-02-05T18:30:30 = 5
+   1995-12-22T09:05:02 = 22
+  -0010-09-15T04:44:23 = 15
+
 =head3 EEEd (d EEE)
 
    2008-02-05T18:30:30 = 5 K
@@ -386,11 +417,23 @@ It contains the following data.
    1995-12-22T09:05:02 = 09:05
   -0010-09-15T04:44:23 = 04:44
 
+=head3 hm (h:mm a)
+
+   2008-02-05T18:30:30 = 6:30 du.
+   1995-12-22T09:05:02 = 9:05 de.
+  -0010-09-15T04:44:23 = 4:44 de.
+
 =head3 Hms (H:mm:ss)
 
    2008-02-05T18:30:30 = 18:30:30
    1995-12-22T09:05:02 = 9:05:02
   -0010-09-15T04:44:23 = 4:44:23
+
+=head3 hms (h:mm:ss a)
+
+   2008-02-05T18:30:30 = 6:30:30 du.
+   1995-12-22T09:05:02 = 9:05:02 de.
+  -0010-09-15T04:44:23 = 4:44:23 de.
 
 =head3 M (L)
 
@@ -398,41 +441,17 @@ It contains the following data.
    1995-12-22T09:05:02 = 12
   -0010-09-15T04:44:23 = 9
 
+=head3 Md (M. d.)
+
+   2008-02-05T18:30:30 = 2. 5.
+   1995-12-22T09:05:02 = 12. 22.
+  -0010-09-15T04:44:23 = 9. 15.
+
 =head3 MEd (M. d., E)
 
    2008-02-05T18:30:30 = 2. 5., K
    1995-12-22T09:05:02 = 12. 22., P
   -0010-09-15T04:44:23 = 9. 15., Szo
-
-=head3 MMM (LLL)
-
-   2008-02-05T18:30:30 = febr.
-   1995-12-22T09:05:02 = dec.
-  -0010-09-15T04:44:23 = szept.
-
-=head3 MMMEd (E MMM d)
-
-   2008-02-05T18:30:30 = K febr. 5
-   1995-12-22T09:05:02 = P dec. 22
-  -0010-09-15T04:44:23 = Szo szept. 15
-
-=head3 MMMMEd (E MMMM d)
-
-   2008-02-05T18:30:30 = K február 5
-   1995-12-22T09:05:02 = P december 22
-  -0010-09-15T04:44:23 = Szo szeptember 15
-
-=head3 MMMMd (MMMM d.)
-
-   2008-02-05T18:30:30 = február 5.
-   1995-12-22T09:05:02 = december 22.
-  -0010-09-15T04:44:23 = szeptember 15.
-
-=head3 MMMd (MMM d.)
-
-   2008-02-05T18:30:30 = febr. 5.
-   1995-12-22T09:05:02 = dec. 22.
-  -0010-09-15T04:44:23 = szept. 15.
 
 =head3 MMdd (MM.dd.)
 
@@ -440,29 +459,35 @@ It contains the following data.
    1995-12-22T09:05:02 = 12.22.
   -0010-09-15T04:44:23 = 09.15.
 
-=head3 Md (M. d.)
+=head3 MMM (LLL)
 
-   2008-02-05T18:30:30 = 2. 5.
-   1995-12-22T09:05:02 = 12. 22.
-  -0010-09-15T04:44:23 = 9. 15.
+   2008-02-05T18:30:30 = febr.
+   1995-12-22T09:05:02 = dec.
+  -0010-09-15T04:44:23 = szept.
 
-=head3 d (d)
+=head3 MMMd (MMM d.)
 
-   2008-02-05T18:30:30 = 5
-   1995-12-22T09:05:02 = 22
-  -0010-09-15T04:44:23 = 15
+   2008-02-05T18:30:30 = febr. 5.
+   1995-12-22T09:05:02 = dec. 22.
+  -0010-09-15T04:44:23 = szept. 15.
 
-=head3 hm (h:mm a)
+=head3 MMMEd (E MMM d)
 
-   2008-02-05T18:30:30 = 6:30 du.
-   1995-12-22T09:05:02 = 9:05 de.
-  -0010-09-15T04:44:23 = 4:44 de.
+   2008-02-05T18:30:30 = K febr. 5
+   1995-12-22T09:05:02 = P dec. 22
+  -0010-09-15T04:44:23 = Szo szept. 15
 
-=head3 hms (h:mm:ss a)
+=head3 MMMMd (MMMM d.)
 
-   2008-02-05T18:30:30 = 6:30:30 du.
-   1995-12-22T09:05:02 = 9:05:02 de.
-  -0010-09-15T04:44:23 = 4:44:23 de.
+   2008-02-05T18:30:30 = február 5.
+   1995-12-22T09:05:02 = december 22.
+  -0010-09-15T04:44:23 = szeptember 15.
+
+=head3 MMMMEd (E MMMM d)
+
+   2008-02-05T18:30:30 = K február 5
+   1995-12-22T09:05:02 = P december 22
+  -0010-09-15T04:44:23 = Szo szeptember 15
 
 =head3 mmss (mm:ss)
 
@@ -528,7 +553,7 @@ It contains the following data.
 
    2008-02-05T18:30:30 = 08/1
    1995-12-22T09:05:02 = 95/4
-  -0010-09-15T04:44:23 = 10/3
+  -0010-09-15T04:44:23 = -10/3
 
 =head3 yyyyMM (yyyy.MM)
 
